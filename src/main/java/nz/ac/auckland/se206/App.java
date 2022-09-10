@@ -42,7 +42,8 @@ public class App extends Application {
   }
 
   private void loadCategories() throws IOException {
-    // Loads all the categories from category_difficulty.csv and splits them into lists of Easy,
+    // Loads all the categories from category_difficulty.csv and splits them into
+    // lists of Easy,
     // Medium and Hard
     Scanner s = new Scanner(new File("src/main/resources/category_difficulty.csv"));
 
@@ -74,6 +75,7 @@ public class App extends Application {
     // Sets initial conditions for the game
     loadCategories();
     SceneManager.addUi(SceneManager.AppScene.MAIN_MENU, loadFxml("mainMenu"));
+    SceneManager.addUi(SceneManager.AppScene.REGISTER, loadFxml("register"));
     SceneManager.addUi(SceneManager.AppScene.GAME, loadFxml("game"));
 
     final Scene scene =
