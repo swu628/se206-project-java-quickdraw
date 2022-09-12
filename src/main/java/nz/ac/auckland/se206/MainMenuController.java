@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 public class MainMenuController {
   @FXML private Text infoText;
 
-  @FXML private Button startButton;
+  @FXML private Button signInButton;
 
   @FXML private Button quitButton;
 
@@ -22,19 +22,30 @@ public class MainMenuController {
   @FXML
   private void onSignIn(ActionEvent e) {
     if (usernameField.getText().trim().isEmpty()) {
-      infoText.setText("Enter valid username");
+      infoText.setText("Enter a valid username");
       usernameField.setText("");
     } else {
       // TODO Add username check function
-
+      sceneReset();
       Button button = (Button) e.getSource();
       Scene currentScene = button.getScene();
       currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
     }
   }
 
+  private void sceneReset() {
+    // Sets the scene to the initial state
+    infoText.setText("Sign in to your account");
+    usernameField.setText("");
+    signInButton.setText("Sign in");
+    createButton.setText("Create new account");
+    quitButton.setText("Quit game");
+  }
+
   @FXML
   private void onCreateAccount(ActionEvent e) {
+    // Resets the scene and replaces root scene with register scene
+    sceneReset();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.REGISTER));

@@ -1,5 +1,7 @@
 package nz.ac.auckland.se206;
 
+import java.io.File;
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -17,23 +19,50 @@ public class RegisterController {
   @FXML private TextField newUsernameField;
 
   @FXML
-  private void onSignUp() {
+  private void onSignUp() throws IOException {
     // Checks if username is valid
-    if (newUsernameField.getText().trim().isEmpty()) {
-      text.setText("Enter valid username");
-      newUsernameField.setText("");
+    if (newUsernameField.getText().contains(" ")) {
+      sceneReset();
+      text.setText("Username cannot contain spaces");
+    } else {
+      // Creates a folder if needed
+      final File profileFolder = new File("src/main/resources/profiles");
+      if (!profileFolder.exists()) {
+        profileFolder.mkdir();
+      }
+
+      // Creates a txt file named as the textfield username if the username is not taken
+      File profileInfo =
+          new File(
+              "src/main/resources/"
+                  + profileFolder.getName()
+                  + "/"
+                  + newUsernameField.getText()
+                  + ".txt");
+      if (profileInfo.createNewFile()) {
+        newUsernameField.setDisable(true);
+        signUpButton.setDisable(true);
+        text.setText("Account Created");
+      } else {
+        sceneReset();
+        text.setText("This username is taken");
+      }
     }
-    // TODO Check if username is taken
-    else {
-      newUsernameField.setDisable(true);
-      signUpButton.setDisable(true);
-      text.setText("Account Created");
-      // TODO create file named as the textfield username
-    }
+  }
+
+  private void sceneReset() {
+    // Sets the scene to the initial state
+    text.setText("Enter your username");
+    newUsernameField.setDisable(false);
+    newUsernameField.setText("");
+    signUpButton.setDisable(false);
+    backButton.setDisable(false);
   }
 
   @FXML
   private void onBack(ActionEvent e) {
+    // Resets the scene and replaces root scene with main menu scene
+    sceneReset();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));

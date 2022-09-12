@@ -28,7 +28,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Button fx:id="startButton" mnemonicParsing="false" onAction="#onSignIn" text="Sign in">
+            <Button fx:id="signInButton" mnemonicParsing="false" onAction="#onSignIn" text="Sign in">
                <font>
                   <Font size="16.0" />
                </font>
