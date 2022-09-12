@@ -127,11 +127,16 @@
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#onQuitGame" text="Quit game">
+                <Button mnemonicParsing="false" onAction="#onMainMenu" text="Main Menu">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
+            <Button mnemonicParsing="false" onAction="#onQuitGame" text="Quit game">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
             </children>
         </VBox>
     </children>

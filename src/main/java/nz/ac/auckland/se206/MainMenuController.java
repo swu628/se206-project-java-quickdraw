@@ -28,7 +28,7 @@ public class MainMenuController {
       infoText.setText("Enter a valid username");
       usernameField.setText("");
     } else {
-      // Sets current profile as the username entered switches to game scene
+      // Sets current profile as the username entered and switches to the game scene
       App.setCurrentProfile(profile);
       System.out.println(
           "Current profile is: " + App.getCurrentProfile().getName().replace(".txt", ""));

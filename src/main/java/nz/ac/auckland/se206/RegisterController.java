@@ -45,7 +45,7 @@ public class RegisterController {
         text.setText("Account Created");
       } else {
         sceneReset();
-        text.setText("This username is taken");
+        text.setText("This username has already been used");
       }
     }
   }
