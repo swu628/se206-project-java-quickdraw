@@ -17,6 +17,8 @@ public class App extends Application {
 
   private static String category;
 
+  public static File currentProfile;
+
   public static void main(final String[] args) {
     launch();
   }
@@ -84,5 +86,13 @@ public class App extends Application {
     stage.setResizable(false);
     stage.setScene(scene);
     stage.show();
+  }
+
+  public static void setCurrentProfile(File file) {
+    currentProfile = file;
+  }
+
+  public static File getCurrentProfile() {
+    return currentProfile;
   }
 }

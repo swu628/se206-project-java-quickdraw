@@ -1,5 +1,6 @@
 package nz.ac.auckland.se206;
 
+import java.io.File;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,11 +22,16 @@ public class MainMenuController {
 
   @FXML
   private void onSignIn(ActionEvent e) {
-    if (usernameField.getText().trim().isEmpty()) {
+    File profile = new File("src/main/resources/profiles/" + usernameField.getText() + ".txt");
+    // Checks if username entered exists
+    if (!profile.exists()) {
       infoText.setText("Enter a valid username");
       usernameField.setText("");
     } else {
-      // TODO Add username check function
+      // Sets current profile as the username entered switches to game scene
+      App.setCurrentProfile(profile);
+      System.out.println(
+          "Current profile is: " + App.getCurrentProfile().getName().replace(".txt", ""));
       sceneReset();
       Button button = (Button) e.getSource();
       Scene currentScene = button.getScene();
