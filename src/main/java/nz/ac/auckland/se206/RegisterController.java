@@ -24,6 +24,9 @@ public class RegisterController {
     if (newUsernameField.getText().contains(" ")) {
       sceneReset();
       text.setText("Username cannot contain spaces");
+    } else if (newUsernameField.getText().isEmpty()) {
+      sceneReset();
+      text.setText("Username cannot be empty");
     } else {
       // Creates a folder if needed
       final File profileFolder = new File("src/main/resources/profiles");
