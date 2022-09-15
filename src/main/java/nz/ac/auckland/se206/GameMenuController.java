@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 public class GameMenuController {
-  @FXML private Text infoText;
+  @FXML private Text welcomeText;
 
   @FXML
   private void onStartGame(ActionEvent e) {

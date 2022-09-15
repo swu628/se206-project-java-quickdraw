@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206;
 
+import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import nz.ac.auckland.se206.profile.User;
 
 public class RegisterController {
   @FXML private Text text;
@@ -28,27 +31,47 @@ public class RegisterController {
       sceneReset();
       text.setText("Username cannot be empty");
     } else {
-      // Creates a folder if needed
-      final File profileFolder = new File("src/main/resources/profiles");
-      if (!profileFolder.exists()) {
-        profileFolder.mkdir();
+      // Creates a folder to store users if needed
+      final File Users = new File("src/main/resources/UserProfiles");
+      if (!Users.exists()) {
+        Users.mkdir();
       }
 
-      // Creates a txt file named as the textfield username if the username is not taken
-      File profileInfo =
-          new File(
-              "src/main/resources/"
-                  + profileFolder.getName()
-                  + "/"
-                  + newUsernameField.getText()
-                  + ".txt");
-      if (profileInfo.createNewFile()) {
+      // Creates a json file if there are none
+      Gson gson = new Gson();
+
+      // Checks if username is taken
+      if (new File("src/main/resources/UserProfiles/" + newUsernameField.getText() + ".json")
+          .isFile()) {
+        sceneReset();
+        text.setText("This username is taken");
+        //    	  System.out.println("Exists");
+        //    	  JsonReader reader = new JsonReader(new
+        // FileReader("src/main/resources/UserProfiles/users.json"));
+        //    	  User[] users = gson.fromJson(reader,User.class);
+        //    	  System.out.println("Username: " + users[0].getName());
+
+        // https://stackoverflow.com/questions/47111676/gson-append-new-object-array-to-existing-json-file
+        //    	  List<User> users = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+        //    	  User newUser = new User(newUsernameField.getText());
+        //    	  users.add(newUser);
+        //    	  gson.toJson(users);
+
+      } else {
+        // Create json file named as the username
+        System.out.println("File created");
+        FileWriter fileWriter =
+            new FileWriter(
+                "src/main/resources/UserProfiles/" + newUsernameField.getText() + ".json");
+
+        // Write user details into the file
+        User user = new User(newUsernameField.getText());
+        gson.toJson(user, fileWriter);
+        fileWriter.close();
+
         newUsernameField.setDisable(true);
         signUpButton.setDisable(true);
         text.setText("Account Created");
-      } else {
-        sceneReset();
-        text.setText("This username has already been used");
       }
     }
   }
