@@ -78,6 +78,7 @@ public class App extends Application {
     loadCategories();
     SceneManager.addUi(SceneManager.AppScene.MAIN_MENU, loadFxml("mainMenu"));
     SceneManager.addUi(SceneManager.AppScene.REGISTER, loadFxml("register"));
+    SceneManager.addUi(SceneManager.AppScene.GAME_MENU, loadFxml("gameMenu"));
     SceneManager.addUi(SceneManager.AppScene.GAME, loadFxml("game"));
 
     final Scene scene =

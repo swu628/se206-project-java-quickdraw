@@ -12,12 +12,6 @@ import javafx.scene.text.Text;
 public class MainMenuController {
   @FXML private Text infoText;
 
-  @FXML private Button signInButton;
-
-  @FXML private Button quitButton;
-
-  @FXML private Button createButton;
-
   @FXML private TextField usernameField;
 
   @FXML
@@ -35,7 +29,7 @@ public class MainMenuController {
       sceneReset();
       Button button = (Button) e.getSource();
       Scene currentScene = button.getScene();
-      currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
+      currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
     }
   }
 
@@ -43,9 +37,6 @@ public class MainMenuController {
     // Sets the scene to the initial state
     infoText.setText("Sign in to your account");
     usernameField.setText("");
-    signInButton.setText("Sign in");
-    createButton.setText("Create new account");
-    quitButton.setText("Quit game");
   }
 
   @FXML

@@ -346,12 +346,12 @@ public class GameController {
   }
 
   @FXML
-  private void onMainMenu(ActionEvent e) {
+  private void onGameMenu(ActionEvent e) {
     // Resets the game and switches scene to the main menu
     onResetGame();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));
+    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
   }
 
   @FXML
