@@ -16,20 +16,18 @@ public class MainMenuController {
 
   @FXML
   private void onSignIn(ActionEvent e) {
-    File profile = new File("src/main/resources/profiles/" + usernameField.getText() + ".txt");
+    File profile = new File("src/main/resources/UserProfiles/" + usernameField.getText() + ".json");
     // Checks if username entered exists
-    if (!profile.exists()) {
-      infoText.setText("Enter a valid username");
-      usernameField.setText("");
-    } else {
+    if (profile.isFile()) {
       // Sets current profile as the username entered and switches to the game scene
       App.setCurrentProfile(profile);
-      System.out.println(
-          "Current profile is: " + App.getCurrentProfile().getName().replace(".txt", ""));
       sceneReset();
       Button button = (Button) e.getSource();
       Scene currentScene = button.getScene();
       currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
+    } else {
+      infoText.setText("Enter a valid username");
+      usernameField.setText("");
     }
   }
 

@@ -37,36 +37,20 @@ public class RegisterController {
         Users.mkdir();
       }
 
-      // Creates a json file if there are none
-      Gson gson = new Gson();
-
       // Checks if username is taken
       if (new File("src/main/resources/UserProfiles/" + newUsernameField.getText() + ".json")
           .isFile()) {
         sceneReset();
         text.setText("This username is taken");
-        //    	  System.out.println("Exists");
-        //    	  JsonReader reader = new JsonReader(new
-        // FileReader("src/main/resources/UserProfiles/users.json"));
-        //    	  User[] users = gson.fromJson(reader,User.class);
-        //    	  System.out.println("Username: " + users[0].getName());
-
-        // https://stackoverflow.com/questions/47111676/gson-append-new-object-array-to-existing-json-file
-        //    	  List<User> users = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
-        //    	  User newUser = new User(newUsernameField.getText());
-        //    	  users.add(newUser);
-        //    	  gson.toJson(users);
-
       } else {
         // Create json file named as the username
-        System.out.println("File created");
         FileWriter fileWriter =
             new FileWriter(
                 "src/main/resources/UserProfiles/" + newUsernameField.getText() + ".json");
 
         // Write user details into the file
-        User user = new User(newUsernameField.getText());
-        gson.toJson(user, fileWriter);
+        Gson gson = new Gson();
+        gson.toJson(new User(newUsernameField.getText()), fileWriter);
         fileWriter.close();
 
         newUsernameField.setDisable(true);
