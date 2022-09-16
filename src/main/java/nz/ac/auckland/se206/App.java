@@ -18,9 +18,9 @@ public class App extends Application {
 
   private static String category;
 
-  public static User currentUser;
+  private static User currentUser;
 
-  public static GameMenuController gameMenuController;
+  private static GameMenuController gameMenuController;
 
   public static void main(final String[] args) {
     launch();
@@ -103,5 +103,9 @@ public class App extends Application {
 
   public static User getCurrentUser() {
     return currentUser;
+  }
+
+  public static GameMenuController getGameMenuController() {
+    return gameMenuController;
   }
 }
