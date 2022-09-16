@@ -19,6 +19,7 @@ public class GameMenuController {
 
   @FXML
   private void onSignOut(ActionEvent e) {
+    App.setCurrentUser(null);
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));

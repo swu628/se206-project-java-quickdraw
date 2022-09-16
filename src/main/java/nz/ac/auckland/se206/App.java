@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.profile.User;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -17,7 +18,7 @@ public class App extends Application {
 
   private static String category;
 
-  public static File currentProfile;
+  public static User currentUser;
 
   public static void main(final String[] args) {
     launch();
@@ -89,11 +90,11 @@ public class App extends Application {
     stage.show();
   }
 
-  public static void setCurrentProfile(File file) {
-    currentProfile = file;
+  public static void setCurrentUser(User user) {
+    currentUser = user;
   }
 
-  public static File getCurrentProfile() {
-    return currentProfile;
+  public static User getCurrentUser() {
+    return currentUser;
   }
 }
