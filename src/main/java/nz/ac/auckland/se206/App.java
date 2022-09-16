@@ -20,6 +20,8 @@ public class App extends Application {
 
   public static User currentUser;
 
+  public static GameMenuController gameMenuController;
+
   public static void main(final String[] args) {
     launch();
   }
@@ -41,7 +43,12 @@ public class App extends Application {
    * @throws IOException If the file is not found.
    */
   private static Parent loadFxml(final String fxml) throws IOException {
-    return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
+    FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml"));
+    Parent parent = loader.load();
+    if (fxml == "gameMenu") {
+      gameMenuController = loader.getController();
+    }
+    return parent;
   }
 
   private void loadCategories() throws IOException {

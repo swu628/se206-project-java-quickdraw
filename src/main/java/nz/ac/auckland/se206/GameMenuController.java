@@ -10,6 +10,10 @@ import javafx.scene.text.Text;
 public class GameMenuController {
   @FXML private Text welcomeText;
 
+  public void onScene() {
+    welcomeText.setText("Welcome " + App.getCurrentUser().getName());
+  }
+
   @FXML
   private void onStartGame(ActionEvent e) {
     Button button = (Button) e.getSource();
