@@ -152,8 +152,8 @@ public class GameController {
 
             // Setting intial conditions for predictior
             TextToSpeech textToSpeech = new TextToSpeech();
-            String prevPred = "";
-            String currentPred = "";
+            String prevTopPred = "";
+            String currentTopPred = "";
 
             // If timerThread is alive, then 60s has not passed
             while (!gameWon && timerThread.isAlive()) {
@@ -177,17 +177,23 @@ public class GameController {
                 StringBuilder sb = new StringBuilder();
                 int i = 1;
                 for (Classifications.Classification c : predictions) {
+                  StringBuilder stringBuilder = new StringBuilder(c.getClassName());
+
+                  for (int j = 0; j < c.getClassName().length(); j++) {
+                    if (stringBuilder.charAt(j) == '_') {
+                      stringBuilder.setCharAt(j, ' ');
+                    }
+                  }
+
+                  String currentPred = stringBuilder.toString();
+
                   if (i == 1) {
-                    currentPred = c.getClassName().replace("_", " ");
+                    currentTopPred = currentPred;
                     sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
                   } else {
-                    sb.append(i)
-                        .append(". ")
-                        .append(c.getClassName().replace("_", " "))
-                        .append(System.lineSeparator());
+                    sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
                   }
-                  if (c.getClassName().replace("_", " ").trim().equals(App.getCategory())
-                      && i <= 3) {
+                  if (currentPred.equals(App.getCategory()) && i <= 3) {
                     gameWon = true;
                   }
                   i++;
@@ -195,9 +201,9 @@ public class GameController {
                 updateMessage(sb.toString());
                 // If there has been a change to the top 1 prediciton, the text-to-speech will say
                 // what it sees
-                if (!prevPred.equals(currentPred)) {
-                  prevPred = currentPred;
-                  textToSpeech.speak("I see " + currentPred);
+                if (!prevTopPred.equals(currentTopPred)) {
+                  prevTopPred = currentTopPred;
+                  textToSpeech.speak("I see " + currentTopPred);
                 }
                 deltaTime -= 1000;
               }
@@ -250,11 +256,11 @@ public class GameController {
       postGameOutcomeLabel.setText("You lost!");
     }
 
+    ttsThread.start();
+
     // Sets the postGame pane to visible so save, play again and quit utilities are available to the
     // player
     displayPostGame();
-
-    ttsThread.start();
   }
 
   /** This method is called when the "Clear" button is pressed. */
