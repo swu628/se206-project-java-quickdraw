@@ -242,6 +242,8 @@ public class GameController {
           protected Void call() throws Exception {
             User user = App.getCurrentUser();
 
+            // Updates user total games won/lost statistic
+            // If game won, checks if it is a new fastest won and updates if true
             if (gameWon) {
               user.setGamesWon(user.getGamesWon() + 1);
               if (user.getFastestWon() > timeTaken || user.getFastestWon() == -1) {
@@ -251,6 +253,7 @@ public class GameController {
               user.setGamesLost(user.getGamesLost() + 1);
             }
 
+            // Updates the user's history of words encountered
             ArrayList<String> wordsHistory = user.getWordsHistory();
 
             wordsHistory.add(App.getCategory());

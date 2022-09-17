@@ -17,18 +17,22 @@ public class StatisticsController {
   @FXML private TextArea wordsHistory;
 
   public void onScene(User currentUser) {
+    // Sets the statistics scene to show current user's statistics
     username.setText(currentUser.getName() + "'s statistics");
     gamesWon.setText(String.valueOf(currentUser.getGamesWon()));
     gamesLost.setText(String.valueOf(currentUser.getGamesLost()));
 
+    // Fastests won game default value is -1
     if (currentUser.getFastestWon() == -1) {
       fastestTime.setText("-");
     } else {
       fastestTime.setText(currentUser.getFastestWon() + " second(s)");
     }
 
+    // Displays list of words encountered by the user
     StringBuilder sb = new StringBuilder();
     ArrayList<String> history = currentUser.getWordsHistory();
+
     for (String word : history) {
       sb.append(word).append(System.lineSeparator());
     }
