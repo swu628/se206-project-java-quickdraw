@@ -21,6 +21,7 @@ public class App extends Application {
   private static User currentUser;
 
   private static GameMenuController gameMenuController;
+  private static StatisticsController statisticsController;
 
   public static void main(final String[] args) {
     launch();
@@ -45,8 +46,11 @@ public class App extends Application {
   private static Parent loadFxml(final String fxml) throws IOException {
     FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml"));
     Parent parent = loader.load();
-    if (fxml == "gameMenu") {
+    if (fxml.equals("gameMenu")) {
       gameMenuController = loader.getController();
+    }
+    if (fxml.equals("statistics")) {
+      statisticsController = loader.getController();
     }
     return parent;
   }
@@ -87,6 +91,7 @@ public class App extends Application {
     SceneManager.addUi(SceneManager.AppScene.MAIN_MENU, loadFxml("mainMenu"));
     SceneManager.addUi(SceneManager.AppScene.REGISTER, loadFxml("register"));
     SceneManager.addUi(SceneManager.AppScene.GAME_MENU, loadFxml("gameMenu"));
+    SceneManager.addUi(SceneManager.AppScene.STATISTICS, loadFxml("statistics"));
     SceneManager.addUi(SceneManager.AppScene.GAME, loadFxml("game"));
 
     final Scene scene =
@@ -107,5 +112,9 @@ public class App extends Application {
 
   public static GameMenuController getGameMenuController() {
     return gameMenuController;
+  }
+
+  public static StatisticsController getStatisticsController() {
+    return statisticsController;
   }
 }

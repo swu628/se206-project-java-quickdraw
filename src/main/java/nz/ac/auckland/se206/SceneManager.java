@@ -9,6 +9,7 @@ public class SceneManager {
     MAIN_MENU,
     REGISTER,
     GAME_MENU,
+    STATISTICS,
     GAME
   }
 

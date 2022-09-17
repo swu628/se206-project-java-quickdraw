@@ -33,6 +33,11 @@
                   <Font size="16.0" />
                </font>
             </Button>
+            <Button fx:id="statisticsButton" mnemonicParsing="false" onAction="#onShowStatistics" text="Statistics">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
             <Button fx:id="signOutButton" mnemonicParsing="false" onAction="#onSignOut" text="Sign Out">
                <font>
                   <Font size="16.0" />
