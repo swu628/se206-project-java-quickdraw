@@ -7,6 +7,8 @@ public class SceneManager {
 
   public enum AppScene {
     MAIN_MENU,
+    REGISTER,
+    GAME_MENU,
     GAME
   }
 

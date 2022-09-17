@@ -11,7 +11,9 @@ import java.util.concurrent.FutureTask;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -341,6 +343,15 @@ public class GameController {
         ImageIO.write(getCurrentSnapshot(), fileExtension, file);
       }
     }
+  }
+
+  @FXML
+  private void onGameMenu(ActionEvent e) {
+    // Resets the game and switches scene to the main menu
+    onResetGame();
+    Button button = (Button) e.getSource();
+    Scene currentScene = button.getScene();
+    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
   }
 
   @FXML
