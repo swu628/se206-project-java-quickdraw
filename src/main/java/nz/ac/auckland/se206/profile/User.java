@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class User {
   private String username;
-
   private int gamesWon;
   private int gamesLost;
   private ArrayList<String> wordsHistory;
@@ -13,9 +12,11 @@ public class User {
 
   public User(String username) {
     this.username = username;
+    // This sets the default statistics of the user
     gamesWon = 0;
     gamesLost = 0;
     wordsHistory = new ArrayList<>();
+    // The default fastest won time is set to -1 as there is no game that has been won yet
     fastestWon = -1;
   }
 
