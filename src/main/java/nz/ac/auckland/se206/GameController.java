@@ -57,6 +57,7 @@ public class GameController {
   private Thread timerThread;
   private Thread predictThread;
   private Boolean gameWon;
+  private Boolean doPredict;
 
   // mouse coordinates
   private double currentX;
@@ -100,6 +101,7 @@ public class GameController {
   private void onStartDrawing() {
     // Sets initial conditions of game and shows game pane whilst disabling all the other panes
     gameWon = false;
+    doPredict = false;
     displayGame();
 
     // Creating timer task for tracking time player has left to draw
@@ -164,46 +166,48 @@ public class GameController {
               previousTimeMillis = currentTimeMillis;
               // If 1000 milliseconds has elapsed, it has been 1 second, so the DL model is queried
               if (deltaTime >= 1000) {
-                // Uses game thread to get current snapshot of canvas
-                // Returns to predictThread to query DL model
-                FutureTask<BufferedImage> snapshotTask =
-                    new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
-                Platform.runLater(snapshotTask);
-                java.util.List<Classifications.Classification> predictions =
-                    model.getPredictions(snapshotTask.get(), 10);
+                if (doPredict) {
+                  // Uses game thread to get current snapshot of canvas
+                  // Returns to predictThread to query DL model
+                  FutureTask<BufferedImage> snapshotTask =
+                      new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
+                  Platform.runLater(snapshotTask);
+                  java.util.List<Classifications.Classification> predictions =
+                      model.getPredictions(snapshotTask.get(), 10);
 
-                // Creates a string which lists the top 10 DL predictions and updates the
-                // predictionList string
-                StringBuilder sb = new StringBuilder();
-                int i = 1;
-                for (Classifications.Classification c : predictions) {
-                  StringBuilder stringBuilder = new StringBuilder(c.getClassName());
+                  // Creates a string which lists the top 10 DL predictions and updates the
+                  // predictionList string
+                  StringBuilder sb = new StringBuilder();
+                  int i = 1;
+                  for (Classifications.Classification c : predictions) {
+                    StringBuilder stringBuilder = new StringBuilder(c.getClassName());
 
-                  for (int j = 0; j < c.getClassName().length(); j++) {
-                    if (stringBuilder.charAt(j) == '_') {
-                      stringBuilder.setCharAt(j, ' ');
+                    for (int j = 0; j < c.getClassName().length(); j++) {
+                      if (stringBuilder.charAt(j) == '_') {
+                        stringBuilder.setCharAt(j, ' ');
+                      }
                     }
-                  }
 
-                  String currentPred = stringBuilder.toString();
+                    String currentPred = stringBuilder.toString();
 
-                  if (i == 1) {
-                    currentTopPred = currentPred;
-                    sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
-                  } else {
-                    sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
+                    if (i == 1) {
+                      currentTopPred = currentPred;
+                      sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
+                    } else {
+                      sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
+                    }
+                    if (currentPred.equals(App.getCategory()) && i <= 3) {
+                      gameWon = true;
+                    }
+                    i++;
                   }
-                  if (currentPred.equals(App.getCategory()) && i <= 3) {
-                    gameWon = true;
+                  updateMessage(sb.toString());
+                  // If there has been a change to the top 1 prediciton, the text-to-speech will say
+                  // what it sees
+                  if (!prevTopPred.equals(currentTopPred)) {
+                    prevTopPred = currentTopPred;
+                    textToSpeech.speak("I see " + currentTopPred);
                   }
-                  i++;
-                }
-                updateMessage(sb.toString());
-                // If there has been a change to the top 1 prediciton, the text-to-speech will say
-                // what it sees
-                if (!prevTopPred.equals(currentTopPred)) {
-                  prevTopPred = currentTopPred;
-                  textToSpeech.speak("I see " + currentTopPred);
                 }
                 deltaTime -= 1000;
               }
@@ -267,6 +271,7 @@ public class GameController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    doPredict = false;
   }
 
   @FXML
@@ -276,6 +281,7 @@ public class GameController {
         e -> {
           currentX = e.getX();
           currentY = e.getY();
+          doPredict = true;
         });
 
     canvas.setOnMouseDragged(
