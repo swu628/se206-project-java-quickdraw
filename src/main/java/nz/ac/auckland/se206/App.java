@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.profile.User;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -16,6 +17,11 @@ import javafx.stage.Stage;
 public class App extends Application {
 
   private static String category;
+
+  private static User currentUser;
+
+  private static GameMenuController gameMenuController;
+  private static StatisticsController statisticsController;
 
   public static void main(final String[] args) {
     launch();
@@ -38,11 +44,20 @@ public class App extends Application {
    * @throws IOException If the file is not found.
    */
   private static Parent loadFxml(final String fxml) throws IOException {
-    return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
+    FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml"));
+    Parent parent = loader.load();
+    if (fxml.equals("gameMenu")) {
+      gameMenuController = loader.getController();
+    }
+    if (fxml.equals("statistics")) {
+      statisticsController = loader.getController();
+    }
+    return parent;
   }
 
   private void loadCategories() throws IOException {
-    // Loads all the categories from category_difficulty.csv and splits them into lists of Easy,
+    // Loads all the categories from category_difficulty.csv and splits them into
+    // lists of Easy,
     // Medium and Hard
     Scanner s = new Scanner(new File("src/main/resources/category_difficulty.csv"));
 
@@ -74,6 +89,9 @@ public class App extends Application {
     // Sets initial conditions for the game
     loadCategories();
     SceneManager.addUi(SceneManager.AppScene.MAIN_MENU, loadFxml("mainMenu"));
+    SceneManager.addUi(SceneManager.AppScene.REGISTER, loadFxml("register"));
+    SceneManager.addUi(SceneManager.AppScene.GAME_MENU, loadFxml("gameMenu"));
+    SceneManager.addUi(SceneManager.AppScene.STATISTICS, loadFxml("statistics"));
     SceneManager.addUi(SceneManager.AppScene.GAME, loadFxml("game"));
 
     final Scene scene =
@@ -82,5 +100,21 @@ public class App extends Application {
     stage.setResizable(false);
     stage.setScene(scene);
     stage.show();
+  }
+
+  public static void setCurrentUser(User user) {
+    currentUser = user;
+  }
+
+  public static User getCurrentUser() {
+    return currentUser;
+  }
+
+  public static GameMenuController getGameMenuController() {
+    return gameMenuController;
+  }
+
+  public static StatisticsController getStatisticsController() {
+    return statisticsController;
   }
 }
