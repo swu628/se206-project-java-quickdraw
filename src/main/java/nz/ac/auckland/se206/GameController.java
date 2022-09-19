@@ -2,10 +2,13 @@ package nz.ac.auckland.se206;
 
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications;
+import com.google.gson.Gson;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import javafx.application.Platform;
@@ -25,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
+import nz.ac.auckland.se206.profile.User;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /**
@@ -130,14 +134,12 @@ public class GameController {
               }
             }
 
-            // Checking if game was lost to prevent double calling setPostGame in timerTask and
-            // predictTask
-            if (!gameWon) {
-              Platform.runLater(
-                  () -> {
-                    setPostGame();
-                  });
-            }
+            final int timeTaken = 60 - timeLeft;
+
+            Platform.runLater(
+                () -> {
+                  setPostGame(timeTaken);
+                });
 
             return null;
           }
@@ -204,15 +206,6 @@ public class GameController {
                 deltaTime -= 1000;
               }
             }
-
-            // Checking if game was won to prevent double calling setPostGame in timerTask and
-            // predictTask
-            if (gameWon) {
-              Platform.runLater(
-                  () -> {
-                    setPostGame();
-                  });
-            }
             return null;
           }
         };
@@ -230,7 +223,7 @@ public class GameController {
     predictThread.start();
   }
 
-  private void setPostGame() {
+  private void setPostGame(int timeTaken) {
     // Delegating text-to-speech to background thread to avoid GUI freeze
     Task<Void> ttsTask =
         new Task<Void>() {
@@ -243,8 +236,51 @@ public class GameController {
           }
         };
 
+    Task<Void> saveUserDataTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            User user = App.getCurrentUser();
+
+            // Updates user total games won/lost statistic
+            // If game won, checks if it is a new fastest won and updates if true
+            if (gameWon) {
+              user.setGamesWon(user.getGamesWon() + 1);
+              if (user.getFastestWon() > timeTaken || user.getFastestWon() == -1) {
+                user.setFastestWon(timeTaken);
+              }
+            } else {
+              user.setGamesLost(user.getGamesLost() + 1);
+            }
+
+            // Updates the user's history of words encountered
+            ArrayList<String> wordsHistory = user.getWordsHistory();
+
+            wordsHistory.add(App.getCategory());
+
+            user.setWordsHistory(wordsHistory);
+
+            try {
+              // Create json file named as the username
+              FileWriter fileWriter =
+                  new FileWriter("src/main/resources/UserProfiles/" + user.getName() + ".json");
+
+              // Write user details into the file
+              Gson gson = new Gson();
+              gson.toJson(user, fileWriter);
+              fileWriter.close();
+            } catch (IOException ignored) {
+
+            }
+
+            return null;
+          }
+        };
+
     Thread ttsThread = new Thread(ttsTask);
     ttsThread.setDaemon(true);
+
+    Thread saveThread = new Thread(saveUserDataTask);
 
     if (gameWon) {
       postGameOutcomeLabel.setText("You won!");
@@ -257,6 +293,7 @@ public class GameController {
     displayPostGame();
 
     ttsThread.start();
+    saveThread.start();
   }
 
   /** This method is called when the "Clear" button is pressed. */
