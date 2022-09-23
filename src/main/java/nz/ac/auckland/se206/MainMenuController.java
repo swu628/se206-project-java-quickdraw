@@ -32,7 +32,7 @@ public class MainMenuController {
 
       // Switches to the game scene
       sceneReset();
-      App.getGameMenuController().onScene();
+      App.getGameMenuController().updateScene();
       Button button = (Button) e.getSource();
       Scene currentScene = button.getScene();
       currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));

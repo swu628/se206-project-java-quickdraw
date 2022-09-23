@@ -82,7 +82,7 @@ public class GameController {
     model = new DoodlePrediction();
   }
 
-  public void onScene() {
+  public void updateScene() {
     // Chooses a random category for next game
     CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
     preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
@@ -280,18 +280,14 @@ public class GameController {
 
             user.setWordsHistory(wordsHistory);
 
-            try {
-              // Create json file named as the username
-              FileWriter fileWriter =
-                  new FileWriter("src/main/resources/UserProfiles/" + user.getName() + ".json");
+            // Create json file named as the username
+            FileWriter fileWriter =
+                new FileWriter("src/main/resources/UserProfiles/" + user.getName() + ".json");
 
-              // Write user details into the file
-              Gson gson = new Gson();
-              gson.toJson(user, fileWriter);
-              fileWriter.close();
-            } catch (IOException ignored) {
-
-            }
+            // Write user details into the file
+            Gson gson = new Gson();
+            gson.toJson(user, fileWriter);
+            fileWriter.close();
 
             return null;
           }
