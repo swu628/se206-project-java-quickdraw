@@ -8,52 +8,47 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 public class GameMenuController {
-	@FXML
-	private Text welcomeText;
-	@FXML
-	private Button startGameButton;
-	@FXML
-	private Button statisticsButton;
-	@FXML
-	private Button signOutButton;
-	@FXML
-	private Button quitButton;
+  @FXML private Text welcomeText;
+  @FXML private Button startGameButton;
+  @FXML private Button statisticsButton;
+  @FXML private Button signOutButton;
+  @FXML private Button quitButton;
 
-	public void onScene() {
-		welcomeText.setText("Welcome " + App.getCurrentUser().getName());
-	}
+  public void onScene() {
+    welcomeText.setText("Welcome " + App.getCurrentUser().getName());
+  }
 
-	@FXML
-	private void onStartGame(ActionEvent e) {
-		Button button = (Button) e.getSource();
-		Scene currentScene = button.getScene();
+  @FXML
+  private void onStartGame(ActionEvent e) {
+    Button button = (Button) e.getSource();
+    Scene currentScene = button.getScene();
 
-		App.getGameController().onScene(App.getCurrentUser());
+    App.getGameController().onScene();
 
-		currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
-	}
+    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
+  }
 
-	@FXML
-	private void onShowStatistics(ActionEvent e) {
-		Button button = (Button) e.getSource();
-		Scene currentScene = button.getScene();
+  @FXML
+  private void onShowStatistics(ActionEvent e) {
+    Button button = (Button) e.getSource();
+    Scene currentScene = button.getScene();
 
-		App.getStatisticsController().onScene(App.getCurrentUser());
+    App.getStatisticsController().onScene(App.getCurrentUser());
 
-		currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.STATISTICS));
-	}
+    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.STATISTICS));
+  }
 
-	@FXML
-	private void onSignOut(ActionEvent e) {
-		App.setCurrentUser(null);
-		Button button = (Button) e.getSource();
-		Scene currentScene = button.getScene();
+  @FXML
+  private void onSignOut(ActionEvent e) {
+    App.setCurrentUser(null);
+    Button button = (Button) e.getSource();
+    Scene currentScene = button.getScene();
 
-		currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));
-	}
+    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));
+  }
 
-	@FXML
-	private void onQuitGame() {
-		Platform.exit();
-	}
+  @FXML
+  private void onQuitGame() {
+    Platform.exit();
+  }
 }
