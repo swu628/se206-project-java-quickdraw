@@ -22,6 +22,9 @@ public class GameMenuController {
   private void onStartGame(ActionEvent e) {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
+
+    App.getGameController().onScene();
+
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
   }
 

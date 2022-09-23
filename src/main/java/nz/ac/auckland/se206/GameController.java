@@ -77,17 +77,20 @@ public class GameController {
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException {
-    // Chooses a random category for next game
-    App.setCategory(CategoryManager.Difficulty.EASY);
-    preGameCategoryLabel.setText("Category: " + App.getCategory());
-    categoryLabel.setText("Category: " + App.getCategory());
-    // Displays the pregame pane
-    displayPreGame();
     graphic = canvas.getGraphicsContext2D();
+    onSwitchToPen();
+    model = new DoodlePrediction();
+  }
+
+  public void onScene() {
+    // Chooses a random category for next game
+    CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
+    preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
+    categoryLabel.setText("Category: " + CategoryManager.getCategory());
 
     onSwitchToPen();
-
-    model = new DoodlePrediction();
+    // Displays the pregame pane
+    displayPreGame();
   }
 
   @FXML
@@ -95,9 +98,10 @@ public class GameController {
     // Clears the canvas
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     // Chooses a random category for next game
-    App.setCategory(CategoryManager.Difficulty.EASY);
-    preGameCategoryLabel.setText("Category: " + App.getCategory());
-    categoryLabel.setText("Category: " + App.getCategory());
+    CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
+    preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
+    categoryLabel.setText("Category: " + CategoryManager.getCategory());
+
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
     displayPreGame();
@@ -105,7 +109,8 @@ public class GameController {
 
   @FXML
   private void onStartDrawing() {
-    // Sets initial conditions of game and shows game pane whilst disabling all the other panes
+    // Sets initial conditions of game and shows game pane whilst disabling all the
+    // other panes
     gameWon = false;
     doPredict = false;
     displayGame();
@@ -121,9 +126,11 @@ public class GameController {
             long previousTimeMillis = System.currentTimeMillis();
 
             updateMessage("Time left: " + timeLeft + "s");
-            // If there are less than 0 seconds or the game has been won, the timer will stop
+            // If there are less than 0 seconds or the game has been won, the timer will
+            // stop
             while (timeLeft >= 0 && !gameWon) {
-              // Calculating how many milliseconds has elapsed since last iteration of the loop
+              // Calculating how many milliseconds has elapsed since last iteration of the
+              // loop
               // And totaling the milliseconds elapsed
               long currentTimeMillis = System.currentTimeMillis();
               deltaTime += (currentTimeMillis - previousTimeMillis);
@@ -163,12 +170,14 @@ public class GameController {
 
             // If timerThread is alive, then 60s has not passed
             while (!gameWon && timerThread.isAlive()) {
-              // Calculating how many milliseconds has elapsed since last iteration of the loop
+              // Calculating how many milliseconds has elapsed since last iteration of the
+              // loop
               // And totaling the milliseconds elapsed
               long currentTimeMillis = System.currentTimeMillis();
               deltaTime += (currentTimeMillis - previousTimeMillis);
               previousTimeMillis = currentTimeMillis;
-              // If 1000 milliseconds has elapsed, it has been 1 second, so the DL model is queried
+              // If 1000 milliseconds has elapsed, it has been 1 second, so the DL model is
+              // queried
               if (deltaTime >= 1000) {
                 if (doPredict) {
                   // Uses game thread to get current snapshot of canvas
@@ -200,13 +209,14 @@ public class GameController {
                     } else {
                       sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
                     }
-                    if (currentPred.equals(App.getCategory()) && i <= 3) {
+                    if (currentPred.equals(CategoryManager.getCategory()) && i <= 3) {
                       gameWon = true;
                     }
                     i++;
                   }
                   updateMessage(sb.toString());
-                  // If there has been a change to the top 1 prediciton, the text-to-speech will say
+                  // If there has been a change to the top 1 prediciton, the text-to-speech will
+                  // say
                   // what it sees
                   if (!prevTopPred.equals(currentTopPred)) {
                     prevTopPred = currentTopPred;
@@ -266,7 +276,7 @@ public class GameController {
             // Updates the user's history of words encountered
             ArrayList<String> wordsHistory = user.getWordsHistory();
 
-            wordsHistory.add(App.getCategory());
+            wordsHistory.add(CategoryManager.getCategory());
 
             user.setWordsHistory(wordsHistory);
 
@@ -301,7 +311,8 @@ public class GameController {
     ttsThread.start();
     saveThread.start();
 
-    // Sets the postGame pane to visible so save, play again and quit utilities are available to the
+    // Sets the postGame pane to visible so save, play again and quit utilities are
+    // available to the
     // player
     displayPostGame();
   }
@@ -376,7 +387,8 @@ public class GameController {
 
   @FXML
   private void onSaveDrawing() throws IOException {
-    // Opens a new file explorer window for user to save the image at their chosen location
+    // Opens a new file explorer window for user to save the image at their chosen
+    // location
     // Will only save if the extension is a .jpg or .png
     FileChooser fc = new FileChooser();
     fc.getExtensionFilters()
