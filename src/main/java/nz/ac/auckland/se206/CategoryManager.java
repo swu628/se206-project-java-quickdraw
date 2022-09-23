@@ -44,22 +44,25 @@ public class CategoryManager {
 
 		User user = App.getCurrentUser();
 
-		// Returns a random category based on the desired difficulty
 		switch (diff) {
 		case EASY:
 			System.out.println(user.getNotPlayedEasyWords());
 			System.out.println(user.getNotPlayedEasyWords().size());
+
 			return getRandomWord(user.getNotPlayedEasyWords());
+
 		case MEDIUM:
 			return getRandomWord(user.getNotPlayedMediumWords());
+
 		case HARD:
 			return getRandomWord(user.getNotPlayedHardWords());
+
 		}
 		return null;
 	}
 
 	public static String getRandomWord(ArrayList<String> words) {
-		return words.get(rand.nextInt(words.size() + 1));
+		return words.get(rand.nextInt(words.size()));
 	}
 
 	public static void setCategory(Difficulty diff) {
