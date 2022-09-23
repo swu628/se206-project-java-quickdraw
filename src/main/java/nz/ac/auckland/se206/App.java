@@ -16,23 +16,16 @@ import nz.ac.auckland.se206.profile.User;
  */
 public class App extends Application {
 
-  private static String category;
+  //	private static String category;
 
   private static User currentUser;
 
   private static GameMenuController gameMenuController;
   private static StatisticsController statisticsController;
+  private static GameController gameController;
 
   public static void main(final String[] args) {
     launch();
-  }
-
-  public static void setCategory(CategoryManager.Difficulty diff) {
-    category = CategoryManager.getRandomCategory(diff);
-  }
-
-  public static String getCategory() {
-    return category;
   }
 
   /**
@@ -52,7 +45,30 @@ public class App extends Application {
     if (fxml.equals("statistics")) {
       statisticsController = loader.getController();
     }
+    if (fxml.equals("game")) {
+      gameController = loader.getController();
+    }
     return parent;
+  }
+
+  public static void setCurrentUser(User user) {
+    currentUser = user;
+  }
+
+  public static User getCurrentUser() {
+    return currentUser;
+  }
+
+  public static GameMenuController getGameMenuController() {
+    return gameMenuController;
+  }
+
+  public static StatisticsController getStatisticsController() {
+    return statisticsController;
+  }
+
+  public static GameController getGameController() {
+    return gameController;
   }
 
   private void loadCategories() throws IOException {
@@ -100,21 +116,5 @@ public class App extends Application {
     stage.setResizable(false);
     stage.setScene(scene);
     stage.show();
-  }
-
-  public static void setCurrentUser(User user) {
-    currentUser = user;
-  }
-
-  public static User getCurrentUser() {
-    return currentUser;
-  }
-
-  public static GameMenuController getGameMenuController() {
-    return gameMenuController;
-  }
-
-  public static StatisticsController getStatisticsController() {
-    return statisticsController;
   }
 }

@@ -14,7 +14,7 @@ public class GameMenuController {
   @FXML private Button signOutButton;
   @FXML private Button quitButton;
 
-  public void onScene() {
+  public void updateScene() {
     welcomeText.setText("Welcome " + App.getCurrentUser().getName());
   }
 
@@ -22,6 +22,9 @@ public class GameMenuController {
   private void onStartGame(ActionEvent e) {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
+
+    App.getGameController().updateScene();
+
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
   }
 
@@ -30,7 +33,7 @@ public class GameMenuController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
-    App.getStatisticsController().onScene(App.getCurrentUser());
+    App.getStatisticsController().updateScene(App.getCurrentUser());
 
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.STATISTICS));
   }

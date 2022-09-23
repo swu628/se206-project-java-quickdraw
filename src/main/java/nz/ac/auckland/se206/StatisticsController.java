@@ -16,13 +16,13 @@ public class StatisticsController {
   @FXML private Label fastestTime;
   @FXML private TextArea wordsHistory;
 
-  public void onScene(User currentUser) {
+  public void updateScene(User currentUser) {
     // Sets the statistics scene to show current user's statistics
     username.setText(currentUser.getName() + "'s statistics");
     gamesWon.setText(String.valueOf(currentUser.getGamesWon()));
     gamesLost.setText(String.valueOf(currentUser.getGamesLost()));
 
-    // Fastests won game default value is -1
+    // Fastest won game default value is -1
     if (currentUser.getFastestWon() == -1) {
       fastestTime.setText("-");
     } else {

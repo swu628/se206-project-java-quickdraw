@@ -54,7 +54,7 @@
                             <children>
                         <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="420.0" style="-fx-border-color: black; -fx-background-color: white;" stylesheets="@../css/style.css">
                            <children>
-                                      <Canvas fx:id="canvas" height="300.0" width="420.0">
+                                      <Canvas fx:id="canvas" height="300.0" layoutX="1.0" layoutY="1.0" width="420.0">
                                           <cursor>
                                               <Cursor fx:constant="HAND" />
                                           </cursor>
