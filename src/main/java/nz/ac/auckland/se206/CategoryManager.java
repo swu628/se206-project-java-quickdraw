@@ -44,19 +44,27 @@ public class CategoryManager {
 
 		User user = App.getCurrentUser();
 
+		// Returns a random category that has not been previously returned unless all
+		// categories classified as the desired difficulty has been returned.
 		switch (diff) {
 		case EASY:
-			System.out.println(user.getNotPlayedEasyWords());
-			System.out.println(user.getNotPlayedEasyWords().size());
-
-			return getRandomWord(user.getNotPlayedEasyWords());
-
+			if (user.getNotPlayedEasyWords().isEmpty()) {
+				return getRandomWord(easy);
+			} else {
+				return getRandomWord(user.getNotPlayedEasyWords());
+			}
 		case MEDIUM:
-			return getRandomWord(user.getNotPlayedMediumWords());
-
+			if (user.getNotPlayedMediumWords().isEmpty()) {
+				return getRandomWord(medium);
+			} else {
+				return getRandomWord(user.getNotPlayedMediumWords());
+			}
 		case HARD:
-			return getRandomWord(user.getNotPlayedHardWords());
-
+			if (user.getNotPlayedHardWords().isEmpty()) {
+				return getRandomWord(hard);
+			} else {
+				return getRandomWord(user.getNotPlayedHardWords());
+			}
 		}
 		return null;
 	}

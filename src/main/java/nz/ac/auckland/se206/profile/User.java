@@ -68,7 +68,6 @@ public class User {
 	}
 
 	public ArrayList<String> getNotPlayedEasyWords() {
-
 		if (wordsHistory.size() != 0) {
 			// Remove the already played easy words from the easy category
 			for (int i = 0; i < wordsHistory.size(); i++) {
@@ -83,11 +82,11 @@ public class User {
 	}
 
 	public ArrayList<String> getNotPlayedMediumWords() {
-		if (getWordsHistory().size() != 0) {
+		if (wordsHistory.size() != 0) {
 			// Remove the already played medium words from the medium category
-			for (int i = 0; i < getWordsHistory().size(); i++) {
+			for (int i = 0; i < wordsHistory.size(); i++) {
 				for (int j = 0; j < notPlayedMediumWords.size(); j++) {
-					if (this.wordsHistory.get(i).equals(notPlayedMediumWords.get(j))) {
+					if (wordsHistory.get(i).equals(notPlayedMediumWords.get(j))) {
 						notPlayedMediumWords.remove(j);
 					}
 				}
@@ -97,11 +96,11 @@ public class User {
 	}
 
 	public ArrayList<String> getNotPlayedHardWords() {
-		if (getWordsHistory().size() != 0) {
+		if (wordsHistory.size() != 0) {
 			// Remove the already played hard words from the hard category
-			for (int i = 0; i < getWordsHistory().size(); i++) {
+			for (int i = 0; i < wordsHistory.size(); i++) {
 				for (int j = 0; j < notPlayedHardWords.size(); j++) {
-					if (this.wordsHistory.get(i).equals(notPlayedHardWords.get(j))) {
+					if (wordsHistory.get(i).equals(notPlayedHardWords.get(j))) {
 						notPlayedHardWords.remove(j);
 					}
 				}
