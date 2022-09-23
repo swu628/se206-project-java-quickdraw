@@ -87,6 +87,8 @@ public class GameController {
     CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
     preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
     categoryLabel.setText("Category: " + CategoryManager.getCategory());
+
+    onSwitchToPen();
     // Displays the pregame pane
     displayPreGame();
   }
