@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class GameMenuController {
@@ -13,6 +14,10 @@ public class GameMenuController {
   @FXML private Button statisticsButton;
   @FXML private Button signOutButton;
   @FXML private Button quitButton;
+
+  public void initialize() {
+    Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
+  }
 
   public void updateScene() {
     welcomeText.setText("Welcome " + App.getCurrentUser().getName());

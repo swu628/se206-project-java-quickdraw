@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import nz.ac.auckland.se206.profile.User;
 
@@ -20,6 +21,10 @@ public class RegisterController {
   @FXML private Button backButton;
 
   @FXML private TextField newUsernameField;
+
+  public void initialize() {
+    Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
+  }
 
   @FXML
   private void onSignUp() throws IOException {
