@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.profile.User;
 
@@ -109,6 +110,9 @@ public class App extends Application {
     SceneManager.addUi(SceneManager.AppScene.GAME_MENU, loadFxml("gameMenu"));
     SceneManager.addUi(SceneManager.AppScene.STATISTICS, loadFxml("statistics"));
     SceneManager.addUi(SceneManager.AppScene.GAME, loadFxml("game"));
+
+    // Sets application icon
+    stage.getIcons().add(new Image("/images/icon.png"));
 
     final Scene scene =
         new Scene(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU), 640, 480);
