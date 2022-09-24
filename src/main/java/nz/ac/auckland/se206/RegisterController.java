@@ -55,6 +55,7 @@ public class RegisterController {
 
         newUsernameField.setDisable(true);
         signUpButton.setDisable(true);
+        text.setStyle("-fx-fill: green;");
         text.setText("Account Created");
       }
     }
@@ -62,7 +63,8 @@ public class RegisterController {
 
   private void sceneReset() {
     // Sets the scene to the initial state
-    text.setText("Enter your username");
+    text.setText("");
+    text.setStyle("-fx-fill: red;");
     newUsernameField.setDisable(false);
     newUsernameField.setText("");
     signUpButton.setDisable(false);
