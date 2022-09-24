@@ -32,20 +32,16 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <HBox layoutX="224.0" layoutY="53.0" maxWidth="550.0" prefHeight="34.0" prefWidth="375.0">
-                            <children>
-                                <Label fx:id="categoryLabel" prefHeight="23.0" prefWidth="187.5" styleClass="subHeading" text="Category" textAlignment="CENTER">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="timerLabel" alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="187.5" styleClass="subHeading" text="Time Left:" textAlignment="CENTER">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </HBox>
+                          <Label fx:id="categoryLabel" alignment="CENTER_RIGHT" layoutX="226.0" layoutY="53.0" prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Category" textAlignment="CENTER">
+                              <font>
+                                  <Font size="18.0" />
+                              </font>
+                          </Label>
+                          <Label fx:id="timerLabel" alignment="CENTER_RIGHT" layoutX="226.0" layoutY="89.0" prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Time Left:" textAlignment="CENTER">
+                              <font>
+                                  <Font size="16.0" />
+                              </font>
+                          </Label>
                         <TextArea fx:id="predictionsList" editable="false" layoutX="36.0" layoutY="88.0" prefHeight="381.0" prefWidth="176.0" text="Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction" />
                     </children>
                 </AnchorPane>
