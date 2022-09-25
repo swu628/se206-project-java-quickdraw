@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -56,8 +57,9 @@
                                 </Canvas>
                             </children>
                         </Pane>
-                        <HBox alignment="CENTER_RIGHT" layoutX="200.0" layoutY="330.0" spacing="15.0">
+                        <HBox alignment="CENTER_RIGHT" layoutX="46.0" layoutY="330.0" prefHeight="45.0" prefWidth="375.0" spacing="15.0">
                             <children>
+                        <ImageView fx:id="toolImage" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                                 <Button fx:id="penButton" mnemonicParsing="false" onAction="#onSwitchToPen" text="Pen">
                                     <font>
                                         <Font size="16.0" />

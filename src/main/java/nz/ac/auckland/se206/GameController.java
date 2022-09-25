@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -51,6 +52,7 @@ public class GameController {
   @FXML private Button clearButton;
   @FXML private Button penButton;
   @FXML private Button eraserButton;
+  @FXML private ImageView toolImage;
   @FXML private Label categoryLabel;
   @FXML private Label preGameCategoryLabel;
   @FXML private AnchorPane preGamePane;
@@ -326,6 +328,8 @@ public class GameController {
 
   @FXML
   private void onSwitchToPen() {
+    // Change tool image
+    toolImage.setImage(new Image("/images/pen.png"));
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
@@ -357,6 +361,8 @@ public class GameController {
 
   @FXML
   private void onSwitchToEraser() {
+    // Change tool image
+    toolImage.setImage(new Image("/images/eraser.png"));
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
