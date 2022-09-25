@@ -366,7 +366,10 @@ public class GameController {
   private void onSwitchToEraser() {
     // Change tool and cursor image
     toolImage.setImage(new Image("/images/eraser.png"));
-    canvas.setCursor(new ImageCursor(new Image("/images/eraserCursor.png")));
+    Image eraserImage = new Image("/images/eraserCursor.png");
+    canvas.setCursor(
+        new ImageCursor(
+            eraserImage, eraserImage.getHeight() * 0.125, eraserImage.getWidth() * 0.125));
 
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
