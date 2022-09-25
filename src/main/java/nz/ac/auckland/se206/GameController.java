@@ -16,6 +16,7 @@ import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -328,8 +329,10 @@ public class GameController {
 
   @FXML
   private void onSwitchToPen() {
-    // Change tool image
+    // Change tool and cursor image
     toolImage.setImage(new Image("/images/pen.png"));
+    canvas.setCursor(new ImageCursor(new Image("/images/penCursor.png")));
+
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
@@ -361,8 +364,10 @@ public class GameController {
 
   @FXML
   private void onSwitchToEraser() {
-    // Change tool image
+    // Change tool and cursor image
     toolImage.setImage(new Image("/images/eraser.png"));
+    canvas.setCursor(new ImageCursor(new Image("/images/eraserCursor.png")));
+
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
