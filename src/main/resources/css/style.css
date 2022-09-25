@@ -46,12 +46,12 @@ Text {
 
 .gameBody TextArea {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 20px;
+    -fx-font-size: 19px;
     -fx-background-color: transparent;
 }
 
 .gameBody TextArea .text {
-    -fx-line-spacing: 0.09em;
+    -fx-line-spacing: 0.12em;
 }
 
 .gameBody TextArea .scroll-pane {
