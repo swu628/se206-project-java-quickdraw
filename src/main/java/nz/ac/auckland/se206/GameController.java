@@ -63,6 +63,7 @@ public class GameController {
   private DoodlePrediction model;
   private Thread timerThread;
   private Thread predictThread;
+  private int timeLeft;
   private Boolean gameWon;
   private Boolean doPredict;
 
@@ -115,6 +116,8 @@ public class GameController {
     // other panes
     gameWon = false;
     doPredict = false;
+    timeLeft = MAX_TIME;
+    onSwitchToPen();
     displayGame();
 
     // Creating timer task for tracking time player has left to draw
@@ -123,7 +126,6 @@ public class GameController {
           @Override
           protected Void call() throws Exception {
             // Setting initial conditions for timer
-            int timeLeft = MAX_TIME;
             double deltaTime = 0;
             long previousTimeMillis = System.currentTimeMillis();
 
@@ -140,7 +142,9 @@ public class GameController {
               // If 1000 milliseconds has elapsed, it has been 1 second, so timer is updated
               if (deltaTime >= 1000) {
                 timeLeft--;
-                updateMessage("Time left: " + timeLeft + "s");
+                if (timeLeft >= 0) {
+                  updateMessage("Time left: " + timeLeft + "s");
+                }
                 deltaTime -= 1000;
               }
             }
@@ -172,8 +176,7 @@ public class GameController {
             String prevTopPred = "";
             String currentTopPred = "";
 
-            // If timerThread is alive, then 60s has not passed
-            while (!gameWon && timerThread.isAlive()) {
+            while (timeLeft >= 0 && !gameWon) {
               // Calculating how many milliseconds has elapsed since last iteration of the
               // loop
               // And totaling the milliseconds elapsed
