@@ -16,9 +16,6 @@ import nz.ac.auckland.se206.profile.User;
  * remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
-
-  //	private static String category;
-
   private static User currentUser;
 
   private static GameMenuController gameMenuController;
