@@ -5,9 +5,8 @@ import java.util.Random;
 import nz.ac.auckland.se206.CategoryManager;
 
 public class User {
+  private final int[] COLOUR;
   private String username;
-  private final int[] colour;
-
   private int gamesWon;
   private int gamesLost;
   private ArrayList<String> wordsHistory;
@@ -29,7 +28,7 @@ public class User {
     fastestWon = -1;
     Random rand = new Random(System.currentTimeMillis());
     // Sets a random colour to be used for user icon
-    colour = new int[] {rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)};
+    COLOUR = new int[] {rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)};
   }
 
   public String getName() {
@@ -118,11 +117,11 @@ public class User {
     // Returns the string "rgb(r,g,b)"
     StringBuilder sb = new StringBuilder();
     sb.append("rgb(")
-        .append(colour[0])
+        .append(COLOUR[0])
         .append(",")
-        .append(colour[1])
+        .append(COLOUR[1])
         .append(",")
-        .append(colour[2])
+        .append(COLOUR[2])
         .append(")");
     return sb.toString();
   }
