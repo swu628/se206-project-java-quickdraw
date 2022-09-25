@@ -147,6 +147,8 @@ public class GameController {
 
             final int timeTaken = 60 - timeLeft;
 
+            while (predictThread.isAlive()) {}
+
             Platform.runLater(
                 () -> {
                   setPostGame(timeTaken);
