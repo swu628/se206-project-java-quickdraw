@@ -12,6 +12,11 @@ Text {
     -fx-font-size: 30px;
 }
 
+.profileSelectButton:hover .profileSelectArrow {
+    -fx-fill: grey;
+    -fx-cursor: hand;
+}
+
 .resultText {
     -fx-font-size: 25px;
     -fx-fill: red;
