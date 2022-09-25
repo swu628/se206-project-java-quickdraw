@@ -16,6 +16,7 @@ import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -23,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -51,6 +53,7 @@ public class GameController {
   @FXML private Button clearButton;
   @FXML private Button penButton;
   @FXML private Button eraserButton;
+  @FXML private ImageView toolImage;
   @FXML private Label categoryLabel;
   @FXML private Label preGameCategoryLabel;
   @FXML private AnchorPane preGamePane;
@@ -328,6 +331,10 @@ public class GameController {
 
   @FXML
   private void onSwitchToPen() {
+    // Change tool and cursor image
+    toolImage.setImage(new Image("/images/pen.png"));
+    canvas.setCursor(new ImageCursor(new Image("/images/penCursor.png")));
+
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
@@ -359,6 +366,13 @@ public class GameController {
 
   @FXML
   private void onSwitchToEraser() {
+    // Change tool and cursor image
+    toolImage.setImage(new Image("/images/eraser.png"));
+    Image eraserImage = new Image("/images/eraserCursor.png");
+    canvas.setCursor(
+        new ImageCursor(
+            eraserImage, eraserImage.getHeight() * 0.125, eraserImage.getWidth() * 0.125));
+
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
