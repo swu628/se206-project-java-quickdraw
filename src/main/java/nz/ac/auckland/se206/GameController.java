@@ -62,11 +62,10 @@ public class GameController {
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
-  private Thread predictThread;
-  private int timeLeft;
-  private Boolean gameWon;
-  private Boolean doPredict;
-
+  private volatile Thread predictThread;
+  private volatile int timeLeft;
+  private volatile Boolean gameWon;
+  private volatile Boolean doPredict;
   // mouse coordinates
   private double currentX;
   private double currentY;
