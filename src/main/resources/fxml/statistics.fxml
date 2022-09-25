@@ -14,83 +14,86 @@
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <children>
-      <VBox alignment="CENTER" layoutX="120.0" layoutY="70.0" prefWidth="400.0" spacing="5.0" AnchorPane.bottomAnchor="50.0" AnchorPane.topAnchor="50.0">
+      <VBox alignment="CENTER" layoutY="35.0" prefWidth="640.0">
          <children>
-            <Label fx:id="username" alignment="CENTER" prefHeight="23.0" prefWidth="355.0" text="User's statistics" textAlignment="CENTER">
+            <Label fx:id="username" alignment="CENTER" prefHeight="23.0" prefWidth="640.0" styleClass="title" text="User's statistics" textAlignment="CENTER">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <HBox prefHeight="400.0">
+         </children>
+      </VBox>
+      <AnchorPane layoutX="1.0" layoutY="100.0" prefHeight="300.0" prefWidth="640.0" styleClass="statisticsPane">
+         <children>
+            <AnchorPane layoutX="54.0" layoutY="-2.0" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0" spacing="5.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="-2.0" layoutY="-2.0" prefHeight="100.0" prefWidth="280.0">
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Label text="Games Won: ">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="gamesWon" alignment="CENTER_RIGHT" text="Num">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Label text="Games Lost: ">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="gamesLost" alignment="CENTER_RIGHT" text="Num">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Label text="Fastest Time: ">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="fastestTime" alignment="CENTER_RIGHT" text="Num">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="300.0" spacing="5.0">
-                     <children>
-                        <Label alignment="TOP_RIGHT" prefWidth="150.0" text="Words History">
+                        <Label text="Games Won: ">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="wordsHistory" editable="false" nodeOrientation="RIGHT_TO_LEFT" text="Words" wrapText="true">
+                        <Label fx:id="gamesWon" alignment="CENTER_RIGHT" text="Num">
                            <font>
                               <Font size="16.0" />
                            </font>
-                        </TextArea>
+                        </Label>
                      </children>
-                  </VBox>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="-3.0" layoutY="108.0" prefHeight="100.0" prefWidth="280.0">
+                     <children>
+                        <Label text="Games Lost: ">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="gamesLost" alignment="CENTER_RIGHT" text="Num">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="-3.0" layoutY="218.0" prefHeight="100.0" prefWidth="310.0">
+                     <children>
+                        <Label text="Fastest Time: ">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="fastestTime" alignment="CENTER_RIGHT" text="155 Second(s)">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <Button mnemonicParsing="false" onAction="#onGameMenu" text="Back">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
+            </AnchorPane>
+            <AnchorPane layoutX="341.0" layoutY="-4.0" prefHeight="200.0" prefWidth="250.0" styleClass="wordsHistory">
+               <children>
+                  <TextArea fx:id="wordsHistory" editable="false" layoutX="-3.0" layoutY="65.0" maxWidth="300.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="220.0" prefWidth="274.0" text="Words">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TextArea>
+                  <Label alignment="TOP_RIGHT" layoutX="107.0" layoutY="30.0" prefWidth="150.0" text="Words History">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
          </children>
-      </VBox>
+      </AnchorPane>
+      <Button layoutX="289.0" layoutY="412.0" mnemonicParsing="false" onAction="#onGameMenu" text="Back">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

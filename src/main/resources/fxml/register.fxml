@@ -10,34 +10,38 @@
 
 <AnchorPane prefHeight="480.0" prefWidth="640.0" styleClass="background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.RegisterController">
    <children>
-      <Label alignment="CENTER" layoutX="153.0" layoutY="81.0" prefHeight="23.0" prefWidth="355.0" text="Create an Account" textAlignment="CENTER">
+      <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="143.0" layoutY="71.0" prefHeight="23.0" prefWidth="355.0" styleClass="title" text="Create an Account" textAlignment="CENTER">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <VBox alignment="CENTER" layoutX="181.0" layoutY="150.0" prefHeight="200.0" prefWidth="300.0" spacing="5.0">
+      <AnchorPane layoutY="161.0">
          <children>
-            <Text fx:id="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your username">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <TextField fx:id="newUsernameField" prefHeight="30.0" promptText="Username">
+            <VBox alignment="CENTER" fillWidth="false" layoutY="6.0" prefWidth="640.0">
+               <children>
+                  <Text fx:id="text" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="resultText" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+            <TextField fx:id="newUsernameField" alignment="CENTER" layoutX="193.0" layoutY="31.0" promptText="Username">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#onSignUp" prefHeight="35.0" prefWidth="80.0" text="Sign up">
+            <Button fx:id="signUpButton" alignment="CENTER" contentDisplay="CENTER" layoutX="275.0" layoutY="104.0" mnemonicParsing="false" onAction="#onSignUp" text="Sign up" textAlignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBack" prefHeight="35.0" prefWidth="80.0" text="Go Back">
+            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" layoutX="289.0" layoutY="141.0" mnemonicParsing="false" onAction="#onBack" text="Back" textAlignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
          </children>
-      </VBox>
+      </AnchorPane>
    </children>
 </AnchorPane>

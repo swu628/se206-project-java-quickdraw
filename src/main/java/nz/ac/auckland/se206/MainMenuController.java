@@ -10,14 +10,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import nz.ac.auckland.se206.profile.User;
 
 public class MainMenuController {
+  @FXML private Label title;
   @FXML private Text infoText;
-
   @FXML private TextField usernameField;
+
+  public void initialize() {
+    Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
+  }
 
   @FXML
   private void onSignIn(ActionEvent e) throws IOException {
@@ -44,7 +50,7 @@ public class MainMenuController {
 
   private void sceneReset() {
     // Sets the scene to the initial state
-    infoText.setText("Sign in to your account");
+    infoText.setText("");
     usernameField.setText("");
   }
 

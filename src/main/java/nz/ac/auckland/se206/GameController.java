@@ -21,10 +21,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
@@ -53,11 +54,11 @@ public class GameController {
   @FXML private Label categoryLabel;
   @FXML private Label preGameCategoryLabel;
   @FXML private AnchorPane preGamePane;
-  @FXML private VBox postGame;
+  @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
-  @FXML private VBox game;
+  @FXML private AnchorPane game;
   @FXML private Label timerLabel;
-  @FXML private Label predictionsList;
+  @FXML private TextArea predictionsList;
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
@@ -77,6 +78,7 @@ public class GameController {
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException {
+    Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
     graphic = canvas.getGraphicsContext2D();
     onSwitchToPen();
     model = new DoodlePrediction();
@@ -369,7 +371,7 @@ public class GameController {
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
-          graphic.setStroke(Color.WHITE);
+          graphic.setStroke(Color.rgb(243, 243, 243));
           graphic.setLineWidth(size);
 
           // Create a line that goes from the point (currentX, currentY) and (x,y)

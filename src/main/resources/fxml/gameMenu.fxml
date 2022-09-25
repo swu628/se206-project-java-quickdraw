@@ -13,41 +13,46 @@
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <children>
-      <Label alignment="CENTER" layoutX="153.0" layoutY="81.0" prefHeight="23.0" prefWidth="355.0" text="Quick, Draw! SE206 Edition" textAlignment="CENTER" AnchorPane.topAnchor="50.0">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <VBox alignment="CENTER" layoutX="181.0" layoutY="150.0" prefHeight="200.0" prefWidth="300.0" spacing="5.0">
+      <VBox alignment="TOP_CENTER" fillWidth="false" layoutY="71.0" prefHeight="410.0" prefWidth="640.0" spacing="40.0">
          <children>
-            <Text fx:id="welcomeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome">
+            <Label fx:id="title" alignment="CENTER" styleClass="title" text="Quick, Draw! SE206 Edition" textAlignment="CENTER">
                <font>
-                  <Font size="20.0" />
+                  <Font size="35.0" />
                </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Text>
-            <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#onStartGame" text="Start Game">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="statisticsButton" mnemonicParsing="false" onAction="#onShowStatistics" text="Statistics">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="signOutButton" mnemonicParsing="false" onAction="#onSignOut" text="Sign Out">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#onQuitGame" text="Quit game">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
+            </Label>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" layoutY="-15.0" prefWidth="255.0" spacing="5.0">
+                     <children>
+                        <Text fx:id="welcomeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+                  <Button fx:id="startGameButton" layoutX="50.0" layoutY="51.0" mnemonicParsing="false" onAction="#onStartGame" text="Start Game">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="statisticsButton" layoutX="64.0" layoutY="88.0" mnemonicParsing="false" onAction="#onShowStatistics" text="Statistics">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="signOutButton" layoutX="71.0" layoutY="124.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign Out">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="quitButton" layoutX="65.0" layoutY="161.0" mnemonicParsing="false" onAction="#onQuitGame" text="Quit game">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
    </children>

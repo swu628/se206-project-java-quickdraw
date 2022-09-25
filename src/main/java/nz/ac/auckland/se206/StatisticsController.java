@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
 import nz.ac.auckland.se206.profile.User;
 
 public class StatisticsController {
@@ -15,6 +16,10 @@ public class StatisticsController {
   @FXML private Label gamesLost;
   @FXML private Label fastestTime;
   @FXML private TextArea wordsHistory;
+
+  public void initialize() {
+    Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
+  }
 
   public void updateScene(User currentUser) {
     // Sets the statistics scene to show current user's statistics

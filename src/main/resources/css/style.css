@@ -1,4 +1,131 @@
-.background{
-	-fx-background-image: url("/images/background_image.png");
-	-fx-background-size: 100% 100%;
+@font-face {
+    src: local('Indie Flower');
+}
+
+.title {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 40px;
+}
+
+Text {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 30px;
+}
+
+.resultText {
+    -fx-font-size: 25px;
+    -fx-fill: red;
+}
+
+.statisticsPane Label {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 22px;
+}
+
+.preGameBody Label {
+    -fx-font-family: "Indie Flower";
+}
+
+.preGameBody #category {
+    -fx-font-size: 30px;
+}
+
+.preGameBody #prompt {
+    -fx-font-size: 25px;
+}
+
+.gameBody Label {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 20px;
+}
+
+.gameBody .subHeading {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 25px;
+}
+
+.gameBody TextArea {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 20px;
+    -fx-background-color: transparent;
+}
+
+.gameBody TextArea .text {
+    -fx-line-spacing: 0.09em;
+}
+
+.gameBody TextArea .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-vbar-policy: never;
+    -fx-hbar-policy: never;
+}
+
+.gameBody TextArea .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+
+.gameBody TextArea .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+.postGameBody Label {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 30px;
+}
+
+.wordsHistory Label {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 25px;
+    -fx-background-color: transparent;
+}
+
+.wordsHistory TextArea {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 20px;
+    -fx-background-color: transparent;
+}
+
+.wordsHistory TextArea .text {
+    -fx-line-spacing: 0.09em;
+}
+
+.wordsHistory TextArea .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-vbar-policy: never;
+    -fx-hbar-policy: never;
+}
+
+.wordsHistory TextArea .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+
+.wordsHistory TextArea .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+Button {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 30px;
+    -fx-background-color: none;
+    -fx-padding: 0;
+}
+
+TextField {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 30px;
+    -fx-padding: 0;
+    -fx-background-color: none;
+    -fx-border-width: 0;
+}
+
+Button:hover {
+    -fx-text-fill: grey;
+    -fx-cursor: hand;
+}
+
+.background {
+    -fx-background-image: url("../images/background_image.png");
+    -fx-background-size: 100% 100%;
 }
