@@ -42,7 +42,7 @@
                                   <Font size="16.0" />
                               </font>
                           </Label>
-                        <TextArea fx:id="predictionsList" editable="false" layoutX="36.0" layoutY="88.0" prefHeight="381.0" prefWidth="225.0" text="Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction" />
+                        <TextArea fx:id="predictionsList" editable="false" layoutX="36.0" layoutY="89.0" prefHeight="381.0" prefWidth="225.0" text="Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;10. The Great Wall of China&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction" />
                     </children>
                 </AnchorPane>
                 <AnchorPane layoutX="180.0" layoutY="82.0" prefHeight="380.0" prefWidth="433.0">
