@@ -40,18 +40,22 @@ public class App extends Application {
   private static Parent loadFxml(final String fxml) throws IOException {
     FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml"));
     Parent parent = loader.load();
-    if (fxml.equals("mainMenu")) {
-      mainMenuController = loader.getController();
+
+    switch (fxml) {
+      case "mainMenu":
+        mainMenuController = loader.getController();
+        break;
+      case "gameMenu":
+        gameMenuController = loader.getController();
+        break;
+      case "statistics":
+        statisticsController = loader.getController();
+        break;
+      case "game":
+        gameController = loader.getController();
+        break;
     }
-    if (fxml.equals("gameMenu")) {
-      gameMenuController = loader.getController();
-    }
-    if (fxml.equals("statistics")) {
-      statisticsController = loader.getController();
-    }
-    if (fxml.equals("game")) {
-      gameController = loader.getController();
-    }
+
     return parent;
   }
 
