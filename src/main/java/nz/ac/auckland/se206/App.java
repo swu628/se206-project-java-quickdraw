@@ -17,7 +17,7 @@ import nz.ac.auckland.se206.profile.User;
  */
 public class App extends Application {
   private static User currentUser;
-
+  private static MainMenuController mainMenuController;
   private static GameMenuController gameMenuController;
   private static StatisticsController statisticsController;
   private static GameController gameController;
@@ -37,15 +37,22 @@ public class App extends Application {
   private static Parent loadFxml(final String fxml) throws IOException {
     FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml"));
     Parent parent = loader.load();
-    if (fxml.equals("gameMenu")) {
-      gameMenuController = loader.getController();
+
+    switch (fxml) {
+      case "mainMenu":
+        mainMenuController = loader.getController();
+        break;
+      case "gameMenu":
+        gameMenuController = loader.getController();
+        break;
+      case "statistics":
+        statisticsController = loader.getController();
+        break;
+      case "game":
+        gameController = loader.getController();
+        break;
     }
-    if (fxml.equals("statistics")) {
-      statisticsController = loader.getController();
-    }
-    if (fxml.equals("game")) {
-      gameController = loader.getController();
-    }
+
     return parent;
   }
 
@@ -67,6 +74,10 @@ public class App extends Application {
 
   public static GameController getGameController() {
     return gameController;
+  }
+
+  public static MainMenuController getMainMenuController() {
+    return mainMenuController;
   }
 
   private void loadCategories() throws IOException {

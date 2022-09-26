@@ -80,6 +80,8 @@ public class RegisterController {
   private void onBack(ActionEvent e) {
     // Resets the scene and replaces root scene with main menu scene
     sceneReset();
+    // Sets up main menu scene
+    App.getMainMenuController().setUpUsers();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));
