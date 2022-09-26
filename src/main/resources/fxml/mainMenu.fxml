@@ -7,6 +7,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" styleClass="background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.MainMenuController">
    <children>
       <Label fx:id="title" alignment="CENTER" layoutX="100.0" layoutY="71.0" styleClass="title" text="Quick, Draw! SE206 Edition" textAlignment="CENTER">
@@ -19,18 +20,6 @@
             <Text fx:id="username" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
          </children>
       </VBox>
-      <Button fx:id="profileSelectLeft" layoutX="232.0" layoutY="189.0" mnemonicParsing="false" onMouseClicked="#onToPreviousUser" prefHeight="44.0" prefWidth="18.0" styleClass="profileSelectButton">
-         <graphic>
-             <!--     Path aquired from: https://icons.getbootstrap.com/icons/caret-left-fill/       -->
-            <SVGPath content="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" scaleX="2.0" scaleY="2.0" styleClass="profileSelectArrow" />
-         </graphic>
-      </Button>
-      <Button fx:id="profileSelectRight" layoutX="392.0" layoutY="189.0" mnemonicParsing="false" onMouseClicked="#onToNextUser" prefHeight="44.0" prefWidth="18.0" styleClass="profileSelectButton">
-         <graphic>
-             <!--     Path aquired from: https://icons.getbootstrap.com/icons/caret-right-fill/       -->
-            <SVGPath content="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" scaleX="2.0" scaleY="2.0" styleClass="profileSelectArrow" />
-         </graphic>
-      </Button>
       <AnchorPane layoutX="247.0" layoutY="135.0" prefHeight="150.0" prefWidth="150.0">
          <children>
              <!--     Path aquired from: https://www.iconfinder.com/icons/206740/hand-drawn_happy_smiley_icon       -->
@@ -56,5 +45,17 @@
             </Button>
          </children>
       </AnchorPane>
+      <Button fx:id="profileSelectLeft" layoutX="227.0" layoutY="185.0" mnemonicParsing="false" onMouseClicked="#onToPreviousUser" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0" styleClass="profileSelectButton">
+         <graphic>
+             <!--     Path aquired from: https://icons.getbootstrap.com/icons/caret-left-fill/       -->
+            <SVGPath content="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow" />
+         </graphic>
+      </Button>
+      <Button fx:id="profileSelectRight" layoutX="389.0" layoutY="185.0" mnemonicParsing="false" onMouseClicked="#onToNextUser" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0" styleClass="profileSelectButton">
+         <graphic>
+             <!--     Path aquired from: https://icons.getbootstrap.com/icons/caret-right-fill/       -->
+            <SVGPath content="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow" />
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
