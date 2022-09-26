@@ -153,7 +153,9 @@ public class GameController {
 
             final int timeTaken = 60 - timeLeft;
 
-            while (predictThread.isAlive()) {}
+            while (predictThread.isAlive()) {
+              // Waiting for predict thread to die before going to post game scene.
+            }
 
             Platform.runLater(
                 () -> {

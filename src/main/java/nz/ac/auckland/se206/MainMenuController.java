@@ -62,7 +62,8 @@ public class MainMenuController {
           userList.add(user);
         }
       } catch (FileNotFoundException ignored) {
-
+        // Ignoring the exception as the file names were found by browsing the folder, so they must
+        // exist
       }
       // Sets default user as first profile in folder
       username.setText(userList.get(currentUser).getName());
