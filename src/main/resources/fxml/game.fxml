@@ -59,7 +59,7 @@
                         </Pane>
                         <HBox alignment="CENTER_RIGHT" layoutX="46.0" layoutY="459.0" prefHeight="45.0" prefWidth="375.0" spacing="15.0">
                             <children>
-                        <ImageView fx:id="toolImage" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="toolImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                                 <Button fx:id="penButton" mnemonicParsing="false" onAction="#onSwitchToPen" text="Pen">
                                     <font>
                                         <Font size="16.0" />
