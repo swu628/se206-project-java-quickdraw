@@ -123,7 +123,7 @@ public class App extends Application {
     stage.getIcons().add(new Image("/images/icon.png"));
 
     final Scene scene =
-        new Scene(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU), 640, 480);
+        new Scene(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU), 960, 720);
 
     stage.setResizable(false);
     stage.setScene(scene);

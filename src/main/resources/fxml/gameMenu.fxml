@@ -8,21 +8,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" styleClass="background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameMenuController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <children>
-      <VBox alignment="TOP_CENTER" fillWidth="false" layoutY="71.0" prefHeight="410.0" prefWidth="640.0" spacing="40.0">
+      <VBox alignment="TOP_CENTER" fillWidth="false" layoutY="107.0" prefHeight="410.0" prefWidth="960.0" spacing="40.0">
          <children>
             <Label fx:id="title" alignment="CENTER" styleClass="title" text="Quick, Draw! SE206 Edition" textAlignment="CENTER">
                <font>
                   <Font size="35.0" />
                </font>
             </Label>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane prefHeight="236.0" prefWidth="960.0">
                <children>
-                  <VBox alignment="CENTER" layoutY="-15.0" prefWidth="255.0" spacing="5.0">
+                  <VBox alignment="CENTER" layoutY="-4.0" prefWidth="960.0" spacing="5.0">
                      <children>
                         <Text fx:id="welcomeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome">
                            <font>
@@ -31,22 +31,22 @@
                         </Text>
                      </children>
                   </VBox>
-                  <Button fx:id="startGameButton" layoutX="50.0" layoutY="51.0" mnemonicParsing="false" onAction="#onStartGame" text="Start Game">
+                  <Button fx:id="startGameButton" layoutX="371.0" layoutY="96.0" mnemonicParsing="false" onAction="#onStartGame" text="Start Game">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="statisticsButton" layoutX="64.0" layoutY="88.0" mnemonicParsing="false" onAction="#onShowStatistics" text="Statistics">
+                  <Button fx:id="statisticsButton" layoutX="385.0" layoutY="152.0" mnemonicParsing="false" onAction="#onShowStatistics" text="Statistics">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="signOutButton" layoutX="71.0" layoutY="124.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign Out">
+                  <Button fx:id="signOutButton" layoutX="392.0" layoutY="206.0" mnemonicParsing="false" onAction="#onSignOut" text="Sign Out">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="quitButton" layoutX="65.0" layoutY="161.0" mnemonicParsing="false" onAction="#onQuitGame" text="Quit game">
+                  <Button fx:id="quitButton" layoutX="386.0" layoutY="261.0" mnemonicParsing="false" onAction="#onQuitGame" text="Quit game">
                      <font>
                         <Font size="16.0" />
                      </font>
