@@ -348,7 +348,7 @@ public class GameController {
     canvas.setOnMouseDragged(
         e -> {
           // Brush size
-          final double size = 5.0;
+          final double size = 7.0;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
@@ -385,7 +385,7 @@ public class GameController {
     canvas.setOnMouseDragged(
         e -> {
           // Brush size
-          final double size = 8;
+          final double size = 12;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;

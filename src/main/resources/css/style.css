@@ -4,12 +4,12 @@
 
 .title {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 40px;
+    -fx-font-size: 60px;
 }
 
 Text {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 30px;
+    -fx-font-size: 45px;
 }
 
 .profileSelectButton:hover .profileSelectArrow {
@@ -18,13 +18,13 @@ Text {
 }
 
 .resultText {
-    -fx-font-size: 25px;
+    -fx-font-size: 38px;
     -fx-fill: red;
 }
 
 .statisticsPane Label {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 22px;
+    -fx-font-size: 33px;
 }
 
 .preGameBody Label {
@@ -32,31 +32,31 @@ Text {
 }
 
 .preGameBody #category {
-    -fx-font-size: 30px;
+    -fx-font-size: 45px;
 }
 
 .preGameBody #prompt {
-    -fx-font-size: 25px;
+    -fx-font-size: 38px;
 }
 
 .gameBody Label {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 20px;
+    -fx-font-size: 30px;
 }
 
 .gameBody .subHeading {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 25px;
+    -fx-font-size: 38px;
 }
 
 .gameBody TextArea {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 19px;
+    -fx-font-size: 28px;
     -fx-background-color: transparent;
 }
 
 .gameBody TextArea .text {
-    -fx-line-spacing: 0.12em;
+    -fx-line-spacing: 0.175em;
 }
 
 .gameBody TextArea .scroll-pane {
@@ -74,25 +74,31 @@ Text {
     -fx-background-color: transparent;
 }
 
+
+.postGameBody .title {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 60px;
+}
+
 .postGameBody Label {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 30px;
+    -fx-font-size: 45px;
 }
 
 .wordsHistory Label {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 25px;
+    -fx-font-size: 38px;
     -fx-background-color: transparent;
 }
 
 .wordsHistory TextArea {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 20px;
+    -fx-font-size: 28px;
     -fx-background-color: transparent;
 }
 
 .wordsHistory TextArea .text {
-    -fx-line-spacing: 0.09em;
+    -fx-line-spacing: 0.17em;
 }
 
 .wordsHistory TextArea .scroll-pane {
@@ -112,14 +118,14 @@ Text {
 
 Button {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 30px;
+    -fx-font-size: 45px;
     -fx-background-color: none;
     -fx-padding: 0;
 }
 
 TextField {
     -fx-font-family: "Indie Flower";
-    -fx-font-size: 30px;
+    -fx-font-size: 45px;
     -fx-padding: 0;
     -fx-background-color: none;
     -fx-border-width: 0;
