@@ -179,6 +179,7 @@ public class GameController {
             TextToSpeech textToSpeech = new TextToSpeech();
             String prevTopPred = "";
             String currentTopPred = "";
+            int prevPredPos = Integer.MAX_VALUE;
 
             while (timeLeft >= 0 && !gameWon) {
               // Calculating how many milliseconds has elapsed since last iteration of the
@@ -197,12 +198,12 @@ public class GameController {
                       new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
                   Platform.runLater(snapshotTask);
                   java.util.List<Classifications.Classification> predictions =
-                      model.getPredictions(snapshotTask.get(), 10);
+                      model.getPredictions(snapshotTask.get(), Integer.MAX_VALUE);
 
                   // Creates a string which lists the top 10 DL predictions and updates the
                   // predictionList string
                   StringBuilder sb = new StringBuilder();
-                  int i = 1;
+                  int currentPos = 1;
                   for (Classifications.Classification c : predictions) {
                     StringBuilder stringBuilder = new StringBuilder(c.getClassName());
 
@@ -214,19 +215,42 @@ public class GameController {
 
                     String currentPred = stringBuilder.toString();
 
-                    if (i == 1) {
+                    if (currentPos == 1) {
                       currentTopPred = currentPred;
-                      sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
+                      sb.append(currentPos)
+                          .append(". ")
+                          .append(currentPred)
+                          .append(System.lineSeparator());
                     } else {
-                      sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
+                      sb.append(currentPos)
+                          .append(". ")
+                          .append(currentPred)
+                          .append(System.lineSeparator());
                     }
-                    if (currentPred.equals(CategoryManager.getCategory()) && i <= 3) {
-                      gameWon = true;
+
+                    // Checks if current prediction word is correct
+                    if (currentPred.equals(CategoryManager.getCategory())) {
+                      System.out.println("Current pos is: " + currentPos);
+                      if (currentPos <= 3) {
+                        gameWon = true;
+                      } else if (currentPos > 10) {
+                        // Checks if prediction is getting further or closer to top 10
+                        if (currentPos < prevPredPos) {
+                          System.out.println("getting closer: " + currentPos + "<" + prevPredPos);
+                        } else if (currentPos > prevPredPos) {
+                          System.out.println("getting further: " + currentPos + ">" + prevPredPos);
+                        } else {
+                          System.out.println("same");
+                        }
+                        prevPredPos = currentPos;
+                        break;
+                      }
+                      prevPredPos = currentPos;
                     }
-                    i++;
+                    currentPos++;
                   }
                   updateMessage(sb.toString());
-                  // If there has been a change to the top 1 prediciton, the text-to-speech will
+                  // If there has been a change to the top 1 prediction, the text-to-speech will
                   // say
                   // what it sees
                   if (!prevTopPred.equals(currentTopPred)) {
