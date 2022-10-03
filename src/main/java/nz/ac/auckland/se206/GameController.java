@@ -62,6 +62,7 @@ public class GameController {
   @FXML private AnchorPane game;
   @FXML private Label timerLabel;
   @FXML private TextArea predictionsList;
+  @FXML private Label predDirectionLabel;
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
@@ -106,6 +107,7 @@ public class GameController {
     CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
     preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
     categoryLabel.setText("Category: " + CategoryManager.getCategory());
+    predDirectionLabel.setText("");
 
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
@@ -230,17 +232,26 @@ public class GameController {
 
                     // Checks if current prediction word is correct
                     if (currentPred.equals(CategoryManager.getCategory())) {
-                      System.out.println("Current pos is: " + currentPos);
                       if (currentPos <= 3) {
                         gameWon = true;
                       } else if (currentPos > 10) {
                         // Checks if prediction is getting further or closer to top 10
                         if (currentPos < prevPredPos) {
-                          System.out.println("getting closer: " + currentPos + "<" + prevPredPos);
+                          Platform.runLater(
+                              () -> {
+                                predDirectionLabel.setText("Prediction is getting: Closer");
+                              });
+
                         } else if (currentPos > prevPredPos) {
-                          System.out.println("getting further: " + currentPos + ">" + prevPredPos);
+                          Platform.runLater(
+                              () -> {
+                                predDirectionLabel.setText("Prediction is getting: Further");
+                              });
                         } else {
-                          System.out.println("same");
+                          Platform.runLater(
+                              () -> {
+                                predDirectionLabel.setText("Prediction is getting:");
+                              });
                         }
                         prevPredPos = currentPos;
                         break;
