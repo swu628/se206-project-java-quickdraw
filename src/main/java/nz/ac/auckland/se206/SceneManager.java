@@ -10,6 +10,7 @@ public class SceneManager {
     REGISTER,
     GAME_MENU,
     STATISTICS,
+    DIFFICULTY_SETTINGS,
     GAME
   }
 

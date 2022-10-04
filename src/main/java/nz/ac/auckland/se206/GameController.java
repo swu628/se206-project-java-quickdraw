@@ -47,15 +47,13 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class GameController {
-  private static final int MAX_TIME = 60;
-
   @FXML private Canvas canvas;
   @FXML private Button clearButton;
   @FXML private Button penButton;
   @FXML private Button eraserButton;
   @FXML private ImageView toolImage;
-  @FXML private Label categoryLabel;
-  @FXML private Label preGameCategoryLabel;
+  @FXML private Label wordLabel;
+  @FXML private Label preGameWordLabel;
   @FXML private AnchorPane preGamePane;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
@@ -89,9 +87,9 @@ public class GameController {
 
   public void updateScene() {
     // Chooses a random category for next game
-    CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
-    preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
-    categoryLabel.setText("Category: " + CategoryManager.getCategory());
+    CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
+    preGameWordLabel.setText("Draw: " + CategoryManager.getWord());
+    wordLabel.setText("Draw: " + CategoryManager.getWord());
 
     onSwitchToPen();
     // Displays the pregame pane
@@ -103,9 +101,9 @@ public class GameController {
     // Clears the canvas
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     // Chooses a random category for next game
-    CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
-    preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
-    categoryLabel.setText("Category: " + CategoryManager.getCategory());
+    CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
+    preGameWordLabel.setText("Draw: " + CategoryManager.getWord());
+    wordLabel.setText("Draw: " + CategoryManager.getWord());
 
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
@@ -114,11 +112,14 @@ public class GameController {
 
   @FXML
   private void onStartDrawing() {
+    User currentUser = App.getCurrentUser();
     // Sets initial conditions of game and shows game pane whilst disabling all the
     // other panes
     gameWon = false;
     doPredict = false;
-    timeLeft = MAX_TIME;
+    timeLeft = currentUser.getTimeDifficulty().getMaxTime();
+    int maxGuessNum = currentUser.getAccuracyDifficulty().getNumGuesses();
+    double minConfidence = currentUser.getConfidenceDifficulty().getMinConfidence();
     onSwitchToPen();
     displayGame();
 
@@ -216,11 +217,19 @@ public class GameController {
 
                     if (i == 1) {
                       currentTopPred = currentPred;
-                      sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
-                    } else {
-                      sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
                     }
-                    if (currentPred.equals(CategoryManager.getCategory()) && i <= 3) {
+
+                    double percentage = c.getProbability() * 100;
+
+                    sb.append(currentPred)
+                        .append(" - ")
+                        .append(String.format("%.2f", percentage))
+                        .append("%")
+                        .append(System.lineSeparator());
+
+                    if (currentPred.equals(CategoryManager.getWord())
+                        && i <= maxGuessNum
+                        && percentage >= minConfidence) {
                       gameWon = true;
                     }
                     i++;
@@ -287,7 +296,7 @@ public class GameController {
             // Updates the user's history of words encountered
             ArrayList<String> wordsHistory = user.getWordsHistory();
 
-            wordsHistory.add(CategoryManager.getCategory());
+            wordsHistory.add(CategoryManager.getWord());
 
             user.setWordsHistory(wordsHistory);
 

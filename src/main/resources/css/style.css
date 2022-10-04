@@ -116,6 +116,38 @@ Text {
     -fx-background-color: transparent;
 }
 
+.difficultySettings .infoPane {
+    -fx-border-color: rgb(198, 198, 198);
+    -fx-background-color: rgb(243, 243, 243);
+    -fx-border-width: 1;
+
+}
+
+.difficultySettings TextArea {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 25px;
+    -fx-background-color: transparent;
+}
+
+.difficultySettings TextArea .text {
+    -fx-line-spacing: 0.05em;
+}
+
+.difficultySettings TextArea .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-vbar-policy: never;
+    -fx-hbar-policy: never;
+}
+
+.difficultySettings TextArea .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+
+.difficultySettings TextArea .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
 Button {
     -fx-font-family: "Indie Flower";
     -fx-font-size: 45px;

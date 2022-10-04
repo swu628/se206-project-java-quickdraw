@@ -44,10 +44,22 @@ public class GameMenuController {
   }
 
   @FXML
+  private void onShowDifficultySettings(ActionEvent e) {
+    Button button = (Button) e.getSource();
+    Scene currentScene = button.getScene();
+
+    App.getDifficultySettingsController().setUpScene(App.getCurrentUser());
+
+    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.DIFFICULTY_SETTINGS));
+  }
+
+  @FXML
   private void onSignOut(ActionEvent e) {
     App.setCurrentUser(null);
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
+
+    App.getMainMenuController().setUpUsers();
 
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));
   }
