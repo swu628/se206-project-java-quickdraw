@@ -177,7 +177,7 @@ public class GameController {
             double deltaTime = 0;
             long previousTimeMillis = System.currentTimeMillis();
 
-            // Setting intial conditions for predictior
+            // Setting initial conditions for prediction
             TextToSpeech textToSpeech = new TextToSpeech();
             String prevTopPred = "";
             String currentTopPred = "";
@@ -200,12 +200,12 @@ public class GameController {
                       new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
                   Platform.runLater(snapshotTask);
                   java.util.List<Classifications.Classification> predictions =
-                      model.getPredictions(snapshotTask.get(), Integer.MAX_VALUE);
-
+                      model.getPredictions(snapshotTask.get(), 50);
                   // Creates a string which lists the top 10 DL predictions and updates the
                   // predictionList string
                   StringBuilder sb = new StringBuilder();
                   int currentPos = 1;
+                  boolean wordFound = false;
                   for (Classifications.Classification c : predictions) {
                     StringBuilder stringBuilder = new StringBuilder(c.getClassName());
 
@@ -223,7 +223,7 @@ public class GameController {
                           .append(". ")
                           .append(currentPred)
                           .append(System.lineSeparator());
-                    } else {
+                    } else if (currentPos <= 10) {
                       sb.append(currentPos)
                           .append(". ")
                           .append(currentPred)
@@ -232,25 +232,30 @@ public class GameController {
 
                     // Checks if current prediction word is correct
                     if (currentPred.equals(CategoryManager.getCategory())) {
+                      wordFound = true;
+                      System.out.println(currentPos);
                       if (currentPos <= 3) {
                         gameWon = true;
-                      } else if (currentPos > 10) {
+                      }
+                      if (currentPos <= 10) {
+                        Platform.runLater(
+                            () -> {
+                              predDirectionLabel.setText("Prediction is in the top 10");
+                            });
+                      } else {
                         // Checks if prediction is getting further or closer to top 10
                         if (currentPos < prevPredPos) {
+                          System.out.println(currentPos + "<" + prevPredPos);
                           Platform.runLater(
                               () -> {
                                 predDirectionLabel.setText("Prediction is getting: Closer");
                               });
 
                         } else if (currentPos > prevPredPos) {
+                          System.out.println(currentPos + ">" + prevPredPos);
                           Platform.runLater(
                               () -> {
                                 predDirectionLabel.setText("Prediction is getting: Further");
-                              });
-                        } else {
-                          Platform.runLater(
-                              () -> {
-                                predDirectionLabel.setText("Prediction is getting:");
                               });
                         }
                         prevPredPos = currentPos;
@@ -259,6 +264,13 @@ public class GameController {
                       prevPredPos = currentPos;
                     }
                     currentPos++;
+                  }
+                  if (!wordFound) {
+                    System.out.println("not found");
+                    Platform.runLater(
+                        () -> {
+                          predDirectionLabel.setText("Prediction is getting: Further");
+                        });
                   }
                   updateMessage(sb.toString());
                   // If there has been a change to the top 1 prediction, the text-to-speech will
