@@ -21,6 +21,7 @@ public class App extends Application {
   private static GameMenuController gameMenuController;
   private static StatisticsController statisticsController;
   private static GameController gameController;
+  private static ModeSelectController modeSelectController;
 
   public static void main(final String[] args) {
     launch();
@@ -51,6 +52,9 @@ public class App extends Application {
       case "game":
         gameController = loader.getController();
         break;
+      case "modeSelect":
+        modeSelectController = loader.getController();
+        break;
     }
 
     return parent;
@@ -78,6 +82,10 @@ public class App extends Application {
 
   public static MainMenuController getMainMenuController() {
     return mainMenuController;
+  }
+
+  public static ModeSelectController getModeSelectController() {
+    return modeSelectController;
   }
 
   private void loadCategories() throws IOException {
@@ -118,6 +126,7 @@ public class App extends Application {
     SceneManager.addUi(SceneManager.AppScene.GAME_MENU, loadFxml("gameMenu"));
     SceneManager.addUi(SceneManager.AppScene.STATISTICS, loadFxml("statistics"));
     SceneManager.addUi(SceneManager.AppScene.GAME, loadFxml("game"));
+    SceneManager.addUi(SceneManager.AppScene.MODE_SELECT, loadFxml("modeSelect"));
 
     // Sets application icon
     stage.getIcons().add(new Image("/images/icon.png"));

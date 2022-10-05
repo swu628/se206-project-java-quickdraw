@@ -10,7 +10,8 @@ public class SceneManager {
     REGISTER,
     GAME_MENU,
     STATISTICS,
-    GAME
+    GAME,
+    MODE_SELECT
   }
 
   private static HashMap<AppScene, Parent> sceneMap = new HashMap<>();

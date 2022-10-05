@@ -30,7 +30,7 @@ public class GameMenuController {
 
     App.getGameController().updateScene();
 
-    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
+    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MODE_SELECT));
   }
 
   @FXML
