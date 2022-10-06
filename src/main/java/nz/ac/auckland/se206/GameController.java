@@ -233,29 +233,26 @@ public class GameController {
                     // Checks if current prediction word is correct
                     if (currentPred.equals(CategoryManager.getCategory())) {
                       wordFound = true;
-                      System.out.println(currentPos);
                       if (currentPos <= 3) {
                         gameWon = true;
                       }
                       if (currentPos <= 10) {
                         Platform.runLater(
                             () -> {
-                              predDirectionLabel.setText("Prediction is in the top 10");
+                              predDirectionLabel.setText("in top 10");
                             });
                       } else {
                         // Checks if prediction is getting further or closer to top 10
                         if (currentPos < prevPredPos) {
-                          System.out.println(currentPos + "<" + prevPredPos);
                           Platform.runLater(
                               () -> {
-                                predDirectionLabel.setText("Prediction is getting: Closer");
+                                predDirectionLabel.setText("getting CLOSER");
                               });
 
                         } else if (currentPos > prevPredPos) {
-                          System.out.println(currentPos + ">" + prevPredPos);
                           Platform.runLater(
                               () -> {
-                                predDirectionLabel.setText("Prediction is getting: Further");
+                                predDirectionLabel.setText("getting FURTHER");
                               });
                         }
                         prevPredPos = currentPos;
@@ -266,10 +263,9 @@ public class GameController {
                     currentPos++;
                   }
                   if (!wordFound) {
-                    System.out.println("not found");
                     Platform.runLater(
                         () -> {
-                          predDirectionLabel.setText("Prediction is getting: Further");
+                          predDirectionLabel.setText("getting FURTHER");
                         });
                   }
                   updateMessage(sb.toString());
