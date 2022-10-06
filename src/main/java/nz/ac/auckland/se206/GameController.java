@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import javafx.application.Platform;
@@ -30,6 +31,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
+import nz.ac.auckland.se206.dict.DictionarySearch;
+import nz.ac.auckland.se206.dict.WordEntry;
+import nz.ac.auckland.se206.dict.WordInfo;
+import nz.ac.auckland.se206.dict.WordNotFoundException;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profile.User;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -93,9 +98,27 @@ public class GameController {
     preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
     categoryLabel.setText("Category: " + CategoryManager.getCategory());
 
+    String word = null;
+    if (word != "") {
+      System.out.println(getDefinition(word));
+    }
+
     onSwitchToPen();
     // Displays the pregame pane
     displayPreGame();
+  }
+
+  private String getDefinition(String word) {
+    try {
+      WordInfo wordResult = DictionarySearch.searchWordInfo(word);
+      List<WordEntry> entries = wordResult.getWordEntries();
+      return entries.get(0).getDefinitions().get(0);
+    } catch (IOException e) {
+      e.printStackTrace();
+      return "Word not found";
+    } catch (WordNotFoundException e) {
+      return "Word not found";
+    }
   }
 
   @FXML

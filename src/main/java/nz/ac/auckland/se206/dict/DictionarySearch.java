@@ -41,8 +41,8 @@ public class DictionarySearch {
 
       String partOfSpeech = "[not specified]";
       List<String> definitions = new ArrayList<String>();
-      List<String> synonyms = new ArrayList<String>();
-      List<String> antonyms = new ArrayList<String>();
+      List<JSONArray> synonyms = new ArrayList<JSONArray>();
+      List<JSONArray> antonyms = new ArrayList<JSONArray>();
 
       for (int m = 0; m < jsonMeanings.length(); m++) {
         JSONObject jsonMeaningObj = jsonMeanings.getJSONObject(m);
@@ -60,11 +60,11 @@ public class DictionarySearch {
           if (!definition.isEmpty()) {
             definitions.add(definition);
           }
-          String synonym = jsonDefinitionObj.getString("synonyms");
+          JSONArray synonym = jsonDefinitionObj.getJSONArray("synonyms");
           if (!synonym.isEmpty()) {
             synonyms.add(synonym);
           }
-          String antonym = jsonDefinitionObj.getString("antonyms");
+          JSONArray antonym = jsonDefinitionObj.getJSONArray("antonyms");
           if (!antonym.isEmpty()) {
             antonyms.add(antonym);
           }
