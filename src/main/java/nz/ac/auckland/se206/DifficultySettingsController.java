@@ -167,6 +167,7 @@ public class DifficultySettingsController {
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
 
+    // Creates arrays which store each difficulty so that the user can scroll through them
     accuracyDifficultyList = new ArrayList<>(Arrays.asList(AccuracyDifficulty.values()));
     wordsDifficultyList = new ArrayList<>(Arrays.asList(WordsDifficulty.values()));
     timeDifficultyList = new ArrayList<>(Arrays.asList(TimeDifficulty.values()));
@@ -176,16 +177,18 @@ public class DifficultySettingsController {
   public void setUpScene(User user) {
     currentUser = user;
 
+    // Sets the difficulties to those specified by the user profile
     accuracyDifficulty = accuracyDifficultyList.indexOf(currentUser.getAccuracyDifficulty());
     wordsDifficulty = wordsDifficultyList.indexOf(currentUser.getWordsDifficulty());
     timeDifficulty = timeDifficultyList.indexOf(currentUser.getTimeDifficulty());
     confidenceDifficulty = confidenceDifficultyList.indexOf(currentUser.getConfidenceDifficulty());
-
+    // Sets the difficulty labels to those specified by the user profile
     accuracySettingsLabel.setText(accuracyDifficultyList.get(accuracyDifficulty).toString());
     wordsSettingsLabel.setText(wordsDifficultyList.get(wordsDifficulty).toString());
     timeSettingsLabel.setText(timeDifficultyList.get(timeDifficulty).toString());
     confidenceSettingsLabel.setText(confidenceDifficultyList.get(confidenceDifficulty).toString());
 
+    // Enables/disables the arrows depending on difficulty position in its respective array
     if (accuracyDifficulty == 0) {
       disableAccuracySelectLeft();
       enableAccuracySelectRight();
@@ -236,7 +239,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onToPreviousAccuracyDifficulty() {
-    // Changes current user to previous user in list
+    // Changes current accuracy difficulty to previous accuracy difficulty in list
     accuracyDifficulty -= 1;
     accuracySettingsLabel.setText(accuracyDifficultyList.get(accuracyDifficulty).toString());
     enableAccuracySelectRight();
@@ -248,7 +251,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onToNextAccuracyDifficulty() {
-    // Changes current user to next user in list
+    // Changes current accuracy difficulty to next accuracy difficulty in list
     accuracyDifficulty += 1;
     accuracySettingsLabel.setText(accuracyDifficultyList.get(accuracyDifficulty).toString());
     enableAccuracySelectLeft();
@@ -260,7 +263,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onToPreviousWordDifficulty() {
-    // Changes current user to previous user in list
+    // Changes current word difficulty to previous word difficulty in list
     wordsDifficulty -= 1;
     wordsSettingsLabel.setText(wordsDifficultyList.get(wordsDifficulty).toString());
     enableWordsSelectRight();
@@ -272,7 +275,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onToNextWordDifficulty() {
-    // Changes current user to next user in list
+    // Changes current word difficulty to next word difficulty in list
     wordsDifficulty += 1;
     wordsSettingsLabel.setText(wordsDifficultyList.get(wordsDifficulty).toString());
     enableWordsSelectLeft();
@@ -284,7 +287,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onToPreviousTimeDifficulty() {
-    // Changes current user to previous user in list
+    // Changes current time difficulty to previous time difficulty in list
     timeDifficulty -= 1;
     timeSettingsLabel.setText(timeDifficultyList.get(timeDifficulty).toString());
     enableTimeSelectRight();
@@ -296,7 +299,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onToNextTimeDifficulty() {
-    // Changes current user to next user in list
+    // Changes current time difficulty to next time difficulty in list
     timeDifficulty += 1;
     timeSettingsLabel.setText(timeDifficultyList.get(timeDifficulty).toString());
     enableTimeSelectLeft();
@@ -308,7 +311,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onToPreviousConfidenceDifficulty() {
-    // Changes current user to previous user in list
+    // Changes current confidence difficulty to previous confidence difficulty in list
     confidenceDifficulty -= 1;
     confidenceSettingsLabel.setText(confidenceDifficultyList.get(confidenceDifficulty).toString());
     enableConfidenceSelectRight();
@@ -320,7 +323,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onToNextConfidenceDifficulty() {
-    // Changes current user to next user in list
+    // Changes current confidence difficulty to next confidence difficulty in list
     confidenceDifficulty += 1;
     confidenceSettingsLabel.setText(confidenceDifficultyList.get(confidenceDifficulty).toString());
     enableConfidenceSelectLeft();
@@ -412,6 +415,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onGetAccuracyHelp() {
+    // Enables help blurb for respective accuracy difficulty
     settingDescription.setText(accuracyDifficultyList.get(accuracyDifficulty).getDescription());
     settingDescriptionPane.setVisible(true);
     settingDescriptionPane.setDisable(false);
@@ -419,6 +423,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onGetWordsHelp() {
+    // Enables help blurb for respective word difficulty
     settingDescription.setText(wordsDifficultyList.get(wordsDifficulty).getDescription());
     settingDescriptionPane.setVisible(true);
     settingDescriptionPane.setDisable(false);
@@ -426,6 +431,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onGetTimeHelp() {
+    // Enables help blurb for respective time difficulty
     settingDescription.setText(timeDifficultyList.get(timeDifficulty).getDescription());
     settingDescriptionPane.setVisible(true);
     settingDescriptionPane.setDisable(false);
@@ -433,6 +439,7 @@ public class DifficultySettingsController {
 
   @FXML
   private void onGetConfidenceHelp() {
+    // Enables help blurb for respective confidence difficulty
     settingDescription.setText(confidenceDifficultyList.get(confidenceDifficulty).getDescription());
     settingDescriptionPane.setVisible(true);
     settingDescriptionPane.setDisable(false);
@@ -443,6 +450,7 @@ public class DifficultySettingsController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
+    // Saves the difficulties to the user profile
     currentUser.setAccuracyDifficulty(accuracyDifficultyList.get(accuracyDifficulty));
     currentUser.setWordsDifficulty(wordsDifficultyList.get(wordsDifficulty));
     currentUser.setTimeDifficulty(timeDifficultyList.get(timeDifficulty));
