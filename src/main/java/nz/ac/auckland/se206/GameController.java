@@ -62,6 +62,7 @@ public class GameController {
   @FXML private AnchorPane game;
   @FXML private Label timerLabel;
   @FXML private TextArea predictionsList;
+  @FXML private Label predDirectionLabel;
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
@@ -88,14 +89,7 @@ public class GameController {
   }
 
   public void updateScene() {
-    // Chooses a random category for next game
-    CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
-    preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
-    categoryLabel.setText("Category: " + CategoryManager.getCategory());
-
-    onSwitchToPen();
-    // Displays the pregame pane
-    displayPreGame();
+    onResetGame();
   }
 
   @FXML
@@ -106,6 +100,7 @@ public class GameController {
     CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
     preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
     categoryLabel.setText("Category: " + CategoryManager.getCategory());
+    predDirectionLabel.setText("");
 
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
@@ -175,10 +170,11 @@ public class GameController {
             double deltaTime = 0;
             long previousTimeMillis = System.currentTimeMillis();
 
-            // Setting intial conditions for predictior
+            // Setting initial conditions for prediction
             TextToSpeech textToSpeech = new TextToSpeech();
             String prevTopPred = "";
             String currentTopPred = "";
+            int prevPredPos = Integer.MAX_VALUE;
 
             while (timeLeft >= 0 && !gameWon) {
               // Calculating how many milliseconds has elapsed since last iteration of the
@@ -197,12 +193,12 @@ public class GameController {
                       new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
                   Platform.runLater(snapshotTask);
                   java.util.List<Classifications.Classification> predictions =
-                      model.getPredictions(snapshotTask.get(), 10);
-
+                      model.getPredictions(snapshotTask.get(), 50);
                   // Creates a string which lists the top 10 DL predictions and updates the
                   // predictionList string
                   StringBuilder sb = new StringBuilder();
-                  int i = 1;
+                  int currentPos = 1;
+                  boolean wordFound = false;
                   for (Classifications.Classification c : predictions) {
                     StringBuilder stringBuilder = new StringBuilder(c.getClassName());
 
@@ -214,19 +210,59 @@ public class GameController {
 
                     String currentPred = stringBuilder.toString();
 
-                    if (i == 1) {
+                    if (currentPos == 1) {
                       currentTopPred = currentPred;
-                      sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
-                    } else {
-                      sb.append(i).append(". ").append(currentPred).append(System.lineSeparator());
+                      sb.append(currentPos)
+                          .append(". ")
+                          .append(currentPred)
+                          .append(System.lineSeparator());
+                    } else if (currentPos <= 10) {
+                      sb.append(currentPos)
+                          .append(". ")
+                          .append(currentPred)
+                          .append(System.lineSeparator());
                     }
-                    if (currentPred.equals(CategoryManager.getCategory()) && i <= 3) {
-                      gameWon = true;
+
+                    // Checks if current prediction word is correct
+                    if (currentPred.equals(CategoryManager.getCategory())) {
+                      wordFound = true;
+                      if (currentPos <= 3) {
+                        gameWon = true;
+                      }
+                      if (currentPos <= 10) {
+                        Platform.runLater(
+                            () -> {
+                              predDirectionLabel.setText("in top 10");
+                            });
+                      } else {
+                        // Checks if prediction is getting further or closer to top 10
+                        if (currentPos < prevPredPos) {
+                          Platform.runLater(
+                              () -> {
+                                predDirectionLabel.setText("getting CLOSER");
+                              });
+
+                        } else if (currentPos > prevPredPos) {
+                          Platform.runLater(
+                              () -> {
+                                predDirectionLabel.setText("getting FURTHER");
+                              });
+                        }
+                        prevPredPos = currentPos;
+                        break;
+                      }
+                      prevPredPos = currentPos;
                     }
-                    i++;
+                    currentPos++;
+                  }
+                  if (!wordFound) {
+                    Platform.runLater(
+                        () -> {
+                          predDirectionLabel.setText("getting FURTHER");
+                        });
                   }
                   updateMessage(sb.toString());
-                  // If there has been a change to the top 1 prediciton, the text-to-speech will
+                  // If there has been a change to the top 1 prediction, the text-to-speech will
                   // say
                   // what it sees
                   if (!prevTopPred.equals(currentTopPred)) {
