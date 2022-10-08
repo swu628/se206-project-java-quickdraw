@@ -89,14 +89,7 @@ public class GameController {
   }
 
   public void updateScene() {
-    // Chooses a random category for next game
-    CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
-    preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
-    categoryLabel.setText("Category: " + CategoryManager.getCategory());
-
-    onSwitchToPen();
-    // Displays the pregame pane
-    displayPreGame();
+    onResetGame();
   }
 
   @FXML
