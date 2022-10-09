@@ -49,6 +49,8 @@ public class GameMenuController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
+    App.getMainMenuController().setUpUsers();
+
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));
   }
 
