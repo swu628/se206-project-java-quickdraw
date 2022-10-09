@@ -50,6 +50,7 @@ public class StatisticsController {
       sb.append(history.get(i)).append(System.lineSeparator());
     }
 
+    // Enables the next selector and disables the previous selector
     wordsHistoryPrevious.setVisible(false);
     wordsHistoryPrevious.setDisable(true);
     wordsHistoryNext.setVisible(true);
@@ -60,6 +61,7 @@ public class StatisticsController {
 
   @FXML
   private void onToNextWordHistory() {
+    // Gets next 5 words in history
     wordsHistoryStart = wordsHistoryEnd + 1;
     wordsHistoryEnd += 5;
 
@@ -70,10 +72,12 @@ public class StatisticsController {
     }
 
     if (wordsHistoryEnd >= history.size() - 1) {
+      // Disables the next selector
       wordsHistoryNext.setVisible(false);
       wordsHistoryNext.setDisable(true);
     }
 
+    // Enables the previous selector
     wordsHistoryPrevious.setVisible(true);
     wordsHistoryPrevious.setDisable(false);
 
@@ -82,6 +86,7 @@ public class StatisticsController {
 
   @FXML
   private void onToPreviousWordHistory() {
+    // Gets previous 5 words in history
     wordsHistoryEnd = wordsHistoryStart - 1;
     wordsHistoryStart -= 5;
 
@@ -92,10 +97,12 @@ public class StatisticsController {
     }
 
     if (wordsHistoryStart == 0) {
+      // Disables the previous selector
       wordsHistoryPrevious.setVisible(false);
       wordsHistoryPrevious.setDisable(true);
     }
 
+    // Enables the next selector
     wordsHistoryNext.setVisible(true);
     wordsHistoryNext.setDisable(false);
 
