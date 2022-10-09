@@ -143,22 +143,17 @@ public class MainMenuController {
     App.setCurrentUser(userList.get(currentUser));
 
     // Switches to the game scene
-    sceneReset();
+    setUpUsers();
     App.getGameMenuController().updateScene();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
   }
 
-  private void sceneReset() {
-    // Sets the scene to the initial state
-    setUpUsers();
-  }
-
   @FXML
   private void onCreateAccount(ActionEvent e) {
     // Resets the scene and replaces root scene with register scene
-    sceneReset();
+    setUpUsers();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.REGISTER));
