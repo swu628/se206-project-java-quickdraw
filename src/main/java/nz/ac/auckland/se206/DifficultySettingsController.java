@@ -18,15 +18,9 @@ import nz.ac.auckland.se206.profile.User;
 
 public class DifficultySettingsController {
   public enum AccuracyDifficulty {
-    EASY(
-        3,
-        "During EASY difficulty, the player wins the game if the word to draw is within the top 3 guesses"),
-    MEDIUM(
-        2,
-        "During MEDIUM difficulty, the player wins the game if the word to draw is within the top 2 guesses"),
-    HARD(
-        1,
-        "During HARD difficulty, the player wins the game if the word to draw is within the top 1 guess");
+    EASY(3, "The player wins the game if the word to draw is within the top 3 guesses"),
+    MEDIUM(2, "The player wins the game if the word to draw is within the top 2 guesses"),
+    HARD(1, "The player wins the game if the word to draw is within the top 1 guess");
 
     private final int TOP_NUM_GUESSES;
     private final String DESCRIPTION;
@@ -48,22 +42,22 @@ public class DifficultySettingsController {
   public enum WordsDifficulty {
     EASY(
         new CategoryManager.Difficulty[] {CategoryManager.Difficulty.EASY},
-        "During EASY difficulty, only words classified as EASY are selected"),
+        "Only words classified as EASY are selected"),
     MEDIUM(
         new CategoryManager.Difficulty[] {
           CategoryManager.Difficulty.EASY, CategoryManager.Difficulty.MEDIUM
         },
-        "During MEDIUM difficulty, only words classified as EASY or MEDIUM are selected"),
+        "Only words classified as EASY or MEDIUM are selected"),
     HARD(
         new CategoryManager.Difficulty[] {
           CategoryManager.Difficulty.EASY,
           CategoryManager.Difficulty.MEDIUM,
           CategoryManager.Difficulty.HARD
         },
-        "During HARD difficulty, only words classified as EASY, MEDIUM or HARD are selected"),
+        "Only words classified as EASY, MEDIUM or HARD are selected"),
     MASTER(
         new CategoryManager.Difficulty[] {CategoryManager.Difficulty.HARD},
-        "During MASTER difficulty, only words classified as HARD are selected");
+        "Only words classified as HARD are selected");
 
     private final CategoryManager.Difficulty[] DIFFICULTIES;
     private final String DESCRIPTION;
@@ -83,10 +77,10 @@ public class DifficultySettingsController {
   }
 
   public enum TimeDifficulty {
-    EASY(60, "During EASY difficulty, the player gets 60 seconds to draw the selected word"),
-    MEDIUM(45, "During MEDIUM difficulty, the player gets 45 seconds to draw the selected word"),
-    HARD(30, "During HARD difficulty, the player gets 30 seconds to draw the selected word"),
-    MASTER(15, "During MASTER difficulty, the player gets 15 seconds to draw the selected word");
+    EASY(60, "The player gets 60 seconds to draw the selected word"),
+    MEDIUM(45, "The player gets 45 seconds to draw the selected word"),
+    HARD(30, "The player gets 30 seconds to draw the selected word"),
+    MASTER(15, "The player gets 15 seconds to draw the selected word");
 
     private final int MAX_TIME;
     private final String DESCRIPTION;
@@ -106,18 +100,10 @@ public class DifficultySettingsController {
   }
 
   public enum ConfidenceDifficulty {
-    EASY(
-        1.0,
-        "During EASY difficulty, the confidence level of the correct prediction must be at least 1%"),
-    MEDIUM(
-        10.0,
-        "During MEDIUM difficulty, the confidence level of the correct prediction must be at least 10%"),
-    HARD(
-        25.0,
-        "During HARD difficulty, the confidence level of the correct prediction must be at least 25%"),
-    MASTER(
-        50.0,
-        "During MASTER difficulty, the confidence level of the correct prediction must be at least 50%");
+    EASY(1.0, "The confidence level of the correct prediction must be at least 1%"),
+    MEDIUM(10.0, "The confidence level of the correct prediction must be at least 10%"),
+    HARD(25.0, "The confidence level of the correct prediction must be at least 25%"),
+    MASTER(50.0, "The confidence level of the correct prediction must be at least 50%");
 
     private final double MIN_CONFIDENCE;
     private final String DESCRIPTION;
@@ -162,7 +148,14 @@ public class DifficultySettingsController {
   @FXML private Button timeHelp;
   @FXML private Button confidenceHelp;
   @FXML private TextArea settingDescription;
-  @FXML private AnchorPane settingDescriptionPane;
+  @FXML private AnchorPane accuracyDescriptionPane;
+  @FXML private AnchorPane wordDescriptionPane;
+  @FXML private AnchorPane timeDescriptionPane;
+  @FXML private AnchorPane confidenceDescriptionPane;
+  @FXML private TextArea accuracyDescription;
+  @FXML private TextArea wordDescription;
+  @FXML private TextArea timeDescription;
+  @FXML private TextArea confidenceDescription;
 
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
@@ -233,8 +226,15 @@ public class DifficultySettingsController {
       enableConfidenceSelectRight();
     }
 
-    settingDescriptionPane.setVisible(false);
-    settingDescriptionPane.setDisable(true);
+    // Disables all help panes
+    accuracyDescriptionPane.setVisible(false);
+    accuracyDescriptionPane.setDisable(true);
+    wordDescriptionPane.setVisible(false);
+    wordDescriptionPane.setDisable(true);
+    timeDescriptionPane.setVisible(false);
+    timeDescriptionPane.setDisable(true);
+    confidenceDescriptionPane.setVisible(false);
+    confidenceDescriptionPane.setDisable(true);
   }
 
   @FXML
@@ -242,6 +242,7 @@ public class DifficultySettingsController {
     // Changes current accuracy difficulty to previous accuracy difficulty in list
     accuracyDifficulty -= 1;
     accuracySettingsLabel.setText(accuracyDifficultyList.get(accuracyDifficulty).toString());
+    accuracyDescription.setText(accuracyDifficultyList.get(accuracyDifficulty).getDescription());
     enableAccuracySelectRight();
 
     if (accuracyDifficulty == 0) {
@@ -254,6 +255,7 @@ public class DifficultySettingsController {
     // Changes current accuracy difficulty to next accuracy difficulty in list
     accuracyDifficulty += 1;
     accuracySettingsLabel.setText(accuracyDifficultyList.get(accuracyDifficulty).toString());
+    accuracyDescription.setText(accuracyDifficultyList.get(accuracyDifficulty).getDescription());
     enableAccuracySelectLeft();
 
     if (accuracyDifficulty == accuracyDifficultyList.size() - 1) {
@@ -266,6 +268,7 @@ public class DifficultySettingsController {
     // Changes current word difficulty to previous word difficulty in list
     wordsDifficulty -= 1;
     wordsSettingsLabel.setText(wordsDifficultyList.get(wordsDifficulty).toString());
+    wordDescription.setText(wordsDifficultyList.get(wordsDifficulty).getDescription());
     enableWordsSelectRight();
 
     if (wordsDifficulty == 0) {
@@ -278,6 +281,7 @@ public class DifficultySettingsController {
     // Changes current word difficulty to next word difficulty in list
     wordsDifficulty += 1;
     wordsSettingsLabel.setText(wordsDifficultyList.get(wordsDifficulty).toString());
+    wordDescription.setText(wordsDifficultyList.get(wordsDifficulty).getDescription());
     enableWordsSelectLeft();
 
     if (wordsDifficulty == wordsDifficultyList.size() - 1) {
@@ -290,6 +294,7 @@ public class DifficultySettingsController {
     // Changes current time difficulty to previous time difficulty in list
     timeDifficulty -= 1;
     timeSettingsLabel.setText(timeDifficultyList.get(timeDifficulty).toString());
+    timeDescription.setText(timeDifficultyList.get(timeDifficulty).getDescription());
     enableTimeSelectRight();
 
     if (timeDifficulty == 0) {
@@ -302,6 +307,7 @@ public class DifficultySettingsController {
     // Changes current time difficulty to next time difficulty in list
     timeDifficulty += 1;
     timeSettingsLabel.setText(timeDifficultyList.get(timeDifficulty).toString());
+    timeDescription.setText(timeDifficultyList.get(timeDifficulty).getDescription());
     enableTimeSelectLeft();
 
     if (timeDifficulty == timeDifficultyList.size() - 1) {
@@ -314,6 +320,8 @@ public class DifficultySettingsController {
     // Changes current confidence difficulty to previous confidence difficulty in list
     confidenceDifficulty -= 1;
     confidenceSettingsLabel.setText(confidenceDifficultyList.get(confidenceDifficulty).toString());
+    confidenceDescription.setText(
+        confidenceDifficultyList.get(confidenceDifficulty).getDescription());
     enableConfidenceSelectRight();
 
     if (confidenceDifficulty == 0) {
@@ -326,6 +334,8 @@ public class DifficultySettingsController {
     // Changes current confidence difficulty to next confidence difficulty in list
     confidenceDifficulty += 1;
     confidenceSettingsLabel.setText(confidenceDifficultyList.get(confidenceDifficulty).toString());
+    confidenceDescription.setText(
+        confidenceDifficultyList.get(confidenceDifficulty).getDescription());
     enableConfidenceSelectLeft();
 
     if (confidenceDifficulty == confidenceDifficultyList.size() - 1) {
@@ -415,34 +425,63 @@ public class DifficultySettingsController {
 
   @FXML
   private void onGetAccuracyHelp() {
-    // Enables help blurb for respective accuracy difficulty
-    settingDescription.setText(accuracyDifficultyList.get(accuracyDifficulty).getDescription());
-    settingDescriptionPane.setVisible(true);
-    settingDescriptionPane.setDisable(false);
+    // Checks if help blurb is enabled/disabled and does the opposite
+    if (accuracyDescriptionPane.isVisible()) {
+      // Disables help blurb for respective accuracy difficulty
+      accuracyDescriptionPane.setVisible(false);
+      accuracyDescriptionPane.setDisable(true);
+    } else {
+      // Enables help blurb for respective accuracy difficulty
+      accuracyDescription.setText(accuracyDifficultyList.get(accuracyDifficulty).getDescription());
+      accuracyDescriptionPane.setVisible(true);
+      accuracyDescriptionPane.setDisable(false);
+    }
   }
 
   @FXML
   private void onGetWordsHelp() {
-    // Enables help blurb for respective word difficulty
-    settingDescription.setText(wordsDifficultyList.get(wordsDifficulty).getDescription());
-    settingDescriptionPane.setVisible(true);
-    settingDescriptionPane.setDisable(false);
+    // Checks if help blurb is enabled/disabled and does the opposite
+    if (wordDescriptionPane.isVisible()) {
+      // Disables help blurb for respective accuracy difficulty
+      wordDescriptionPane.setVisible(false);
+      wordDescriptionPane.setDisable(true);
+    } else {
+      // Enables help blurb for respective word difficulty
+      wordDescription.setText(wordsDifficultyList.get(wordsDifficulty).getDescription());
+      wordDescriptionPane.setVisible(true);
+      wordDescriptionPane.setDisable(false);
+    }
   }
 
   @FXML
   private void onGetTimeHelp() {
-    // Enables help blurb for respective time difficulty
-    settingDescription.setText(timeDifficultyList.get(timeDifficulty).getDescription());
-    settingDescriptionPane.setVisible(true);
-    settingDescriptionPane.setDisable(false);
+    // Checks if help blurb is enabled/disabled and does the opposite
+    if (timeDescriptionPane.isVisible()) {
+      // Disables help blurb for respective accuracy difficulty
+      timeDescriptionPane.setVisible(false);
+      timeDescriptionPane.setDisable(true);
+    } else {
+      // Enables help blurb for respective time difficulty
+      timeDescription.setText(timeDifficultyList.get(timeDifficulty).getDescription());
+      timeDescriptionPane.setVisible(true);
+      timeDescriptionPane.setDisable(false);
+    }
   }
 
   @FXML
   private void onGetConfidenceHelp() {
-    // Enables help blurb for respective confidence difficulty
-    settingDescription.setText(confidenceDifficultyList.get(confidenceDifficulty).getDescription());
-    settingDescriptionPane.setVisible(true);
-    settingDescriptionPane.setDisable(false);
+    // Checks if help blurb is enabled/disabled and does the opposite
+    if (confidenceDescriptionPane.isVisible()) {
+      // Disables help blurb for respective accuracy difficulty
+      confidenceDescriptionPane.setVisible(false);
+      confidenceDescriptionPane.setDisable(true);
+    } else {
+      // Enables help blurb for respective confidence difficulty
+      confidenceDescription.setText(
+          confidenceDifficultyList.get(confidenceDifficulty).getDescription());
+      confidenceDescriptionPane.setVisible(true);
+      confidenceDescriptionPane.setDisable(false);
+    }
   }
 
   @FXML

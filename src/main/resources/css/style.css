@@ -124,7 +124,10 @@ Text {
     -fx-border-color: rgb(198, 198, 198);
     -fx-background-color: rgb(243, 243, 243);
     -fx-border-width: 1;
+}
 
+.difficultySettings .infoPane TextArea {
+    -fx-font-size: 24px;
 }
 
 .difficultySettings TextArea {

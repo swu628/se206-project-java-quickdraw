@@ -160,9 +160,45 @@
                         </HBox>
                      </children>
                   </HBox>
-                  <AnchorPane fx:id="settingDescriptionPane" layoutX="426.0" layoutY="4.0" prefHeight="221.0" prefWidth="404.0" styleClass="infoPane">
+                  <AnchorPane fx:id="accuracyDescriptionPane" layoutX="418.0" layoutY="4.0" prefHeight="111.0" prefWidth="411.0" styleClass="infoPane">
                      <children>
-                        <TextArea fx:id="settingDescription" editable="false" layoutY="14.0" maxWidth="453.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="193.0" prefWidth="408.0" wrapText="true">
+                        <TextArea fx:id="accuracyDescription" editable="false" layoutX="3.0" layoutY="2.0" maxWidth="453.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="107.0" prefWidth="408.0" text="The player wins the game if the word to draw is within the top 3 guesses" wrapText="true">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="wordDescriptionPane" layoutX="418.0" layoutY="114.0" prefHeight="111.0" prefWidth="411.0" styleClass="infoPane">
+                     <children>
+                        <TextArea fx:id="wordDescription" editable="false" layoutX="3.0" layoutY="2.0" maxWidth="453.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="107.0" prefWidth="408.0" text="Only words classified as EASY, MEDIUM or HARD are selected" wrapText="true">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="timeDescriptionPane" layoutX="418.0" layoutY="224.0" prefHeight="111.0" prefWidth="411.0" styleClass="infoPane">
+                     <children>
+                        <TextArea fx:id="timeDescription" editable="false" layoutX="3.0" layoutY="2.0" maxWidth="453.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="107.0" prefWidth="408.0" text="The player gets 45 seconds to draw the selected word" wrapText="true">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="confidenceDescriptionPane" layoutX="418.0" layoutY="334.0" prefHeight="111.0" prefWidth="411.0" styleClass="infoPane">
+                     <children>
+                        <TextArea fx:id="confidenceDescription" editable="false" layoutX="3.0" layoutY="2.0" maxWidth="453.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="107.0" prefWidth="408.0" text="The confidence level of the correct prediction must be at least 50%" wrapText="true">
                            <font>
                               <Font size="16.0" />
                            </font>
