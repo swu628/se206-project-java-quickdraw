@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameController">
     <children>
-        <AnchorPane fx:id="game" prefHeight="720.0" prefWidth="960.0">
+        <AnchorPane fx:id="game" disable="true" prefHeight="720.0" prefWidth="960.0" visible="false">
             <children>
                 <VBox alignment="CENTER" layoutY="-3.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <children>
@@ -86,7 +86,7 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onStartDrawing" prefHeight="480.0" prefWidth="640.0" styleClass="preGameBody" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="preGamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onStartDrawing" prefHeight="480.0" prefWidth="640.0" styleClass="preGameBody" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label id="category" fx:id="preGameWordLabel" alignment="CENTER" layoutY="290.0" prefHeight="23.0" prefWidth="960.0" text="Word: " textAlignment="CENTER">
                     <font>
@@ -98,6 +98,26 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
+            <Label fx:id="accuracyDifficultyLabel" layoutX="78.0" layoutY="85.0" prefHeight="55.0" prefWidth="265.0" styleClass="difficultySettings" text="Accuracy: MEDIUM">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="wordDifficultyLabel" layoutX="78.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0" styleClass="difficultySettings" text="Words: MEDIUM">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="timeDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0" styleClass="difficultySettings" text="Time: MEDIUM" textAlignment="RIGHT">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="confidenceDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="86.0" prefHeight="55.0" prefWidth="265.0" styleClass="difficultySettings" text="Confidence: MASTER" textAlignment="RIGHT">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
             </children>
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

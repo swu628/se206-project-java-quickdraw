@@ -61,6 +61,10 @@ public class GameController {
   @FXML private Label timerLabel;
   @FXML private TextArea predictionsList;
   @FXML private Label predDirectionLabel;
+  @FXML private Label accuracyDifficultyLabel;
+  @FXML private Label wordDifficultyLabel;
+  @FXML private Label confidenceDifficultyLabel;
+  @FXML private Label timeDifficultyLabel;
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
@@ -94,6 +98,14 @@ public class GameController {
   private void onResetGame() {
     // Clears the canvas
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    User currentUser = App.getCurrentUser();
+    // Displays the difficulty for the next game
+    accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
+    timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
+    confidenceDifficultyLabel.setText(
+        "Confidence: " + currentUser.getConfidenceDifficulty().toString());
+    wordDifficultyLabel.setText("Word: " + currentUser.getWordsDifficulty().toString());
+
     // Chooses a random category for next game
     CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
     preGameWordLabel.setText("Draw: " + CategoryManager.getWord());

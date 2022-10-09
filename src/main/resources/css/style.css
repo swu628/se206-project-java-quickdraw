@@ -39,6 +39,10 @@ Text {
     -fx-font-size: 38px;
 }
 
+.preGameBody .difficultySettings {
+    -fx-font-size: 30px;
+}
+
 .gameBody Label {
     -fx-font-family: "Indie Flower";
     -fx-font-size: 30px;
