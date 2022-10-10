@@ -51,10 +51,12 @@ public class StatisticsController {
     }
 
     // Enables the next selector and disables the previous selector
-    wordsHistoryPrevious.setVisible(false);
-    wordsHistoryPrevious.setDisable(true);
-    wordsHistoryNext.setVisible(true);
-    wordsHistoryNext.setDisable(false);
+    disableHistoryPrevious();
+    if (history.size() > 5) {
+      enableHistoryNext();
+    } else {
+      disableHistoryNext();
+    }
 
     wordsHistory.setText(sb.toString());
   }
@@ -72,14 +74,10 @@ public class StatisticsController {
     }
 
     if (wordsHistoryEnd >= history.size() - 1) {
-      // Disables the next selector
-      wordsHistoryNext.setVisible(false);
-      wordsHistoryNext.setDisable(true);
+      disableHistoryNext();
     }
 
-    // Enables the previous selector
-    wordsHistoryPrevious.setVisible(true);
-    wordsHistoryPrevious.setDisable(false);
+    enableHistoryPrevious();
 
     wordsHistory.setText(sb.toString());
   }
@@ -97,16 +95,32 @@ public class StatisticsController {
     }
 
     if (wordsHistoryStart == 0) {
-      // Disables the previous selector
-      wordsHistoryPrevious.setVisible(false);
-      wordsHistoryPrevious.setDisable(true);
+      disableHistoryPrevious();
     }
 
-    // Enables the next selector
-    wordsHistoryNext.setVisible(true);
-    wordsHistoryNext.setDisable(false);
+    enableHistoryNext();
 
     wordsHistory.setText(sb.toString());
+  }
+
+  private void enableHistoryNext() {
+    wordsHistoryNext.setVisible(true);
+    wordsHistoryNext.setDisable(false);
+  }
+
+  private void disableHistoryNext() {
+    wordsHistoryNext.setVisible(false);
+    wordsHistoryNext.setDisable(true);
+  }
+
+  private void enableHistoryPrevious() {
+    wordsHistoryPrevious.setVisible(true);
+    wordsHistoryPrevious.setDisable(false);
+  }
+
+  private void disableHistoryPrevious() {
+    wordsHistoryPrevious.setVisible(false);
+    wordsHistoryPrevious.setDisable(true);
   }
 
   @FXML
