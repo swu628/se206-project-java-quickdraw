@@ -39,6 +39,10 @@ Text {
     -fx-font-size: 38px;
 }
 
+.preGameBody .difficultySettings {
+    -fx-font-size: 30px;
+}
+
 .gameBody Label {
     -fx-font-family: "Indie Flower";
     -fx-font-size: 30px;
@@ -113,6 +117,41 @@ Text {
 
 
 .wordsHistory TextArea .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+.difficultySettings .infoPane {
+    -fx-border-color: rgb(198, 198, 198);
+    -fx-background-color: rgb(243, 243, 243);
+    -fx-border-width: 1;
+}
+
+.difficultySettings .infoPane TextArea {
+    -fx-font-size: 24px;
+}
+
+.difficultySettings TextArea {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 25px;
+    -fx-background-color: transparent;
+}
+
+.difficultySettings TextArea .text {
+    -fx-line-spacing: 0.05em;
+}
+
+.difficultySettings TextArea .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-vbar-policy: never;
+    -fx-hbar-policy: never;
+}
+
+.difficultySettings TextArea .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+
+.difficultySettings TextArea .scroll-pane .content {
     -fx-background-color: transparent;
 }
 

@@ -16,6 +16,11 @@ public class StatisticsController {
   @FXML private Label gamesLost;
   @FXML private Label fastestTime;
   @FXML private TextArea wordsHistory;
+  @FXML private Button wordsHistoryNext;
+  @FXML private Button wordsHistoryPrevious;
+  private int wordsHistoryStart;
+  private int wordsHistoryEnd;
+  private ArrayList<String> history;
 
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
@@ -34,13 +39,72 @@ public class StatisticsController {
       fastestTime.setText(currentUser.getFastestWon() + " second(s)");
     }
 
-    // Displays list of words encountered by the user
-    StringBuilder sb = new StringBuilder();
-    ArrayList<String> history = currentUser.getWordsHistory();
+    // Displays first 5 words encountered by the user
+    wordsHistoryStart = 0;
+    wordsHistoryEnd = 4;
+    history = currentUser.getWordsHistory();
 
-    for (String word : history) {
-      sb.append(word).append(System.lineSeparator());
+    StringBuilder sb = new StringBuilder();
+
+    for (int i = wordsHistoryStart; i < history.size() && i <= wordsHistoryEnd; i++) {
+      sb.append(history.get(i)).append(System.lineSeparator());
     }
+
+    // Enables the next selector and disables the previous selector
+    wordsHistoryPrevious.setVisible(false);
+    wordsHistoryPrevious.setDisable(true);
+    wordsHistoryNext.setVisible(true);
+    wordsHistoryNext.setDisable(false);
+
+    wordsHistory.setText(sb.toString());
+  }
+
+  @FXML
+  private void onToNextWordHistory() {
+    // Gets next 5 words in history
+    wordsHistoryStart = wordsHistoryEnd + 1;
+    wordsHistoryEnd += 5;
+
+    StringBuilder sb = new StringBuilder();
+
+    for (int i = wordsHistoryStart; i < history.size() && i <= wordsHistoryEnd; i++) {
+      sb.append(history.get(i)).append(System.lineSeparator());
+    }
+
+    if (wordsHistoryEnd >= history.size() - 1) {
+      // Disables the next selector
+      wordsHistoryNext.setVisible(false);
+      wordsHistoryNext.setDisable(true);
+    }
+
+    // Enables the previous selector
+    wordsHistoryPrevious.setVisible(true);
+    wordsHistoryPrevious.setDisable(false);
+
+    wordsHistory.setText(sb.toString());
+  }
+
+  @FXML
+  private void onToPreviousWordHistory() {
+    // Gets previous 5 words in history
+    wordsHistoryEnd = wordsHistoryStart - 1;
+    wordsHistoryStart -= 5;
+
+    StringBuilder sb = new StringBuilder();
+
+    for (int i = wordsHistoryStart; i < history.size() && i <= wordsHistoryEnd; i++) {
+      sb.append(history.get(i)).append(System.lineSeparator());
+    }
+
+    if (wordsHistoryStart == 0) {
+      // Disables the previous selector
+      wordsHistoryPrevious.setVisible(false);
+      wordsHistoryPrevious.setDisable(true);
+    }
+
+    // Enables the next selector
+    wordsHistoryNext.setVisible(true);
+    wordsHistoryNext.setDisable(false);
 
     wordsHistory.setText(sb.toString());
   }
