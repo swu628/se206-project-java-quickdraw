@@ -47,15 +47,13 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class GameController {
-  private static final int MAX_TIME = 60;
-
   @FXML private Canvas canvas;
   @FXML private Button clearButton;
   @FXML private Button penButton;
   @FXML private Button eraserButton;
   @FXML private ImageView toolImage;
-  @FXML private Label categoryLabel;
-  @FXML private Label preGameCategoryLabel;
+  @FXML private Label wordLabel;
+  @FXML private Label preGameWordLabel;
   @FXML private AnchorPane preGamePane;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
@@ -63,6 +61,10 @@ public class GameController {
   @FXML private Label timerLabel;
   @FXML private TextArea predictionsList;
   @FXML private Label predDirectionLabel;
+  @FXML private Label accuracyDifficultyLabel;
+  @FXML private Label wordDifficultyLabel;
+  @FXML private Label confidenceDifficultyLabel;
+  @FXML private Label timeDifficultyLabel;
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
@@ -96,10 +98,18 @@ public class GameController {
   private void onResetGame() {
     // Clears the canvas
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    User currentUser = App.getCurrentUser();
+    // Displays the difficulty for the next game
+    accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
+    timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
+    confidenceDifficultyLabel.setText(
+        "Confidence: " + currentUser.getConfidenceDifficulty().toString());
+    wordDifficultyLabel.setText("Word: " + currentUser.getWordsDifficulty().toString());
+
     // Chooses a random category for next game
-    CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
-    preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
-    categoryLabel.setText("Category: " + CategoryManager.getCategory());
+    CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
+    preGameWordLabel.setText("Draw: " + CategoryManager.getWord());
+    wordLabel.setText("Draw: " + CategoryManager.getWord());
     predDirectionLabel.setText("");
 
     onSwitchToPen();
@@ -109,11 +119,14 @@ public class GameController {
 
   @FXML
   private void onStartDrawing() {
+    User currentUser = App.getCurrentUser();
     // Sets initial conditions of game and shows game pane whilst disabling all the
     // other panes
     gameWon = false;
     doPredict = false;
-    timeLeft = MAX_TIME;
+    timeLeft = currentUser.getTimeDifficulty().getMaxTime();
+    int maxGuessNum = currentUser.getAccuracyDifficulty().getNumGuesses();
+    double minConfidence = currentUser.getConfidenceDifficulty().getMinConfidence();
     onSwitchToPen();
     displayGame();
 
@@ -210,23 +223,28 @@ public class GameController {
 
                     String currentPred = stringBuilder.toString();
 
+                    // Getting confidence of each prediction
+                    double percentage = c.getProbability() * 100;
+
                     if (currentPos == 1) {
                       currentTopPred = currentPred;
-                      sb.append(currentPos)
-                          .append(". ")
-                          .append(currentPred)
+                      sb.append(currentPred)
+                          .append(" - ")
+                          .append(String.format("%.2f", percentage))
+                          .append("%")
                           .append(System.lineSeparator());
                     } else if (currentPos <= 10) {
-                      sb.append(currentPos)
-                          .append(". ")
-                          .append(currentPred)
+                      sb.append(currentPred)
+                          .append(" - ")
+                          .append(String.format("%.2f", percentage))
+                          .append("%")
                           .append(System.lineSeparator());
                     }
 
                     // Checks if current prediction word is correct
-                    if (currentPred.equals(CategoryManager.getCategory())) {
+                    if (currentPred.equals(CategoryManager.getWord())) {
                       wordFound = true;
-                      if (currentPos <= 3) {
+                      if (currentPos <= maxGuessNum && percentage >= minConfidence) {
                         gameWon = true;
                       }
                       if (currentPos <= 10) {
@@ -248,8 +266,6 @@ public class GameController {
                                 predDirectionLabel.setText("getting FURTHER");
                               });
                         }
-                        prevPredPos = currentPos;
-                        break;
                       }
                       prevPredPos = currentPos;
                     }
@@ -323,7 +339,7 @@ public class GameController {
             // Updates the user's history of words encountered
             ArrayList<String> wordsHistory = user.getWordsHistory();
 
-            wordsHistory.add(CategoryManager.getCategory());
+            wordsHistory.add(CategoryManager.getWord());
 
             user.setWordsHistory(wordsHistory);
 
