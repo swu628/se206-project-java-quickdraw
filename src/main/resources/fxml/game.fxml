@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameController">
+<AnchorPane prefHeight="720.0" prefWidth="960.0" styleClass="backgroundTwo" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameController">
     <children>
         <AnchorPane fx:id="game" prefHeight="720.0" prefWidth="960.0">
             <children>
@@ -44,7 +44,7 @@
                                   <Font size="16.0" />
                               </font>
                           </Label>
-                  <Label fx:id="predDirectionLabel" layoutX="243.0" layoutY="54.0" styleClass="subHeading" text="Predictions: ">
+                  <Label fx:id="predDirectionLabel" layoutX="233.0" layoutY="53.0" styleClass="subHeading" text="Predictions: ">
                      <font>
                         <Font size="16.0" />
                      </font>

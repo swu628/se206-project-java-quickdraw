@@ -136,7 +136,12 @@ Button:hover {
     -fx-cursor: hand;
 }
 
-.background {
-    -fx-background-image: url("../images/background_image.png");
+.backgroundOne {
+    -fx-background-image: url("../images/background-one.png");
+    -fx-background-size: 100% 100%;
+}
+
+.backgroundTwo {
+    -fx-background-image: url("../images/background-two.png");
     -fx-background-size: 100% 100%;
 }
