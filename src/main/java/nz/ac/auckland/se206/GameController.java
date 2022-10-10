@@ -77,6 +77,8 @@ public class GameController {
   private double currentX;
   private double currentY;
   private Color colour;
+  private boolean isExitBtnClicked;
+  private volatile Thread predictThreadZen;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -140,6 +142,97 @@ public class GameController {
         saveButton.setVisible(true);
         colourPicker.setVisible(true);
         colour = Color.BLACK;
+        isExitBtnClicked = false;
+
+        Task<Void> predictTaskZen =
+            new Task<Void>() {
+
+              @Override
+              protected Void call() throws Exception {
+                // Setting initial conditions for prediction timer
+                double deltaTime = 0;
+                long previousTimeMillis = System.currentTimeMillis();
+
+                // Setting intial conditions for predictior
+                TextToSpeech textToSpeech = new TextToSpeech();
+                String prevTopPred = "";
+                String currentTopPred = "";
+
+                while (!isExitBtnClicked) {
+                  // Calculating how many milliseconds has elapsed since last iteration of the
+                  // loop
+                  // And totaling the milliseconds elapsed
+                  long currentTimeMillis = System.currentTimeMillis();
+                  deltaTime += (currentTimeMillis - previousTimeMillis);
+                  previousTimeMillis = currentTimeMillis;
+                  // If 1000 milliseconds has elapsed, it has been 1 second, so the DL model is
+                  // queried
+                  if (deltaTime >= 1000) {
+                    if (doPredict) {
+                      // Uses game thread to get current snapshot of canvas
+                      // Returns to predictThread to query DL model
+                      FutureTask<BufferedImage> snapshotTask =
+                          new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
+                      Platform.runLater(snapshotTask);
+                      java.util.List<Classifications.Classification> predictions =
+                          model.getPredictions(snapshotTask.get(), 10);
+
+                      // Creates a string which lists the top 10 DL predictions and updates the
+                      // predictionList string
+                      StringBuilder sb = new StringBuilder();
+                      int i = 1;
+                      for (Classifications.Classification c : predictions) {
+                        StringBuilder stringBuilder = new StringBuilder(c.getClassName());
+
+                        for (int j = 0; j < c.getClassName().length(); j++) {
+                          if (stringBuilder.charAt(j) == '_') {
+                            stringBuilder.setCharAt(j, ' ');
+                          }
+                        }
+
+                        String currentPred = stringBuilder.toString();
+
+                        if (i == 1) {
+                          currentTopPred = currentPred;
+                          sb.append(i)
+                              .append(". ")
+                              .append(currentPred)
+                              .append(System.lineSeparator());
+                        } else {
+                          sb.append(i)
+                              .append(". ")
+                              .append(currentPred)
+                              .append(System.lineSeparator());
+                        }
+                        i++;
+                      }
+                      updateMessage(sb.toString());
+                      // If there has been a change to the top 1 prediciton, the text-to-speech will
+                      // say
+                      // what it sees
+                      if (!prevTopPred.equals(currentTopPred)) {
+                        prevTopPred = currentTopPred;
+                        textToSpeech.speak("I see " + currentTopPred);
+                      }
+                    }
+                    deltaTime -= 1000;
+                  }
+                }
+
+                return null;
+              }
+            };
+
+        // Setting intitial conditions for the timer and prediction tasks and threads
+        predictionsList.textProperty().bind(predictTaskZen.messageProperty());
+        predictThreadZen = new Thread(predictTaskZen);
+        predictThreadZen.setDaemon(true);
+        predictThreadZen.start();
+
+        // if (isExitBtnClicked) {
+        // displayPostGame();
+        // }
+
         break;
       case "Normal mode":
         timerLabel.setVisible(true);
@@ -469,6 +562,10 @@ public class GameController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
+
+    if (button.getText().equals("Exit")) {
+      isExitBtnClicked = true;
+    }
   }
 
   @FXML
