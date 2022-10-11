@@ -17,7 +17,7 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameController">
     <children>
-        <AnchorPane fx:id="game" prefHeight="720.0" prefWidth="960.0">
+        <AnchorPane fx:id="game" disable="true" prefHeight="720.0" prefWidth="960.0" visible="false">
             <children>
                 <VBox alignment="CENTER" layoutY="-3.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <children>
@@ -35,17 +35,22 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                          <Label fx:id="categoryLabel" alignment="CENTER_RIGHT" layoutX="431.0" layoutY="54.0" prefHeight="47.0" prefWidth="441.0" styleClass="subHeading" text="Category" textAlignment="CENTER">
-                              <font>
-                                  <Font size="18.0" />
-                              </font>
-                          </Label>
-                        <TextArea fx:id="predictionsList" editable="false" layoutX="26.0" layoutY="112.0" prefHeight="566.0" prefWidth="433.0" text="Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;10. The Great Wall of China&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction" />
-                          <Label fx:id="timerLabel" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="107.0" prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Time Left:" textAlignment="CENTER">
-                              <font>
-                                  <Font size="16.0" />
-                              </font>
-                          </Label>
+                        <Label fx:id="wordLabel" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="54.0" prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Word" textAlignment="CENTER">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <TextArea fx:id="predictionsList" editable="false" layoutX="26.0" layoutY="112.0" prefHeight="566.0" prefWidth="433.0" text="Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;The Great Wall of China - 100.00%&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction" />
+                        <Label fx:id="timerLabel" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="107.0" prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Time Left:" textAlignment="CENTER">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="predDirectionLabel" layoutX="233.0" layoutY="53.0" styleClass="subHeading" text="Prediction Direction">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
                   <Button fx:id="exitButton" layoutX="803.0" layoutY="100.0" mnemonicParsing="false" onAction="#onGameMenu" text="Exit" visible="false" />
                   <Button fx:id="saveButton" layoutX="671.0" layoutY="98.0" mnemonicParsing="false" onAction="#onSaveDrawing" text="Save" visible="false" />
                     </children>
@@ -90,9 +95,9 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onStartDrawing" prefHeight="480.0" prefWidth="640.0" styleClass="preGameBody" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="preGamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onStartDrawing" prefHeight="480.0" prefWidth="640.0" styleClass="preGameBody" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label id="category" fx:id="preGameCategoryLabel" alignment="CENTER" layoutY="290.0" prefHeight="23.0" prefWidth="960.0" text="Category:" textAlignment="CENTER">
+                <Label id="category" fx:id="preGameWordLabel" alignment="CENTER" layoutY="290.0" prefHeight="23.0" prefWidth="960.0" text="Word: " textAlignment="CENTER">
                     <font>
                         <Font size="25.0" />
                     </font>
@@ -102,13 +107,33 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
+            <Label fx:id="accuracyDifficultyLabel" layoutX="78.0" layoutY="85.0" prefHeight="55.0" prefWidth="265.0" styleClass="difficultySettings" text="Accuracy: MEDIUM">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="wordDifficultyLabel" layoutX="78.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0" styleClass="difficultySettings" text="Words: MEDIUM">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="timeDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0" styleClass="difficultySettings" text="Time: MEDIUM" textAlignment="RIGHT">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="confidenceDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="86.0" prefHeight="55.0" prefWidth="265.0" styleClass="difficultySettings" text="Confidence: MASTER" textAlignment="RIGHT">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
             </children>
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
         </AnchorPane>
-      <AnchorPane fx:id="postGame" disable="true" layoutY="125.0" prefHeight="480.0" prefWidth="640.0" styleClass="postGameBody" visible="false">
-         <children>
+        <AnchorPane fx:id="postGame" disable="true" layoutY="125.0" prefHeight="480.0" prefWidth="640.0" styleClass="postGameBody" visible="false">
+            <children>
                 <Label fx:id="postGameOutcomeLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="37.0" prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Game Outcome" textAlignment="CENTER">
                     <font>
                         <Font size="25.0" />
@@ -134,7 +159,7 @@
                         <Font size="16.0" />
                     </font>
                 </Button>
-         </children>
-      </AnchorPane>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>

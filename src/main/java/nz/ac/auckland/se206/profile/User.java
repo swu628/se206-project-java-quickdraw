@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.profile;
 import java.util.ArrayList;
 import java.util.Random;
 import nz.ac.auckland.se206.CategoryManager;
+import nz.ac.auckland.se206.DifficultySettingsController;
 
 public class User {
   private final int[] COLOUR;
@@ -10,12 +11,14 @@ public class User {
   private int gamesWon;
   private int gamesLost;
   private ArrayList<String> wordsHistory;
-
   private ArrayList<String> notPlayedEasyWords = CategoryManager.getEasyWords();
   private ArrayList<String> notPlayedMediumWords = CategoryManager.getMediumWords();
   private ArrayList<String> notPlayedHardWords = CategoryManager.getHardWords();
-
   private int fastestWon;
+  private DifficultySettingsController.AccuracyDifficulty accuracyDifficulty;
+  private DifficultySettingsController.WordsDifficulty wordsDifficulty;
+  private DifficultySettingsController.TimeDifficulty timeDifficulty;
+  private DifficultySettingsController.ConfidenceDifficulty confidenceDifficulty;
 
   public User(String username) {
     this.username = username;
@@ -29,6 +32,12 @@ public class User {
     Random rand = new Random(System.currentTimeMillis());
     // Sets a random colour to be used for user icon
     COLOUR = new int[] {rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)};
+
+    // Sets the default difficulties
+    accuracyDifficulty = DifficultySettingsController.AccuracyDifficulty.EASY;
+    wordsDifficulty = DifficultySettingsController.WordsDifficulty.EASY;
+    timeDifficulty = DifficultySettingsController.TimeDifficulty.EASY;
+    confidenceDifficulty = DifficultySettingsController.ConfidenceDifficulty.EASY;
   }
 
   public String getName() {
@@ -124,5 +133,39 @@ public class User {
         .append(COLOUR[2])
         .append(")");
     return sb.toString();
+  }
+
+  public DifficultySettingsController.AccuracyDifficulty getAccuracyDifficulty() {
+    return accuracyDifficulty;
+  }
+
+  public void setAccuracyDifficulty(
+      DifficultySettingsController.AccuracyDifficulty accuracyDifficulty) {
+    this.accuracyDifficulty = accuracyDifficulty;
+  }
+
+  public DifficultySettingsController.WordsDifficulty getWordsDifficulty() {
+    return wordsDifficulty;
+  }
+
+  public void setWordsDifficulty(DifficultySettingsController.WordsDifficulty wordsDifficulty) {
+    this.wordsDifficulty = wordsDifficulty;
+  }
+
+  public DifficultySettingsController.TimeDifficulty getTimeDifficulty() {
+    return timeDifficulty;
+  }
+
+  public void setTimeDifficulty(DifficultySettingsController.TimeDifficulty timeDifficulty) {
+    this.timeDifficulty = timeDifficulty;
+  }
+
+  public DifficultySettingsController.ConfidenceDifficulty getConfidenceDifficulty() {
+    return confidenceDifficulty;
+  }
+
+  public void setConfidenceDifficulty(
+      DifficultySettingsController.ConfidenceDifficulty confidenceDifficulty) {
+    this.confidenceDifficulty = confidenceDifficulty;
   }
 }

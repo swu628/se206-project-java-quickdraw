@@ -48,15 +48,13 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class GameController {
-  private static final int MAX_TIME = 60;
-
   @FXML private Canvas canvas;
   @FXML private Button clearButton;
   @FXML private Button penButton;
   @FXML private Button eraserButton;
   @FXML private ImageView toolImage;
-  @FXML private Label categoryLabel;
-  @FXML private Label preGameCategoryLabel;
+  @FXML private Label wordLabel;
+  @FXML private Label preGameWordLabel;
   @FXML private AnchorPane preGamePane;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
@@ -66,6 +64,11 @@ public class GameController {
   @FXML private Button exitButton;
   @FXML private Button saveButton;
   @FXML private ColorPicker colourPicker;
+  @FXML private Label predDirectionLabel;
+  @FXML private Label accuracyDifficultyLabel;
+  @FXML private Label wordDifficultyLabel;
+  @FXML private Label confidenceDifficultyLabel;
+  @FXML private Label timeDifficultyLabel;
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
@@ -95,24 +98,26 @@ public class GameController {
   }
 
   public void updateScene() {
-    // Chooses a random category for next game
-    CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
-    preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
-    categoryLabel.setText("Category: " + CategoryManager.getCategory());
-
-    onSwitchToPen();
-    // Displays the pregame pane
-    displayPreGame();
+    onResetGame();
   }
 
   @FXML
   private void onResetGame() {
     // Clears the canvas
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    User currentUser = App.getCurrentUser();
+    // Displays the difficulty for the next game
+    accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
+    timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
+    confidenceDifficultyLabel.setText(
+        "Confidence: " + currentUser.getConfidenceDifficulty().toString());
+    wordDifficultyLabel.setText("Word: " + currentUser.getWordsDifficulty().toString());
+
     // Chooses a random category for next game
-    CategoryManager.setCategory(CategoryManager.Difficulty.EASY);
-    preGameCategoryLabel.setText("Category: " + CategoryManager.getCategory());
-    categoryLabel.setText("Category: " + CategoryManager.getCategory());
+    CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
+    preGameWordLabel.setText("Draw: " + CategoryManager.getWord());
+    wordLabel.setText("Draw: " + CategoryManager.getWord());
+    predDirectionLabel.setText("");
 
     if (colourPicker.isVisible()) {
       colourPicker.setValue(Color.BLACK);
@@ -124,11 +129,14 @@ public class GameController {
 
   @FXML
   private void onStartDrawing() {
+    User currentUser = App.getCurrentUser();
     // Sets initial conditions of game and shows game pane whilst disabling all the
     // other panes
     gameWon = false;
     doPredict = false;
-    timeLeft = MAX_TIME;
+    timeLeft = currentUser.getTimeDifficulty().getMaxTime();
+    int maxGuessNum = currentUser.getAccuracyDifficulty().getNumGuesses();
+    double minConfidence = currentUser.getConfidenceDifficulty().getMinConfidence();
     onSwitchToPen();
     displayGame();
 
@@ -279,84 +287,121 @@ public class GameController {
                     () -> {
                       setPostGame(timeTaken);
                     });
-
+                    
                 return null;
               }
             };
 
         Task<Void> predictTask =
             new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // Setting initial conditions for prediction timer
+            double deltaTime = 0;
+            long previousTimeMillis = System.currentTimeMillis();
 
-              @Override
-              protected Void call() throws Exception {
-                // Setting initial conditions for prediction timer
-                double deltaTime = 0;
-                long previousTimeMillis = System.currentTimeMillis();
+            // Setting initial conditions for prediction
+            TextToSpeech textToSpeech = new TextToSpeech();
+            String prevTopPred = "";
+            String currentTopPred = "";
+            int prevPredPos = Integer.MAX_VALUE;
 
-                // Setting intial conditions for predictior
-                TextToSpeech textToSpeech = new TextToSpeech();
-                String prevTopPred = "";
-                String currentTopPred = "";
+            while (timeLeft >= 0 && !gameWon) {
+              // Calculating how many milliseconds has elapsed since last iteration of the
+              // loop
+              // And totaling the milliseconds elapsed
+              long currentTimeMillis = System.currentTimeMillis();
+              deltaTime += (currentTimeMillis - previousTimeMillis);
+              previousTimeMillis = currentTimeMillis;
+              // If 1000 milliseconds has elapsed, it has been 1 second, so the DL model is
+              // queried
+              if (deltaTime >= 1000) {
+                if (doPredict) {
+                  // Uses game thread to get current snapshot of canvas
+                  // Returns to predictThread to query DL model
+                  FutureTask<BufferedImage> snapshotTask =
+                      new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
+                  Platform.runLater(snapshotTask);
+                  java.util.List<Classifications.Classification> predictions =
+                      model.getPredictions(snapshotTask.get(), 50);
+                  // Creates a string which lists the top 10 DL predictions and updates the
+                  // predictionList string
+                  StringBuilder sb = new StringBuilder();
+                  int currentPos = 1;
+                  boolean wordFound = false;
+                  for (Classifications.Classification c : predictions) {
+                    StringBuilder stringBuilder = new StringBuilder(c.getClassName());
 
-                while (timeLeft >= 0 && !gameWon) {
-                  // Calculating how many milliseconds has elapsed since last iteration of the
-                  // loop
-                  // And totaling the milliseconds elapsed
-                  long currentTimeMillis = System.currentTimeMillis();
-                  deltaTime += (currentTimeMillis - previousTimeMillis);
-                  previousTimeMillis = currentTimeMillis;
-                  // If 1000 milliseconds has elapsed, it has been 1 second, so the DL model is
-                  // queried
-                  if (deltaTime >= 1000) {
-                    if (doPredict) {
-                      // Uses game thread to get current snapshot of canvas
-                      // Returns to predictThread to query DL model
-                      FutureTask<BufferedImage> snapshotTask =
-                          new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
-                      Platform.runLater(snapshotTask);
-                      java.util.List<Classifications.Classification> predictions =
-                          model.getPredictions(snapshotTask.get(), 10);
-
-                      // Creates a string which lists the top 10 DL predictions and updates the
-                      // predictionList string
-                      StringBuilder sb = new StringBuilder();
-                      int i = 1;
-                      for (Classifications.Classification c : predictions) {
-                        StringBuilder stringBuilder = new StringBuilder(c.getClassName());
-
-                        for (int j = 0; j < c.getClassName().length(); j++) {
-                          if (stringBuilder.charAt(j) == '_') {
-                            stringBuilder.setCharAt(j, ' ');
-                          }
-                        }
-
-                        String currentPred = stringBuilder.toString();
-
-                        if (i == 1) {
-                          currentTopPred = currentPred;
-                          sb.append(i)
-                              .append(". ")
-                              .append(currentPred)
-                              .append(System.lineSeparator());
-                        } else {
-                          sb.append(i)
-                              .append(". ")
-                              .append(currentPred)
-                              .append(System.lineSeparator());
-                        }
-                        if (currentPred.equals(CategoryManager.getCategory()) && i <= 3) {
-                          gameWon = true;
-                        }
-                        i++;
+                    for (int j = 0; j < c.getClassName().length(); j++) {
+                      if (stringBuilder.charAt(j) == '_') {
+                        stringBuilder.setCharAt(j, ' ');
                       }
-                      updateMessage(sb.toString());
-                      // If there has been a change to the top 1 prediciton, the text-to-speech will
-                      // say
-                      // what it sees
-                      if (!prevTopPred.equals(currentTopPred)) {
-                        prevTopPred = currentTopPred;
-                        textToSpeech.speak("I see " + currentTopPred);
+                    }
+
+                    String currentPred = stringBuilder.toString();
+
+                    // Getting confidence of each prediction
+                    double percentage = c.getProbability() * 100;
+
+                    if (currentPos == 1) {
+                      currentTopPred = currentPred;
+                      sb.append(currentPred)
+                          .append(" - ")
+                          .append(String.format("%.2f", percentage))
+                          .append("%")
+                          .append(System.lineSeparator());
+                    } else if (currentPos <= 10) {
+                      sb.append(currentPred)
+                          .append(" - ")
+                          .append(String.format("%.2f", percentage))
+                          .append("%")
+                          .append(System.lineSeparator());
+                    }
+
+                    // Checks if current prediction word is correct
+                    if (currentPred.equals(CategoryManager.getWord())) {
+                      wordFound = true;
+                      if (currentPos <= maxGuessNum && percentage >= minConfidence) {
+                        gameWon = true;
                       }
+                      if (currentPos <= 10) {
+                        Platform.runLater(
+                            () -> {
+                              predDirectionLabel.setText("in top 10");
+                            });
+                      } else {
+                        // Checks if prediction is getting further or closer to top 10
+                        if (currentPos < prevPredPos) {
+                          Platform.runLater(
+                              () -> {
+                                predDirectionLabel.setText("getting CLOSER");
+                              });
+
+                        } else if (currentPos > prevPredPos) {
+                          Platform.runLater(
+                              () -> {
+                                predDirectionLabel.setText("getting FURTHER");
+                              });
+                        }
+                      }
+                      prevPredPos = currentPos;
+                    }
+                    currentPos++;
+                  }
+                  if (!wordFound) {
+                    Platform.runLater(
+                        () -> {
+                          predDirectionLabel.setText("getting FURTHER");
+                        });
+                  }
+                  updateMessage(sb.toString());
+                  // If there has been a change to the top 1 prediction, the text-to-speech will
+                  // say
+                  // what it sees
+                  if (!prevTopPred.equals(currentTopPred)) {
+                    prevTopPred = currentTopPred;
+                    textToSpeech.speak("I see " + currentTopPred);
+                    }
                     }
                     deltaTime -= 1000;
                   }
@@ -413,7 +458,7 @@ public class GameController {
             // Updates the user's history of words encountered
             ArrayList<String> wordsHistory = user.getWordsHistory();
 
-            wordsHistory.add(CategoryManager.getCategory());
+            wordsHistory.add(CategoryManager.getWord());
 
             user.setWordsHistory(wordsHistory);
 

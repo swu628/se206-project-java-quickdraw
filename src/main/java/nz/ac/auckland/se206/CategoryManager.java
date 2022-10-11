@@ -16,7 +16,7 @@ public class CategoryManager {
   private static ArrayList<String> hard = new ArrayList<>();
 
   private static Random rand = new Random();
-  private static String category;
+  private static String word;
 
   public static void addEasy(String c) {
     easy.add(c);
@@ -42,7 +42,7 @@ public class CategoryManager {
     return hard;
   }
 
-  public static String getRandomCategory(Difficulty diff) {
+  public static String getRandomWord(Difficulty diff) {
 
     User user = App.getCurrentUser();
 
@@ -75,11 +75,13 @@ public class CategoryManager {
     return words.get(rand.nextInt(words.size()));
   }
 
-  public static void setCategory(Difficulty diff) {
-    category = getRandomCategory(diff);
+  public static void setWord(DifficultySettingsController.WordsDifficulty diff) {
+    Difficulty[] difficulties = diff.getDifficulties();
+
+    word = getRandomWord(difficulties[rand.nextInt(difficulties.length)]);
   }
 
-  public static String getCategory() {
-    return category;
+  public static String getWord() {
+    return word;
   }
 }
