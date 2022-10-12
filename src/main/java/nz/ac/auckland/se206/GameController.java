@@ -119,9 +119,20 @@ public class GameController {
     wordLabel.setText("Draw: " + CategoryManager.getWord());
     predDirectionLabel.setText("");
 
+    // Set pen colour to read
     if (colourPicker.isVisible()) {
       colourPicker.setValue(Color.BLACK);
     }
+
+    // Set visibility of time label
+    Button button = (Button) ModeSelectController.getActionEvent().getSource();
+    btnClicked = button.getText();
+    if (btnClicked.equals("Normal mode")) {
+      timeDifficultyLabel.setVisible(true);
+    } else if (btnClicked.equals("Zen mode")) {
+      timeDifficultyLabel.setVisible(false);
+    }
+
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
     displayPreGame();
@@ -140,17 +151,16 @@ public class GameController {
     onSwitchToPen();
     displayGame();
 
-    Button button = (Button) ModeSelectController.getActionEvent().getSource();
-    btnClicked = button.getText(); // get the button's text
-
     switch (btnClicked) {
       case "Zen mode":
         timerLabel.setVisible(false);
         exitButton.setVisible(true);
         saveButton.setVisible(true);
         colourPicker.setVisible(true);
-        colour = Color.BLACK;
+        timeDifficultyLabel.setVisible(false);
         isExitBtnClicked = false;
+        colour = Color.BLACK;
+
         getPredictTask(maxGuessNum, minConfidence, currentUser);
 
         // Save the word to history
@@ -167,12 +177,15 @@ public class GameController {
         fileWriter.close();
 
         break;
+
       case "Normal mode":
         timerLabel.setVisible(true);
         exitButton.setVisible(false);
         saveButton.setVisible(false);
         colourPicker.setVisible(false);
+        timeDifficultyLabel.setVisible(true);
         colour = Color.BLACK;
+
         getTimerTask();
         getPredictTask(maxGuessNum, minConfidence, currentUser);
 
@@ -196,8 +209,7 @@ public class GameController {
             // stop
             while (timeLeft >= 0 && !gameWon) {
               // Calculating how many milliseconds has elapsed since last iteration of the
-              // loop
-              // And totaling the milliseconds elapsed
+              // loop, and totaling the milliseconds elapsed
               long currentTimeMillis = System.currentTimeMillis();
               deltaTime += (currentTimeMillis - previousTimeMillis);
               previousTimeMillis = currentTimeMillis;
@@ -264,6 +276,7 @@ public class GameController {
    *
    * @param maxGuessNum depends on the difficulty chosen
    * @param minConfidence depends on the difficulty chosen
+   * @param currentUser is the current account logged in
    */
   private void getPredictTask(int maxGuessNum, double minConfidence, User currentUser) {
     Task<Void> predictTask =
@@ -282,8 +295,7 @@ public class GameController {
 
             while (getStatement()) {
               // Calculating how many milliseconds has elapsed since last iteration of the
-              // loop
-              // And totaling the milliseconds elapsed
+              // loop, and totaling the milliseconds elapsed
               long currentTimeMillis = System.currentTimeMillis();
               deltaTime += (currentTimeMillis - previousTimeMillis);
               previousTimeMillis = currentTimeMillis;
@@ -372,8 +384,7 @@ public class GameController {
                   }
                   updateMessage(sb.toString());
                   // If there has been a change to the top 1 prediction, the text-to-speech will
-                  // say
-                  // what it sees
+                  // say what it sees
                   if (!prevTopPred.equals(currentTopPred)) {
                     prevTopPred = currentTopPred;
                     textToSpeech.speak("I see " + currentTopPred);
@@ -459,8 +470,7 @@ public class GameController {
     saveThread.start();
 
     // Sets the postGame pane to visible so save, play again and quit utilities are
-    // available to the
-    // player
+    // available to the player
     displayPostGame();
   }
 
@@ -546,8 +556,7 @@ public class GameController {
   @FXML
   private void onSaveDrawing() throws IOException {
     // Opens a new file explorer window for user to save the image at their chosen
-    // location
-    // Will only save if the extension is a .jpg or .png
+    // location. Will only save if the extension is a .jpg or .png
     FileChooser fc = new FileChooser();
     fc.getExtensionFilters()
         .addAll(
