@@ -81,7 +81,7 @@ public class GameController {
   private double currentY;
   private Color colour;
   private boolean isExitBtnClicked;
-  private volatile Thread predictThreadZen;
+  private String btnClicked;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -128,7 +128,7 @@ public class GameController {
   }
 
   @FXML
-  private void onStartDrawing() {
+  private void onStartDrawing() throws IOException {
     User currentUser = App.getCurrentUser();
     // Sets initial conditions of game and shows game pane whilst disabling all the
     // other panes
@@ -141,7 +141,7 @@ public class GameController {
     displayGame();
 
     Button button = (Button) ModeSelectController.getActionEvent().getSource();
-    String btnClicked = button.getText(); // get the button's text
+    btnClicked = button.getText(); // get the button's text
 
     switch (btnClicked) {
       case "Zen mode":
@@ -151,95 +151,7 @@ public class GameController {
         colourPicker.setVisible(true);
         colour = Color.BLACK;
         isExitBtnClicked = false;
-
-        Task<Void> predictTaskZen =
-            new Task<Void>() {
-
-              @Override
-              protected Void call() throws Exception {
-                // Setting initial conditions for prediction timer
-                double deltaTime = 0;
-                long previousTimeMillis = System.currentTimeMillis();
-
-                // Setting intial conditions for predictior
-                TextToSpeech textToSpeech = new TextToSpeech();
-                String prevTopPred = "";
-                String currentTopPred = "";
-
-                while (!isExitBtnClicked) {
-                  // Calculating how many milliseconds has elapsed since last iteration of the
-                  // loop
-                  // And totaling the milliseconds elapsed
-                  long currentTimeMillis = System.currentTimeMillis();
-                  deltaTime += (currentTimeMillis - previousTimeMillis);
-                  previousTimeMillis = currentTimeMillis;
-                  // If 1000 milliseconds has elapsed, it has been 1 second, so the DL model is
-                  // queried
-                  if (deltaTime >= 1000) {
-                    if (doPredict) {
-                      // Uses game thread to get current snapshot of canvas
-                      // Returns to predictThread to query DL model
-                      FutureTask<BufferedImage> snapshotTask =
-                          new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
-                      Platform.runLater(snapshotTask);
-                      java.util.List<Classifications.Classification> predictions =
-                          model.getPredictions(snapshotTask.get(), 10);
-
-                      // Creates a string which lists the top 10 DL predictions and updates the
-                      // predictionList string
-                      StringBuilder sb = new StringBuilder();
-                      int i = 1;
-                      for (Classifications.Classification c : predictions) {
-                        StringBuilder stringBuilder = new StringBuilder(c.getClassName());
-
-                        for (int j = 0; j < c.getClassName().length(); j++) {
-                          if (stringBuilder.charAt(j) == '_') {
-                            stringBuilder.setCharAt(j, ' ');
-                          }
-                        }
-
-                        String currentPred = stringBuilder.toString();
-
-                        if (i == 1) {
-                          currentTopPred = currentPred;
-                          sb.append(i)
-                              .append(". ")
-                              .append(currentPred)
-                              .append(System.lineSeparator());
-                        } else {
-                          sb.append(i)
-                              .append(". ")
-                              .append(currentPred)
-                              .append(System.lineSeparator());
-                        }
-                        i++;
-                      }
-                      updateMessage(sb.toString());
-                      // If there has been a change to the top 1 prediciton, the text-to-speech will
-                      // say
-                      // what it sees
-                      if (!prevTopPred.equals(currentTopPred)) {
-                        prevTopPred = currentTopPred;
-                        textToSpeech.speak("I see " + currentTopPred);
-                      }
-                    }
-                    deltaTime -= 1000;
-                  }
-                }
-
-                return null;
-              }
-            };
-
-        // Setting intitial conditions for the timer and prediction tasks and threads
-        predictionsList.textProperty().bind(predictTaskZen.messageProperty());
-        predictThreadZen = new Thread(predictTaskZen);
-        predictThreadZen.setDaemon(true);
-        predictThreadZen.start();
-
-        // if (isExitBtnClicked) {
-        // displayPostGame();
-        // }
+        getPredictTask(maxGuessNum, minConfidence);
 
         break;
       case "Normal mode":
@@ -248,52 +160,101 @@ public class GameController {
         saveButton.setVisible(false);
         colourPicker.setVisible(false);
         colour = Color.BLACK;
-        // Creating timer task for tracking time player has left to draw
-        Task<Void> timerTask =
-            new Task<Void>() {
-              @Override
-              protected Void call() throws Exception {
-                // Setting initial conditions for timer
-                double deltaTime = 0;
-                long previousTimeMillis = System.currentTimeMillis();
+        getTimerTask();
+        getPredictTask(maxGuessNum, minConfidence);
 
-                updateMessage("Time left: " + timeLeft + "s");
-                // If there are less than 0 seconds or the game has been won, the timer will
-                // stop
-                while (timeLeft >= 0 && !gameWon) {
-                  // Calculating how many milliseconds has elapsed since last iteration of the
-                  // loop
-                  // And totaling the milliseconds elapsed
-                  long currentTimeMillis = System.currentTimeMillis();
-                  deltaTime += (currentTimeMillis - previousTimeMillis);
-                  previousTimeMillis = currentTimeMillis;
-                  // If 1000 milliseconds has elapsed, it has been 1 second, so timer is updated
-                  if (deltaTime >= 1000) {
-                    timeLeft--;
-                    if (timeLeft >= 0) {
-                      updateMessage("Time left: " + timeLeft + "s");
-                    }
-                    deltaTime -= 1000;
-                  }
+        break;
+    }
+  }
+
+  /** This method will call the timer task; it will generate a count down timer */
+  private void getTimerTask() {
+    // Creating timer task for tracking time player has left to draw
+    Task<Void> timerTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // Setting initial conditions for timer
+            double deltaTime = 0;
+            long previousTimeMillis = System.currentTimeMillis();
+
+            updateMessage("Time left: " + timeLeft + "s");
+            // If there are less than 0 seconds or the game has been won, the timer will
+            // stop
+            while (timeLeft >= 0 && !gameWon) {
+              // Calculating how many milliseconds has elapsed since last iteration of the
+              // loop
+              // And totaling the milliseconds elapsed
+              long currentTimeMillis = System.currentTimeMillis();
+              deltaTime += (currentTimeMillis - previousTimeMillis);
+              previousTimeMillis = currentTimeMillis;
+              // If 1000 milliseconds has elapsed, it has been 1 second, so timer is updated
+              if (deltaTime >= 1000) {
+                timeLeft--;
+                if (timeLeft >= 0) {
+                  updateMessage("Time left: " + timeLeft + "s");
                 }
-
-                final int timeTaken = 60 - timeLeft;
-
-                while (predictThread.isAlive()) {
-                  // Waiting for predict thread to die before going to post game scene.
-                }
-
-                Platform.runLater(
-                    () -> {
-                      setPostGame(timeTaken);
-                    });
-                    
-                return null;
+                deltaTime -= 1000;
               }
-            };
+            }
 
-        Task<Void> predictTask =
-            new Task<Void>() {
+            final int timeTaken = 60 - timeLeft;
+
+            while (predictThread.isAlive()) {
+              // Waiting for predict thread to die before going to post game scene.
+            }
+
+            Platform.runLater(
+                () -> {
+                  setPostGame(timeTaken);
+                });
+
+            return null;
+          }
+        };
+
+    // Setting intitial conditions for the timer and prediction tasks and threads
+    timerLabel.textProperty().bind(timerTask.messageProperty());
+    timerThread = new Thread(timerTask);
+    timerThread.setDaemon(true);
+    timerThread.start();
+  }
+
+  /**
+   * This is a helper method which will be used in the prediction task
+   *
+   * @return either true or false based on the mode chosen
+   */
+  private boolean getStatement() {
+    boolean statement = false;
+    switch (btnClicked) {
+      case "Normal mode":
+        if (timeLeft >= 0 && !gameWon) {
+          statement = true;
+        } else {
+          statement = false;
+        }
+        break;
+      case "Zen mode":
+        if (!isExitBtnClicked) {
+          statement = true;
+        } else {
+          statement = false;
+        }
+        break;
+    }
+    return statement;
+  }
+
+  /**
+   * This method will call the prediction task; it will generate the prediction list
+   *
+   * @param maxGuessNum depends on the difficulty chosen
+   * @param minConfidence depends on the difficulty chosen
+   */
+  private void getPredictTask(int maxGuessNum, double minConfidence) {
+    Task<Void> predictTask =
+        new Task<Void>() {
           @Override
           protected Void call() throws Exception {
             // Setting initial conditions for prediction timer
@@ -306,7 +267,7 @@ public class GameController {
             String currentTopPred = "";
             int prevPredPos = Integer.MAX_VALUE;
 
-            while (timeLeft >= 0 && !gameWon) {
+            while (getStatement()) {
               // Calculating how many milliseconds has elapsed since last iteration of the
               // loop
               // And totaling the milliseconds elapsed
@@ -361,9 +322,11 @@ public class GameController {
                     // Checks if current prediction word is correct
                     if (currentPred.equals(CategoryManager.getWord())) {
                       wordFound = true;
+
                       if (currentPos <= maxGuessNum && percentage >= minConfidence) {
                         gameWon = true;
                       }
+
                       if (currentPos <= 10) {
                         Platform.runLater(
                             () -> {
@@ -401,28 +364,20 @@ public class GameController {
                   if (!prevTopPred.equals(currentTopPred)) {
                     prevTopPred = currentTopPred;
                     textToSpeech.speak("I see " + currentTopPred);
-                    }
-                    }
-                    deltaTime -= 1000;
                   }
                 }
-                return null;
+                deltaTime -= 1000;
               }
-            };
+            }
+            return null;
+          }
+        };
 
-        // Setting intitial conditions for the timer and prediction tasks and threads
-        timerLabel.textProperty().bind(timerTask.messageProperty());
-        predictionsList.textProperty().bind(predictTask.messageProperty());
-
-        timerThread = new Thread(timerTask);
-        predictThread = new Thread(predictTask);
-        timerThread.setDaemon(true);
-        predictThread.setDaemon(true);
-
-        timerThread.start();
-        predictThread.start();
-        break;
-    }
+    // Setting intitial conditions for the timer and prediction tasks and threads
+    predictionsList.textProperty().bind(predictTask.messageProperty());
+    predictThread = new Thread(predictTask);
+    predictThread.setDaemon(true);
+    predictThread.start();
   }
 
   private void setPostGame(int timeTaken) {
