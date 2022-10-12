@@ -15,10 +15,15 @@ public class GameMenuController {
   @FXML private Button signOutButton;
   @FXML private Button quitButton;
 
+  /**
+   * This method is called upon first load of the fxml. It sets the font to the custom IndieFlower
+   * font.
+   */
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
   }
 
+  /** This method updates the scene to the user's username */
   public void updateScene() {
     welcomeText.setText("Welcome " + App.getCurrentUser().getName());
   }
@@ -31,6 +36,11 @@ public class GameMenuController {
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MODE_SELECT));
   }
 
+  /**
+   * This method changes the scene to the statistics scene
+   *
+   * @param e the action event that triggered this method
+   */
   @FXML
   private void onShowStatistics(ActionEvent e) {
     Button button = (Button) e.getSource();
@@ -41,6 +51,11 @@ public class GameMenuController {
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.STATISTICS));
   }
 
+  /**
+   * This method changes the scene to the difficulty settings scene
+   *
+   * @param e the action event that triggered this method
+   */
   @FXML
   private void onShowDifficultySettings(ActionEvent e) {
     Button button = (Button) e.getSource();
@@ -51,6 +66,11 @@ public class GameMenuController {
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.DIFFICULTY_SETTINGS));
   }
 
+  /**
+   * This method signs out the user and changes the scene to the main menu scene
+   *
+   * @param e the action event that triggered this method
+   */
   @FXML
   private void onSignOut(ActionEvent e) {
     App.setCurrentUser(null);
@@ -62,6 +82,7 @@ public class GameMenuController {
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));
   }
 
+  /** This method quits the game */
   @FXML
   private void onQuitGame() {
     Platform.exit();

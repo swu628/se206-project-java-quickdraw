@@ -22,10 +22,19 @@ public class StatisticsController {
   private int wordsHistoryEnd;
   private ArrayList<String> history;
 
+  /**
+   * This method is called upon first load of the fxml. It sets the font to the custom IndieFlower
+   * font.
+   */
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
   }
 
+  /**
+   * This method updates the scene with the statistics of the current user.
+   *
+   * @param currentUser the current user
+   */
   public void updateScene(User currentUser) {
     // Sets the statistics scene to show current user's statistics
     username.setText(currentUser.getName() + "'s statistics");
@@ -59,6 +68,7 @@ public class StatisticsController {
     wordsHistory.setText(sb.toString());
   }
 
+  /** This method displays the next 5 words in the current user's words history */
   @FXML
   private void onToNextWordHistory() {
     // Gets next 5 words in history
@@ -84,6 +94,7 @@ public class StatisticsController {
     wordsHistory.setText(sb.toString());
   }
 
+  /** This method displays the previous 5 words in the current user's words history */
   @FXML
   private void onToPreviousWordHistory() {
     // Gets previous 5 words in history
@@ -109,6 +120,11 @@ public class StatisticsController {
     wordsHistory.setText(sb.toString());
   }
 
+  /**
+   * This method changes the scene to the game menu
+   *
+   * @param e the action event that triggered this method
+   */
   @FXML
   private void onGameMenu(ActionEvent e) {
     Button button = (Button) e.getSource();

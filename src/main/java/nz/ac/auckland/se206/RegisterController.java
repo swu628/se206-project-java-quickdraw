@@ -22,6 +22,10 @@ public class RegisterController {
 
   @FXML private TextField newUsernameField;
 
+  /**
+   * This method is called upon first load of the fxml. It sets the font to the custom IndieFlower
+   * font.
+   */
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
   }
