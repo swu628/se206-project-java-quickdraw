@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -60,6 +61,9 @@ public class GameController {
   @FXML private AnchorPane game;
   @FXML private Label timerLabel;
   @FXML private TextArea predictionsList;
+  @FXML private Button exitButton;
+  @FXML private Button saveButton;
+  @FXML private ColorPicker colourPicker;
   @FXML private Label predDirectionLabel;
   @FXML private Label accuracyDifficultyLabel;
   @FXML private Label wordDifficultyLabel;
@@ -75,6 +79,9 @@ public class GameController {
   // mouse coordinates
   private double currentX;
   private double currentY;
+  private Color colour;
+  private boolean isExitBtnClicked;
+  private String btnClicked;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -112,13 +119,27 @@ public class GameController {
     wordLabel.setText("Draw: " + CategoryManager.getWord());
     predDirectionLabel.setText("");
 
+    // Set pen colour to read
+    if (colourPicker.isVisible()) {
+      colourPicker.setValue(Color.BLACK);
+    }
+
+    // Set visibility of time label
+    Button button = (Button) ModeSelectController.getActionEvent().getSource();
+    btnClicked = button.getText();
+    if (btnClicked.equals("Normal mode")) {
+      timeDifficultyLabel.setVisible(true);
+    } else if (btnClicked.equals("Zen mode")) {
+      timeDifficultyLabel.setVisible(false);
+    }
+
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
     displayPreGame();
   }
 
   @FXML
-  private void onStartDrawing() {
+  private void onStartDrawing() throws IOException {
     User currentUser = App.getCurrentUser();
     // Sets initial conditions of game and shows game pane whilst disabling all the
     // other panes
@@ -130,6 +151,50 @@ public class GameController {
     onSwitchToPen();
     displayGame();
 
+    switch (btnClicked) {
+      case "Zen mode":
+        timerLabel.setVisible(false);
+        exitButton.setVisible(true);
+        saveButton.setVisible(true);
+        colourPicker.setVisible(true);
+        timeDifficultyLabel.setVisible(false);
+        isExitBtnClicked = false;
+        colour = Color.BLACK;
+
+        getPredictTask(maxGuessNum, minConfidence, currentUser);
+
+        // Save the word to history
+        // Updates the user's history of words encountered
+        ArrayList<String> wordsHistory = currentUser.getWordsHistory();
+        wordsHistory.add(CategoryManager.getWord());
+        currentUser.setWordsHistory(wordsHistory);
+        // Create json file named as the username
+        FileWriter fileWriter =
+            new FileWriter("src/main/resources/UserProfiles/" + currentUser.getName() + ".json");
+        // Write user details into the file
+        Gson gson = new Gson();
+        gson.toJson(currentUser, fileWriter);
+        fileWriter.close();
+
+        break;
+
+      case "Normal mode":
+        timerLabel.setVisible(true);
+        exitButton.setVisible(false);
+        saveButton.setVisible(false);
+        colourPicker.setVisible(false);
+        timeDifficultyLabel.setVisible(true);
+        colour = Color.BLACK;
+
+        getTimerTask();
+        getPredictTask(maxGuessNum, minConfidence, currentUser);
+
+        break;
+    }
+  }
+
+  /** This method will call the timer task; it will generate a count down timer */
+  private void getTimerTask() {
     // Creating timer task for tracking time player has left to draw
     Task<Void> timerTask =
         new Task<Void>() {
@@ -144,8 +209,7 @@ public class GameController {
             // stop
             while (timeLeft >= 0 && !gameWon) {
               // Calculating how many milliseconds has elapsed since last iteration of the
-              // loop
-              // And totaling the milliseconds elapsed
+              // loop, and totaling the milliseconds elapsed
               long currentTimeMillis = System.currentTimeMillis();
               deltaTime += (currentTimeMillis - previousTimeMillis);
               previousTimeMillis = currentTimeMillis;
@@ -174,9 +238,49 @@ public class GameController {
           }
         };
 
+    // Setting intitial conditions for the timer and prediction tasks and threads
+    timerLabel.textProperty().bind(timerTask.messageProperty());
+    timerThread = new Thread(timerTask);
+    timerThread.setDaemon(true);
+    timerThread.start();
+  }
+
+  /**
+   * This is a helper method which will be used in the prediction task
+   *
+   * @return either true or false based on the mode chosen
+   */
+  private boolean getStatement() {
+    boolean statement = false;
+    switch (btnClicked) {
+      case "Normal mode":
+        if (timeLeft >= 0 && !gameWon) {
+          statement = true;
+        } else {
+          statement = false;
+        }
+        break;
+      case "Zen mode":
+        if (!isExitBtnClicked) {
+          statement = true;
+        } else {
+          statement = false;
+        }
+        break;
+    }
+    return statement;
+  }
+
+  /**
+   * This method will call the prediction task; it will generate the prediction list
+   *
+   * @param maxGuessNum depends on the difficulty chosen
+   * @param minConfidence depends on the difficulty chosen
+   * @param currentUser is the current account logged in
+   */
+  private void getPredictTask(int maxGuessNum, double minConfidence, User currentUser) {
     Task<Void> predictTask =
         new Task<Void>() {
-
           @Override
           protected Void call() throws Exception {
             // Setting initial conditions for prediction timer
@@ -189,10 +293,9 @@ public class GameController {
             String currentTopPred = "";
             int prevPredPos = Integer.MAX_VALUE;
 
-            while (timeLeft >= 0 && !gameWon) {
+            while (getStatement()) {
               // Calculating how many milliseconds has elapsed since last iteration of the
-              // loop
-              // And totaling the milliseconds elapsed
+              // loop, and totaling the milliseconds elapsed
               long currentTimeMillis = System.currentTimeMillis();
               deltaTime += (currentTimeMillis - previousTimeMillis);
               previousTimeMillis = currentTimeMillis;
@@ -244,9 +347,11 @@ public class GameController {
                     // Checks if current prediction word is correct
                     if (currentPred.equals(CategoryManager.getWord())) {
                       wordFound = true;
+
                       if (currentPos <= maxGuessNum && percentage >= minConfidence) {
                         gameWon = true;
                       }
+
                       if (currentPos <= 10) {
                         Platform.runLater(
                             () -> {
@@ -279,8 +384,7 @@ public class GameController {
                   }
                   updateMessage(sb.toString());
                   // If there has been a change to the top 1 prediction, the text-to-speech will
-                  // say
-                  // what it sees
+                  // say what it sees
                   if (!prevTopPred.equals(currentTopPred)) {
                     prevTopPred = currentTopPred;
                     textToSpeech.speak("I see " + currentTopPred);
@@ -289,20 +393,15 @@ public class GameController {
                 deltaTime -= 1000;
               }
             }
+
             return null;
           }
         };
 
     // Setting intitial conditions for the timer and prediction tasks and threads
-    timerLabel.textProperty().bind(timerTask.messageProperty());
     predictionsList.textProperty().bind(predictTask.messageProperty());
-
-    timerThread = new Thread(timerTask);
     predictThread = new Thread(predictTask);
-    timerThread.setDaemon(true);
     predictThread.setDaemon(true);
-
-    timerThread.start();
     predictThread.start();
   }
 
@@ -371,8 +470,7 @@ public class GameController {
     saveThread.start();
 
     // Sets the postGame pane to visible so save, play again and quit utilities are
-    // available to the
-    // player
+    // available to the player
     displayPostGame();
   }
 
@@ -406,7 +504,7 @@ public class GameController {
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
-          graphic.setStroke(Color.BLACK);
+          graphic.setStroke(colour);
           graphic.setLineWidth(size);
 
           // Create a line that goes from the point (currentX, currentY) and (x,y)
@@ -458,8 +556,7 @@ public class GameController {
   @FXML
   private void onSaveDrawing() throws IOException {
     // Opens a new file explorer window for user to save the image at their chosen
-    // location
-    // Will only save if the extension is a .jpg or .png
+    // location. Will only save if the extension is a .jpg or .png
     FileChooser fc = new FileChooser();
     fc.getExtensionFilters()
         .addAll(
@@ -477,12 +574,21 @@ public class GameController {
   }
 
   @FXML
+  private void onColourPick() {
+    colour = colourPicker.getValue();
+  }
+
+  @FXML
   private void onGameMenu(ActionEvent e) {
     // Resets the game and switches scene to the main menu
     onResetGame();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
+
+    if (button.getText().equals("Exit")) {
+      isExitBtnClicked = true;
+    }
   }
 
   @FXML
