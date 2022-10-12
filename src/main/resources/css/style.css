@@ -27,6 +27,11 @@ Text {
     -fx-font-size: 33px;
 }
 
+.preGameBody {
+    -fx-background-image: url("../images/background-five.png");
+    -fx-background-size: 100% 100%;
+}
+
 .preGameBody Label {
     -fx-font-family: "Indie Flower";
 }
@@ -78,6 +83,10 @@ Text {
     -fx-background-color: transparent;
 }
 
+.postGameBody {
+    -fx-background-image: url("../images/background-one.png");
+    -fx-background-size: 100% 100%;
+}
 
 .postGameBody .title {
     -fx-font-family: "Indie Flower";
@@ -175,7 +184,22 @@ Button:hover {
     -fx-cursor: hand;
 }
 
-.background {
-    -fx-background-image: url("../images/background_image.png");
+.backgroundOne {
+    -fx-background-image: url("../images/background-one.png");
+    -fx-background-size: 100% 100%;
+}
+
+.backgroundTwo {
+    -fx-background-image: url("../images/background-two.png");
+    -fx-background-size: 100% 100%;
+}
+
+.backgroundThree {
+    -fx-background-image: url("../images/background-three.png");
+    -fx-background-size: 100% 100%;
+}
+
+.backgroundFour {
+    -fx-background-image: url("../images/background-four.png");
     -fx-background-size: 100% 100%;
 }
