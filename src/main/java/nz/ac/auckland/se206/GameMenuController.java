@@ -77,6 +77,7 @@ public class GameMenuController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
+    // Updates the main menu with all the current user profiles that exist
     App.getMainMenuController().setUpUsers();
 
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MAIN_MENU));

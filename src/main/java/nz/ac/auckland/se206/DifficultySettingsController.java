@@ -22,20 +22,20 @@ public class DifficultySettingsController {
     MEDIUM(2, "The player wins the game if the word to draw is within the top 2 guesses"),
     HARD(1, "The player wins the game if the word to draw is within the top 1 guess");
 
-    private final int TOP_NUM_GUESSES;
-    private final String DESCRIPTION;
+    private final int topNumberGuesses;
+    private final String difficultyDescription;
 
     AccuracyDifficulty(int numGuesses, String description) {
-      TOP_NUM_GUESSES = numGuesses;
-      DESCRIPTION = description;
+      topNumberGuesses = numGuesses;
+      difficultyDescription = description;
     }
 
     public int getNumGuesses() {
-      return TOP_NUM_GUESSES;
+      return topNumberGuesses;
     }
 
     public String getDescription() {
-      return DESCRIPTION;
+      return difficultyDescription;
     }
   }
 
@@ -59,20 +59,20 @@ public class DifficultySettingsController {
         new CategoryManager.Difficulty[] {CategoryManager.Difficulty.HARD},
         "Only words classified as HARD are selected");
 
-    private final CategoryManager.Difficulty[] DIFFICULTIES;
-    private final String DESCRIPTION;
+    private final CategoryManager.Difficulty[] difficultyDescriptions;
+    private final String difficultyDescription;
 
     WordsDifficulty(CategoryManager.Difficulty[] difficulties, String description) {
-      DIFFICULTIES = difficulties;
-      DESCRIPTION = description;
+      difficultyDescriptions = difficulties;
+      difficultyDescription = description;
     }
 
     public CategoryManager.Difficulty[] getDifficulties() {
-      return DIFFICULTIES;
+      return difficultyDescriptions;
     }
 
     public String getDescription() {
-      return DESCRIPTION;
+      return difficultyDescription;
     }
   }
 
@@ -82,20 +82,20 @@ public class DifficultySettingsController {
     HARD(30, "The player gets 30 seconds to draw the selected word"),
     MASTER(15, "The player gets 15 seconds to draw the selected word");
 
-    private final int MAX_TIME;
-    private final String DESCRIPTION;
+    private final int maxTime;
+    private final String difficultyDescription;
 
     TimeDifficulty(int maxTime, String description) {
-      MAX_TIME = maxTime;
-      DESCRIPTION = description;
+      this.maxTime = maxTime;
+      difficultyDescription = description;
     }
 
     public int getMaxTime() {
-      return MAX_TIME;
+      return maxTime;
     }
 
     public String getDescription() {
-      return DESCRIPTION;
+      return difficultyDescription;
     }
   }
 
@@ -105,20 +105,20 @@ public class DifficultySettingsController {
     HARD(25.0, "The confidence level of the correct prediction must be at least 25%"),
     MASTER(50.0, "The confidence level of the correct prediction must be at least 50%");
 
-    private final double MIN_CONFIDENCE;
-    private final String DESCRIPTION;
+    private final double minConfidence;
+    private final String difficultyDescription;
 
     ConfidenceDifficulty(double minConfidence, String description) {
-      MIN_CONFIDENCE = minConfidence;
-      DESCRIPTION = description;
+      this.minConfidence = minConfidence;
+      difficultyDescription = description;
     }
 
     public double getMinConfidence() {
-      return MIN_CONFIDENCE;
+      return minConfidence;
     }
 
     public String getDescription() {
-      return DESCRIPTION;
+      return difficultyDescription;
     }
   }
 
