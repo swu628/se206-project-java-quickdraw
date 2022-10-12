@@ -4,10 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.text.Font;
 
 public class ModeSelectController {
 
+  @FXML private CheckBox checkBoxHidWordMode;
   private static ActionEvent event;
 
   public void initialize() {
@@ -24,8 +26,6 @@ public class ModeSelectController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
-    App.getGameController().updateScene();
-
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
   }
 
@@ -35,7 +35,7 @@ public class ModeSelectController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
-    App.getGameController().updateScene();
+    App.getGameController().updateScene(checkBoxHidWordMode.isSelected());
 
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
   }
@@ -46,7 +46,7 @@ public class ModeSelectController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
-    App.getGameController().updateScene();
+    App.getGameController().updateScene(checkBoxHidWordMode.isSelected());
 
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
   }

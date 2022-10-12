@@ -37,7 +37,8 @@ Text {
 }
 
 .preGameBody #category {
-    -fx-font-size: 45px;
+    -fx-font-size: 38px;
+    -fx-line-spacing: -0.25em;
 }
 
 .preGameBody #prompt {

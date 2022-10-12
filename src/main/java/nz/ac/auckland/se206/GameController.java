@@ -87,6 +87,7 @@ public class GameController {
   private Color colour;
   private boolean isExitBtnClicked;
   private String btnClicked;
+  private boolean hiddenWord;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -102,7 +103,8 @@ public class GameController {
     model = new DoodlePrediction();
   }
 
-  public void updateScene() {
+  public void updateScene(boolean hiddenWord) {
+    this.hiddenWord = hiddenWord;
     onResetGame();
   }
 
@@ -133,8 +135,15 @@ public class GameController {
 
     // Chooses a random category for next game
     CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
-    preGameWordLabel.setText("Draw: " + CategoryManager.getWord());
-    wordLabel.setText("Draw: " + CategoryManager.getWord());
+
+    String wordText = CategoryManager.getWord();
+    if (hiddenWord) {
+      wordText = getDefinition(wordText);
+      // wordLabel.setFont(new Font(10));
+    }
+
+    preGameWordLabel.setText("Draw: " + wordText);
+    wordLabel.setText("Draw: " + wordText);
     predDirectionLabel.setText("");
 
     // Set pen colour to read
@@ -145,10 +154,10 @@ public class GameController {
     // Set visibility of time label
     Button button = (Button) ModeSelectController.getActionEvent().getSource();
     btnClicked = button.getText();
-    if (btnClicked.equals("Normal mode")) {
-      timeDifficultyLabel.setVisible(true);
-    } else if (btnClicked.equals("Zen mode")) {
+    if (btnClicked.equals("Zen mode")) {
       timeDifficultyLabel.setVisible(false);
+    } else {
+      timeDifficultyLabel.setVisible(true);
     }
 
     onSwitchToPen();
@@ -169,45 +178,39 @@ public class GameController {
     onSwitchToPen();
     displayGame();
 
-    switch (btnClicked) {
-      case "Zen mode":
-        timerLabel.setVisible(false);
-        exitButton.setVisible(true);
-        saveButton.setVisible(true);
-        colourPicker.setVisible(true);
-        timeDifficultyLabel.setVisible(false);
-        isExitBtnClicked = false;
-        colour = Color.BLACK;
+    if (btnClicked.equals("Zen mode")) {
+      timerLabel.setVisible(false);
+      exitButton.setVisible(true);
+      saveButton.setVisible(true);
+      colourPicker.setVisible(true);
+      timeDifficultyLabel.setVisible(false);
+      isExitBtnClicked = false;
+      colour = Color.BLACK;
 
-        getPredictTask(maxGuessNum, minConfidence, currentUser);
+      getPredictTask(maxGuessNum, minConfidence, currentUser);
 
-        // Save the word to history
-        // Updates the user's history of words encountered
-        ArrayList<String> wordsHistory = currentUser.getWordsHistory();
-        wordsHistory.add(CategoryManager.getWord());
-        currentUser.setWordsHistory(wordsHistory);
-        // Create json file named as the username
-        FileWriter fileWriter =
-            new FileWriter("src/main/resources/UserProfiles/" + currentUser.getName() + ".json");
-        // Write user details into the file
-        Gson gson = new Gson();
-        gson.toJson(currentUser, fileWriter);
-        fileWriter.close();
+      // Save the word to history
+      // Updates the user's history of words encountered
+      ArrayList<String> wordsHistory = currentUser.getWordsHistory();
+      wordsHistory.add(CategoryManager.getWord());
+      currentUser.setWordsHistory(wordsHistory);
+      // Create json file named as the username
+      FileWriter fileWriter =
+          new FileWriter("src/main/resources/UserProfiles/" + currentUser.getName() + ".json");
+      // Write user details into the file
+      Gson gson = new Gson();
+      gson.toJson(currentUser, fileWriter);
+      fileWriter.close();
+    } else {
+      timerLabel.setVisible(true);
+      exitButton.setVisible(false);
+      saveButton.setVisible(false);
+      colourPicker.setVisible(false);
+      timeDifficultyLabel.setVisible(true);
+      colour = Color.BLACK;
 
-        break;
-
-      case "Normal mode":
-        timerLabel.setVisible(true);
-        exitButton.setVisible(false);
-        saveButton.setVisible(false);
-        colourPicker.setVisible(false);
-        timeDifficultyLabel.setVisible(true);
-        colour = Color.BLACK;
-
-        getTimerTask();
-        getPredictTask(maxGuessNum, minConfidence, currentUser);
-
-        break;
+      getTimerTask();
+      getPredictTask(maxGuessNum, minConfidence, currentUser);
     }
   }
 
@@ -270,21 +273,19 @@ public class GameController {
    */
   private boolean getStatement() {
     boolean statement = false;
-    switch (btnClicked) {
-      case "Normal mode":
-        if (timeLeft >= 0 && !gameWon) {
-          statement = true;
-        } else {
-          statement = false;
-        }
-        break;
-      case "Zen mode":
-        if (!isExitBtnClicked) {
-          statement = true;
-        } else {
-          statement = false;
-        }
-        break;
+
+    if (btnClicked.equals("Zen mode")) {
+      if (!isExitBtnClicked) {
+        statement = true;
+      } else {
+        statement = false;
+      }
+    } else {
+      if (timeLeft >= 0 && !gameWon) {
+        statement = true;
+      } else {
+        statement = false;
+      }
     }
     return statement;
   }
@@ -598,8 +599,6 @@ public class GameController {
 
   @FXML
   private void onGameMenu(ActionEvent e) {
-    // Resets the game and switches scene to the main menu
-    onResetGame();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
