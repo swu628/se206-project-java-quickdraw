@@ -151,7 +151,20 @@ public class GameController {
         colourPicker.setVisible(true);
         colour = Color.BLACK;
         isExitBtnClicked = false;
-        getPredictTask(maxGuessNum, minConfidence);
+        getPredictTask(maxGuessNum, minConfidence, currentUser);
+
+        // Save the word to history
+        // Updates the user's history of words encountered
+        ArrayList<String> wordsHistory = currentUser.getWordsHistory();
+        wordsHistory.add(CategoryManager.getWord());
+        currentUser.setWordsHistory(wordsHistory);
+        // Create json file named as the username
+        FileWriter fileWriter =
+            new FileWriter("src/main/resources/UserProfiles/" + currentUser.getName() + ".json");
+        // Write user details into the file
+        Gson gson = new Gson();
+        gson.toJson(currentUser, fileWriter);
+        fileWriter.close();
 
         break;
       case "Normal mode":
@@ -161,7 +174,7 @@ public class GameController {
         colourPicker.setVisible(false);
         colour = Color.BLACK;
         getTimerTask();
-        getPredictTask(maxGuessNum, minConfidence);
+        getPredictTask(maxGuessNum, minConfidence, currentUser);
 
         break;
     }
@@ -252,7 +265,7 @@ public class GameController {
    * @param maxGuessNum depends on the difficulty chosen
    * @param minConfidence depends on the difficulty chosen
    */
-  private void getPredictTask(int maxGuessNum, double minConfidence) {
+  private void getPredictTask(int maxGuessNum, double minConfidence, User currentUser) {
     Task<Void> predictTask =
         new Task<Void>() {
           @Override
@@ -369,6 +382,7 @@ public class GameController {
                 deltaTime -= 1000;
               }
             }
+
             return null;
           }
         };
