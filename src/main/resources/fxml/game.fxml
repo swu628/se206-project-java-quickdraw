@@ -51,13 +51,13 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                  <Button fx:id="exitButton" layoutX="803.0" layoutY="100.0" mnemonicParsing="false" onAction="#onGameMenu" text="Exit" visible="false" />
-                  <Button fx:id="saveButton" layoutX="671.0" layoutY="98.0" mnemonicParsing="false" onAction="#onSaveDrawing" text="Save" visible="false" />
+                  <Button fx:id="exitButton" layoutX="803.0" layoutY="99.0" mnemonicParsing="false" onAction="#onGameMenu" text="Exit" visible="false" />
+                  <Button fx:id="saveButton" layoutX="687.0" layoutY="99.0" mnemonicParsing="false" onAction="#onSaveDrawing" text="Save" visible="false" />
                     </children>
                 </AnchorPane>
-                <AnchorPane layoutX="480.0" layoutY="160.0" prefHeight="534.0" prefWidth="433.0">
+                <AnchorPane layoutX="480.0" layoutY="177.0" prefHeight="517.0" prefWidth="433.0">
                     <children>
-                        <Pane layoutX="-19.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="441.0" style="-fx-border-color: rgb(198, 198,198); -fx-background-color: rgb(243, 243, 243); -fx-border-width: 1;" stylesheets="@../css/style.css">
+                        <Pane layoutX="-19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="441.0" style="-fx-border-color: rgb(198, 198,198); -fx-background-color: rgb(243, 243, 243); -fx-border-width: 1;" stylesheets="@../css/style.css">
                             <children>
                                 <Canvas fx:id="canvas" height="439.0" layoutX="1.0" layoutY="1.0" width="439.0">
                                     <cursor>
@@ -66,7 +66,7 @@
                                 </Canvas>
                             </children>
                         </Pane>
-                        <HBox alignment="CENTER_RIGHT" layoutX="-80.0" layoutY="459.0" prefHeight="56.0" prefWidth="501.0" spacing="15.0">
+                        <HBox alignment="CENTER_RIGHT" layoutX="-80.0" layoutY="442.0" prefHeight="56.0" prefWidth="501.0" spacing="15.0">
                             <children>
                         <ColorPicker fx:id="colourPicker" onAction="#onColourPick" prefHeight="26.0" prefWidth="104.0" visible="false">
                            <value>
@@ -132,29 +132,29 @@
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
         </AnchorPane>
-        <AnchorPane fx:id="postGame" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody" visible="false">
+        <AnchorPane fx:id="postGame" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody" visible="false">
             <children>
-                <Label fx:id="postGameOutcomeLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="177.0" prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Game Outcome" textAlignment="CENTER">
+                <Label fx:id="postGameOutcomeLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="163.0" prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Game Outcome" textAlignment="CENTER">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </Label>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="305.0" mnemonicParsing="false" onAction="#onSaveDrawing" prefWidth="960.0" text="Save drawing" textAlignment="CENTER">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="290.0" mnemonicParsing="false" onAction="#onSaveDrawing" prefWidth="960.0" text="Save drawing" textAlignment="CENTER">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="360.0" mnemonicParsing="false" onAction="#onResetGame" prefWidth="960.0" text="Play again">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="345.0" mnemonicParsing="false" onAction="#onResetGame" prefWidth="960.0" text="Play again">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="415.0" mnemonicParsing="false" onAction="#onGameMenu" prefWidth="960.0" text="Game Menu">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="400.0" mnemonicParsing="false" onAction="#onGameMenu" prefWidth="960.0" text="Game Menu">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="469.0" mnemonicParsing="false" onAction="#onQuitGame" prefWidth="960.0" text="Quit game" textAlignment="CENTER">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="454.0" mnemonicParsing="false" onAction="#onQuitGame" prefWidth="960.0" text="Quit game" textAlignment="CENTER">
                     <font>
                         <Font size="16.0" />
                     </font>
