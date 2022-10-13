@@ -81,16 +81,19 @@ public class StatisticsController {
     wordsHistoryStart = wordsHistoryEnd + 1;
     wordsHistoryEnd += 5;
 
+    // Setting the words history text area to display the updated 5 words
     StringBuilder sb = new StringBuilder();
 
     for (int i = wordsHistoryStart; i < history.size() && i <= wordsHistoryEnd; i++) {
       sb.append(history.get(i)).append(System.lineSeparator());
     }
 
+    // Checking if we are at the last 5 words
     if (wordsHistoryEnd >= history.size() - 1) {
       disableHistoryNext();
     }
 
+    // Enabling the previous words button
     enableHistoryPrevious();
 
     wordsHistory.setText(sb.toString());
@@ -106,16 +109,19 @@ public class StatisticsController {
     wordsHistoryEnd = wordsHistoryStart - 1;
     wordsHistoryStart -= 5;
 
+    // Setting the words history text area to display the updated 5 words
     StringBuilder sb = new StringBuilder();
 
     for (int i = wordsHistoryStart; i < history.size() && i <= wordsHistoryEnd; i++) {
       sb.append(history.get(i)).append(System.lineSeparator());
     }
 
+    // Checking if we are at the first 5 words
     if (wordsHistoryStart == 0) {
       disableHistoryPrevious();
     }
 
+    // Enabling the next words button
     enableHistoryNext();
 
     wordsHistory.setText(sb.toString());

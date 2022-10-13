@@ -76,7 +76,7 @@ public class MainMenuController {
       // Sets default user as first profile in folder
       username.setText(userList.get(currentUser).getName());
       username.setStyle("-fx-fill: black");
-      userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getColour());
+      userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getProfileColour());
       enableSignIn();
     } else {
       // No users found, so disables ability to sign in
@@ -136,7 +136,7 @@ public class MainMenuController {
     // Changes current user to previous user in list
     currentUser -= 1;
     username.setText(userList.get(currentUser).getName());
-    userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getColour());
+    userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getProfileColour());
     enableUserSelectRight();
 
     if (currentUser == 0) {
@@ -154,7 +154,7 @@ public class MainMenuController {
     // Changes current user to next user in list
     currentUser += 1;
     username.setText(userList.get(currentUser).getName());
-    userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getColour());
+    userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getProfileColour());
     enableUserSelectLeft();
 
     if (currentUser == userList.size() - 1) {

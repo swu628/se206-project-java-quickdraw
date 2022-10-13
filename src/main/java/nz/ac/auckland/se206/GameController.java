@@ -146,7 +146,7 @@ public class GameController {
    * This method starts the game according to the user's specified difficulty settings and game
    * mode.
    *
-   * @throws IOException
+   * @throws IOException if the current user profile doesn't exist
    */
   @FXML
   private void onStartDrawing() throws IOException {

@@ -20,6 +20,12 @@ public class User {
   private DifficultySettingsController.TimeDifficulty timeDifficulty;
   private DifficultySettingsController.ConfidenceDifficulty confidenceDifficulty;
 
+  /**
+   * This is a constructor method for the User class. It will set the user profile settings to
+   * default.
+   *
+   * @param username The username for the user
+   */
   public User(String username) {
     this.username = username;
     // This sets the default statistics of the user
@@ -80,6 +86,11 @@ public class User {
     this.username = username;
   }
 
+  /**
+   * This method returns all the not played words under the easy category
+   *
+   * @return the easy not played words
+   */
   public ArrayList<String> getNotPlayedEasyWords() {
     if (wordsHistory.size() != 0) {
       // Remove the already played easy words from the easy category
@@ -94,6 +105,11 @@ public class User {
     return notPlayedEasyWords;
   }
 
+  /**
+   * This method returns all the not played words under the medium category
+   *
+   * @return the medium not played words
+   */
   public ArrayList<String> getNotPlayedMediumWords() {
     if (wordsHistory.size() != 0) {
       // Remove the already played medium words from the medium category
@@ -108,6 +124,11 @@ public class User {
     return notPlayedMediumWords;
   }
 
+  /**
+   * This method returns all the not played words under the hard category
+   *
+   * @return the hard not played words
+   */
   public ArrayList<String> getNotPlayedHardWords() {
     if (wordsHistory.size() != 0) {
       // Remove the already played hard words from the hard category
@@ -122,7 +143,12 @@ public class User {
     return notPlayedHardWords;
   }
 
-  public String getColour() {
+  /**
+   * This method returns the user profile colour
+   *
+   * @return user profile colour
+   */
+  public String getProfileColour() {
     // Returns the string "rgb(r,g,b)"
     StringBuilder sb = new StringBuilder();
     sb.append("rgb(")
