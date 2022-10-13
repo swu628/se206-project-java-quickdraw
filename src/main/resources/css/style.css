@@ -83,6 +83,11 @@ Text {
     -fx-background-color: transparent;
 }
 
+#colour-picker {
+    -fx-background-color: transparent;
+    -fx-color-label-visible: false;
+}
+
 .postGameBody {
     -fx-background-image: url("../images/background-one.png");
     -fx-background-size: 100% 100%;

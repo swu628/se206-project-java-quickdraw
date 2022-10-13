@@ -68,10 +68,13 @@
                         </Pane>
                         <HBox alignment="CENTER_RIGHT" layoutX="-80.0" layoutY="442.0" prefHeight="56.0" prefWidth="501.0" spacing="15.0">
                             <children>
-                        <ColorPicker fx:id="colourPicker" onAction="#onColourPick" prefHeight="26.0" prefWidth="104.0" visible="false">
+                        <ColorPicker id="colour-picker" fx:id="colourPicker" onAction="#onColourPick" pickOnBounds="false" prefHeight="30.0" prefWidth="30.0" scaleX="2.0" scaleY="2.0" styleClass="button" visible="false">
                            <value>
                               <Color />
                            </value>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ColorPicker>
                         <ImageView fx:id="toolImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                                 <Button fx:id="penButton" mnemonicParsing="false" onAction="#onSwitchToPen" text="Pen">
@@ -139,22 +142,22 @@
                         <Font size="25.0" />
                     </font>
                 </Label>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="290.0" mnemonicParsing="false" onAction="#onSaveDrawing" prefWidth="960.0" text="Save drawing" textAlignment="CENTER">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="290.0" mnemonicParsing="false" onAction="#onSaveDrawing" pickOnBounds="false" prefWidth="960.0" text="Save drawing" textAlignment="CENTER">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="345.0" mnemonicParsing="false" onAction="#onResetGame" prefWidth="960.0" text="Play again">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="345.0" mnemonicParsing="false" onAction="#onResetGame" pickOnBounds="false" prefWidth="960.0" text="Play again">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="400.0" mnemonicParsing="false" onAction="#onGameMenu" prefWidth="960.0" text="Game Menu">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="400.0" mnemonicParsing="false" onAction="#onGameMenu" pickOnBounds="false" prefWidth="960.0" text="Game Menu">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="454.0" mnemonicParsing="false" onAction="#onQuitGame" prefWidth="960.0" text="Quit game" textAlignment="CENTER">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="454.0" mnemonicParsing="false" onAction="#onQuitGame" pickOnBounds="false" prefWidth="960.0" text="Quit game" textAlignment="CENTER">
                     <font>
                         <Font size="16.0" />
                     </font>
