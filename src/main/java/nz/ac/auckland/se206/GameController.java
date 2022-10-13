@@ -120,9 +120,16 @@ public class GameController {
     onResetGame();
   }
 
+  /**
+   * This method searches the definition from the given word input. Keeps track of current
+   * definition to avoid reuse.
+   *
+   * @param word that is being searched in the dictionary
+   * @return string with the definition of the word
+   */
   private String getDefinition(String word) {
     try {
-      // Searches definitions for the given word
+      // Searches definitions for the given word in a dictionary
       WordInfo wordResult = DictionarySearch.searchWordInfo(word);
       List<WordEntry> entries = wordResult.getWordEntries();
       String textString = entries.get(entryIndex).getDefinitions().get(definitionIndex);
@@ -562,7 +569,10 @@ public class GameController {
     displayPostGame();
   }
 
-  /** This method is called when the "Next meaning" button is pressed. */
+  /**
+   * This method is called when the "Next meaning" button is pressed. Updates to a new definition
+   * for the current word
+   */
   @FXML
   private void onNextDef() {
     // Changes the definition of the current word being displayed
@@ -653,9 +663,9 @@ public class GameController {
   }
 
   /**
-   * This method will save the user's drawing
+   * This method will open a new window that displays the current word's definition
    *
-   * @throws IOException if file path specified doesn't exist
+   * @throws IOException
    */
   @FXML
   private void onGetDefWindow() throws IOException {
@@ -681,6 +691,11 @@ public class GameController {
         });
   }
 
+  /**
+   * This method will save the user's drawing
+   *
+   * @throws IOException if file path specified doesn't exist
+   */
   @FXML
   private void onSaveDrawing() throws IOException {
     // Opens a new file explorer window for user to save the image at their chosen
