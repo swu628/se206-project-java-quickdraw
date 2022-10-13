@@ -24,8 +24,12 @@ public class StatisticsController {
   private int wordsHistoryEnd;
   private ArrayList<String> history;
   @FXML private ImageView underThirtyBadge;
+  @FXML private ImageView underTwentyBadge;
+  @FXML private ImageView underTenBadge;
   private ArrayList<Integer> timeTakenHistory;
   private int countsUnderThirty;
+  private int countsUnderTwenty;
+  private int countsUnderTen;
 
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
@@ -132,11 +136,19 @@ public class StatisticsController {
   private void setBadge(User currentUser) {
     // Set default to zero
     countsUnderThirty = 0;
+    countsUnderTwenty = 0;
+    countsUnderTen = 0;
 
     // Counts the number of games where the time spent is under 30 seconds
     for (int i = 0; i < timeTakenHistory.size(); i++) {
       if (timeTakenHistory.get(i) <= 30) {
         countsUnderThirty++;
+      }
+      if (timeTakenHistory.get(i) <= 20) {
+        countsUnderTwenty++;
+      }
+      if (timeTakenHistory.get(i) <= 10) {
+        countsUnderTen++;
       }
     }
 
@@ -153,6 +165,34 @@ public class StatisticsController {
     } else {
       currentUser.setUnderThirtyBadge("/images/under30_gold.png");
       underThirtyBadge.setImage(new Image(currentUser.getUnderThirtyBadge()));
+    }
+
+    if (countsUnderTwenty < 3) {
+      currentUser.setUnderTwentyBadge("/images/under20_opacity80.png");
+      underTwentyBadge.setImage(new Image(currentUser.getUnderTwentyBadge()));
+    } else if (countsUnderTwenty >= 3 && countsUnderTwenty < 10) {
+      currentUser.setUnderTwentyBadge("/images/under20_bronze.png");
+      underTwentyBadge.setImage(new Image(currentUser.getUnderTwentyBadge()));
+    } else if (countsUnderTwenty >= 10 && countsUnderTwenty < 50) {
+      currentUser.setUnderTwentyBadge("/images/under20_silver.png");
+      underTwentyBadge.setImage(new Image(currentUser.getUnderTwentyBadge()));
+    } else {
+      currentUser.setUnderTwentyBadge("/images/under20_gold.png");
+      underTwentyBadge.setImage(new Image(currentUser.getUnderTwentyBadge()));
+    }
+
+    if (countsUnderTen < 3) {
+      currentUser.setUnderTenBadge("/images/under10_opacity80.png");
+      underTenBadge.setImage(new Image(currentUser.getUnderTenBadge()));
+    } else if (countsUnderTen >= 3 && countsUnderTen < 10) {
+      currentUser.setUnderTenBadge("/images/under10_bronze.png");
+      underTenBadge.setImage(new Image(currentUser.getUnderTenBadge()));
+    } else if (countsUnderTen >= 10 && countsUnderTen < 50) {
+      currentUser.setUnderTenBadge("/images/under10_silver.png");
+      underTenBadge.setImage(new Image(currentUser.getUnderTenBadge()));
+    } else {
+      currentUser.setUnderTenBadge("/images/under10_gold.png");
+      underTenBadge.setImage(new Image(currentUser.getUnderTenBadge()));
     }
   }
 }

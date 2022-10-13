@@ -21,6 +21,8 @@ public class User {
   private DifficultySettingsController.TimeDifficulty timeDifficulty;
   private DifficultySettingsController.ConfidenceDifficulty confidenceDifficulty;
   private String underThirty;
+  private String underTwenty;
+  private String underTen;
 
   public User(String username) {
     this.username = username;
@@ -186,5 +188,21 @@ public class User {
 
   public void setUnderThirtyBadge(String underThirty) {
     this.underThirty = underThirty;
+  }
+
+  public String getUnderTwentyBadge() {
+    return underTwenty;
+  }
+
+  public void setUnderTwentyBadge(String underTwenty) {
+    this.underTwenty = underTwenty;
+  }
+
+  public String getUnderTenBadge() {
+    return underTen;
+  }
+
+  public void setUnderTenBadge(String underTen) {
+    this.underTen = underTen;
   }
 }
