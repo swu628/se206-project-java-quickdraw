@@ -22,20 +22,20 @@ public class DifficultySettingsController {
     MEDIUM(2, "The player wins the game if the word to draw is within the top 2 guesses"),
     HARD(1, "The player wins the game if the word to draw is within the top 1 guess");
 
-    private final int TOP_NUM_GUESSES;
-    private final String DESCRIPTION;
+    private final int topNumberGuesses;
+    private final String difficultyDescription;
 
     AccuracyDifficulty(int numGuesses, String description) {
-      TOP_NUM_GUESSES = numGuesses;
-      DESCRIPTION = description;
+      topNumberGuesses = numGuesses;
+      difficultyDescription = description;
     }
 
     public int getNumGuesses() {
-      return TOP_NUM_GUESSES;
+      return topNumberGuesses;
     }
 
     public String getDescription() {
-      return DESCRIPTION;
+      return difficultyDescription;
     }
   }
 
@@ -59,20 +59,20 @@ public class DifficultySettingsController {
         new CategoryManager.Difficulty[] {CategoryManager.Difficulty.HARD},
         "Only words classified as HARD are selected");
 
-    private final CategoryManager.Difficulty[] DIFFICULTIES;
-    private final String DESCRIPTION;
+    private final CategoryManager.Difficulty[] difficultyDescriptions;
+    private final String difficultyDescription;
 
     WordsDifficulty(CategoryManager.Difficulty[] difficulties, String description) {
-      DIFFICULTIES = difficulties;
-      DESCRIPTION = description;
+      difficultyDescriptions = difficulties;
+      difficultyDescription = description;
     }
 
     public CategoryManager.Difficulty[] getDifficulties() {
-      return DIFFICULTIES;
+      return difficultyDescriptions;
     }
 
     public String getDescription() {
-      return DESCRIPTION;
+      return difficultyDescription;
     }
   }
 
@@ -82,20 +82,20 @@ public class DifficultySettingsController {
     HARD(30, "The player gets 30 seconds to draw the selected word"),
     MASTER(15, "The player gets 15 seconds to draw the selected word");
 
-    private final int MAX_TIME;
-    private final String DESCRIPTION;
+    private final int maxTime;
+    private final String difficultyDescription;
 
     TimeDifficulty(int maxTime, String description) {
-      MAX_TIME = maxTime;
-      DESCRIPTION = description;
+      this.maxTime = maxTime;
+      difficultyDescription = description;
     }
 
     public int getMaxTime() {
-      return MAX_TIME;
+      return maxTime;
     }
 
     public String getDescription() {
-      return DESCRIPTION;
+      return difficultyDescription;
     }
   }
 
@@ -105,20 +105,20 @@ public class DifficultySettingsController {
     HARD(25.0, "The confidence level of the correct prediction must be at least 25%"),
     MASTER(50.0, "The confidence level of the correct prediction must be at least 50%");
 
-    private final double MIN_CONFIDENCE;
-    private final String DESCRIPTION;
+    private final double minConfidence;
+    private final String difficultyDescription;
 
     ConfidenceDifficulty(double minConfidence, String description) {
-      MIN_CONFIDENCE = minConfidence;
-      DESCRIPTION = description;
+      this.minConfidence = minConfidence;
+      difficultyDescription = description;
     }
 
     public double getMinConfidence() {
-      return MIN_CONFIDENCE;
+      return minConfidence;
     }
 
     public String getDescription() {
-      return DESCRIPTION;
+      return difficultyDescription;
     }
   }
 
@@ -157,6 +157,10 @@ public class DifficultySettingsController {
   @FXML private TextArea timeDescription;
   @FXML private TextArea confidenceDescription;
 
+  /**
+   * This method is called upon first load of the fxml. It sets the font to the custom IndieFlower
+   * font.
+   */
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
 
@@ -167,6 +171,12 @@ public class DifficultySettingsController {
     confidenceDifficultyList = new ArrayList<>(Arrays.asList(ConfidenceDifficulty.values()));
   }
 
+  /**
+   * This method sets up the scene's labels according to the specified user's saved difficulty
+   * settings
+   *
+   * @param user the current user
+   */
   public void setUpScene(User user) {
     currentUser = user;
 
@@ -193,6 +203,7 @@ public class DifficultySettingsController {
       enableAccuracySelectRight();
     }
 
+    // Enables/disables the arrows depending on difficulty position in its respective array
     if (wordsDifficulty == 0) {
       disableWordsSelectLeft();
       enableWordsSelectRight();
@@ -204,6 +215,7 @@ public class DifficultySettingsController {
       enableWordsSelectRight();
     }
 
+    // Enables/disables the arrows depending on difficulty position in its respective array
     if (timeDifficulty == 0) {
       disableTimeSelectLeft();
       enableTimeSelectRight();
@@ -215,6 +227,7 @@ public class DifficultySettingsController {
       enableTimeSelectRight();
     }
 
+    // Enables/disables the arrows depending on difficulty position in its respective array
     if (confidenceDifficulty == 0) {
       disableConfidenceSelectLeft();
       enableConfidenceSelectRight();
@@ -237,6 +250,7 @@ public class DifficultySettingsController {
     confidenceDescriptionPane.setDisable(true);
   }
 
+  /** This method changes the difficulty to the previous difficulty in the accuracy array */
   @FXML
   private void onToPreviousAccuracyDifficulty() {
     // Changes current accuracy difficulty to previous accuracy difficulty in list
@@ -245,11 +259,13 @@ public class DifficultySettingsController {
     accuracyDescription.setText(accuracyDifficultyList.get(accuracyDifficulty).getDescription());
     enableAccuracySelectRight();
 
+    // Disables the previous arrow if we are at first difficulty
     if (accuracyDifficulty == 0) {
       disableAccuracySelectLeft();
     }
   }
 
+  /** This method changes the difficulty to the next difficulty in the accuracy array */
   @FXML
   private void onToNextAccuracyDifficulty() {
     // Changes current accuracy difficulty to next accuracy difficulty in list
@@ -258,11 +274,13 @@ public class DifficultySettingsController {
     accuracyDescription.setText(accuracyDifficultyList.get(accuracyDifficulty).getDescription());
     enableAccuracySelectLeft();
 
+    // Disables the next arrow if we are at last difficulty
     if (accuracyDifficulty == accuracyDifficultyList.size() - 1) {
       disableAccuracySelectRight();
     }
   }
 
+  /** This method changes the difficulty to the previous difficulty in the word array */
   @FXML
   private void onToPreviousWordDifficulty() {
     // Changes current word difficulty to previous word difficulty in list
@@ -271,11 +289,13 @@ public class DifficultySettingsController {
     wordDescription.setText(wordsDifficultyList.get(wordsDifficulty).getDescription());
     enableWordsSelectRight();
 
+    // Disables the previous arrow if we are at first difficulty
     if (wordsDifficulty == 0) {
       disableWordsSelectLeft();
     }
   }
 
+  /** This method changes the difficulty to the next difficulty in the word array */
   @FXML
   private void onToNextWordDifficulty() {
     // Changes current word difficulty to next word difficulty in list
@@ -284,11 +304,13 @@ public class DifficultySettingsController {
     wordDescription.setText(wordsDifficultyList.get(wordsDifficulty).getDescription());
     enableWordsSelectLeft();
 
+    // Disables the next arrow if we are at last difficulty
     if (wordsDifficulty == wordsDifficultyList.size() - 1) {
       disableWordsSelectRight();
     }
   }
 
+  /** This method changes the difficulty to the previous difficulty in the time array */
   @FXML
   private void onToPreviousTimeDifficulty() {
     // Changes current time difficulty to previous time difficulty in list
@@ -297,11 +319,13 @@ public class DifficultySettingsController {
     timeDescription.setText(timeDifficultyList.get(timeDifficulty).getDescription());
     enableTimeSelectRight();
 
+    // Disables the previous arrow if we are at first difficulty
     if (timeDifficulty == 0) {
       disableTimeSelectLeft();
     }
   }
 
+  /** This method changes the difficulty to the next difficulty in the time array */
   @FXML
   private void onToNextTimeDifficulty() {
     // Changes current time difficulty to next time difficulty in list
@@ -310,11 +334,13 @@ public class DifficultySettingsController {
     timeDescription.setText(timeDifficultyList.get(timeDifficulty).getDescription());
     enableTimeSelectLeft();
 
+    // Disables the next arrow if we are at last difficulty
     if (timeDifficulty == timeDifficultyList.size() - 1) {
       disableTimeSelectRight();
     }
   }
 
+  /** This method changes the difficulty to the previous difficulty in the confidence array */
   @FXML
   private void onToPreviousConfidenceDifficulty() {
     // Changes current confidence difficulty to previous confidence difficulty in list
@@ -324,11 +350,13 @@ public class DifficultySettingsController {
         confidenceDifficultyList.get(confidenceDifficulty).getDescription());
     enableConfidenceSelectRight();
 
+    // Disables the previous arrow if we are at first difficulty
     if (confidenceDifficulty == 0) {
       disableConfidenceSelectLeft();
     }
   }
 
+  /** This method changes the difficulty to the next difficulty in the confidence array */
   @FXML
   private void onToNextConfidenceDifficulty() {
     // Changes current confidence difficulty to next confidence difficulty in list
@@ -338,91 +366,109 @@ public class DifficultySettingsController {
         confidenceDifficultyList.get(confidenceDifficulty).getDescription());
     enableConfidenceSelectLeft();
 
+    // Disables the next arrow if we are at last difficulty
     if (confidenceDifficulty == confidenceDifficultyList.size() - 1) {
       disableConfidenceSelectRight();
     }
   }
 
+  /** This method enables the previous accuracy button */
   private void enableAccuracySelectLeft() {
     accuracySelectLeft.setDisable(false);
     accuracySelectLeft.setVisible(true);
   }
 
+  /** This method disables the previous accuracy button */
   private void disableAccuracySelectLeft() {
     accuracySelectLeft.setDisable(true);
     accuracySelectLeft.setVisible(false);
   }
 
+  /** This method enables the next accuracy difficulty button */
   private void enableAccuracySelectRight() {
     accuracySelectRight.setDisable(false);
     accuracySelectRight.setVisible(true);
   }
 
+  /** This method disables the next accuracy difficulty button */
   private void disableAccuracySelectRight() {
     accuracySelectRight.setDisable(true);
     accuracySelectRight.setVisible(false);
   }
 
+  /** This method enables the previous word difficulty button */
   private void enableWordsSelectLeft() {
     wordsSelectLeft.setDisable(false);
     wordsSelectLeft.setVisible(true);
   }
 
+  /** This method disables the previous word difficulty button */
   private void disableWordsSelectLeft() {
     wordsSelectLeft.setDisable(true);
     wordsSelectLeft.setVisible(false);
   }
 
+  /** This method enables the next word difficulty button */
   private void enableWordsSelectRight() {
     wordsSelectRight.setDisable(false);
     wordsSelectRight.setVisible(true);
   }
 
+  /** This method disables the next word difficulty button */
   private void disableWordsSelectRight() {
     wordsSelectRight.setDisable(true);
     wordsSelectRight.setVisible(false);
   }
 
+  /** This method enables the previous time difficulty button */
   private void enableTimeSelectLeft() {
     timeSelectLeft.setDisable(false);
     timeSelectLeft.setVisible(true);
   }
 
+  /** This method disables the previous time difficulty button */
   private void disableTimeSelectLeft() {
     timeSelectLeft.setDisable(true);
     timeSelectLeft.setVisible(false);
   }
 
+  /** This method enables the next time difficulty button */
   private void enableTimeSelectRight() {
     timeSelectRight.setDisable(false);
     timeSelectRight.setVisible(true);
   }
 
+  /** This method disables the next time difficulty button */
   private void disableTimeSelectRight() {
     timeSelectRight.setDisable(true);
     timeSelectRight.setVisible(false);
   }
 
+  /** This method enables the previous confidence difficulty button */
   private void enableConfidenceSelectLeft() {
     confidenceSelectLeft.setDisable(false);
     confidenceSelectLeft.setVisible(true);
   }
 
+  /** This method disables the previous confidence difficulty button */
   private void disableConfidenceSelectLeft() {
     confidenceSelectLeft.setDisable(true);
     confidenceSelectLeft.setVisible(false);
   }
 
+  /** This method enables the next confidence difficulty button */
   private void enableConfidenceSelectRight() {
     confidenceSelectRight.setDisable(false);
     confidenceSelectRight.setVisible(true);
   }
 
+  /** This method disable the next confidence difficulty button */
   private void disableConfidenceSelectRight() {
     confidenceSelectRight.setDisable(true);
     confidenceSelectRight.setVisible(false);
   }
 
+  /** This method toggles the accuracy help blurb */
   @FXML
   private void onGetAccuracyHelp() {
     // Checks if help blurb is enabled/disabled and does the opposite
@@ -438,6 +484,7 @@ public class DifficultySettingsController {
     }
   }
 
+  /** This method toggles the word help blurb */
   @FXML
   private void onGetWordsHelp() {
     // Checks if help blurb is enabled/disabled and does the opposite
@@ -453,6 +500,7 @@ public class DifficultySettingsController {
     }
   }
 
+  /** This method toggles the time help blurb */
   @FXML
   private void onGetTimeHelp() {
     // Checks if help blurb is enabled/disabled and does the opposite
@@ -468,6 +516,7 @@ public class DifficultySettingsController {
     }
   }
 
+  /** This method toggles the confidence help blurb */
   @FXML
   private void onGetConfidenceHelp() {
     // Checks if help blurb is enabled/disabled and does the opposite
@@ -484,6 +533,12 @@ public class DifficultySettingsController {
     }
   }
 
+  /**
+   * This method saves the user's difficulties and then changes the scene to the main menu.
+   *
+   * @param e the action event that triggered this method
+   * @throws IOException if the user profile does not exist
+   */
   @FXML
   private void onGameMenu(ActionEvent e) throws IOException {
     Button button = (Button) e.getSource();

@@ -72,7 +72,7 @@ public class StatisticsController {
   }
 
   /**
-   * This method displays the next 5 words in the user's words history It will disable the next
+   * This method displays the next 5 words in the user's words history. It will disable the next
    * button if it is the last 5 words of the user's history
    */
   @FXML

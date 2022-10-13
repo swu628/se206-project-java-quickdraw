@@ -101,6 +101,10 @@ public class GameController {
     onResetGame();
   }
 
+  /**
+   * This method resets the game by clearing the canvas and then setting up the labels for the next
+   * game.
+   */
   @FXML
   private void onResetGame() {
     // Clears the canvas
@@ -138,6 +142,12 @@ public class GameController {
     displayPreGame();
   }
 
+  /**
+   * This method starts the game according to the user's specified difficulty settings and game
+   * mode.
+   *
+   * @throws IOException
+   */
   @FXML
   private void onStartDrawing() throws IOException {
     User currentUser = App.getCurrentUser();
@@ -405,6 +415,12 @@ public class GameController {
     predictThread.start();
   }
 
+  /**
+   * This method changes the scene to the post game scene. It will make text to speech say whether
+   * the user won/loss. It will update the user's game statistics.
+   *
+   * @param timeTaken the time taken to finish the game
+   */
   private void setPostGame(int timeTaken) {
     // Delegating text-to-speech to background thread to avoid GUI freeze
     Task<Void> ttsTask =
@@ -481,6 +497,7 @@ public class GameController {
     doPredict = false;
   }
 
+  /** This method will switch to the pen */
   @FXML
   private void onSwitchToPen() {
     // Change tool and cursor image
@@ -516,6 +533,7 @@ public class GameController {
         });
   }
 
+  /** This method will switch to the eraser */
   @FXML
   private void onSwitchToEraser() {
     // Change tool and cursor image
@@ -553,6 +571,11 @@ public class GameController {
         });
   }
 
+  /**
+   * This method will save the user's drawing
+   *
+   * @throws IOException if file path specified doesn't exist
+   */
   @FXML
   private void onSaveDrawing() throws IOException {
     // Opens a new file explorer window for user to save the image at their chosen
@@ -578,6 +601,11 @@ public class GameController {
     colour = colourPicker.getValue();
   }
 
+  /**
+   * This method will change the scene to the game menu
+   *
+   * @param e the action event that triggered this method
+   */
   @FXML
   private void onGameMenu(ActionEvent e) {
     // Resets the game and switches scene to the main menu
@@ -591,11 +619,13 @@ public class GameController {
     }
   }
 
+  /** This method quits the game */
   @FXML
   private void onQuitGame() {
     Platform.exit();
   }
 
+  /** This method displays the pregame scene */
   private void displayPreGame() {
     // Shows the preGamePane whilst disabling all the other panes
     preGamePane.setDisable(false);
@@ -606,6 +636,7 @@ public class GameController {
     game.setVisible(false);
   }
 
+  /** This method displays the game scene */
   private void displayGame() {
     // Shows the gamePane whilst disabling all the other panes
     preGamePane.setDisable(true);
@@ -616,6 +647,7 @@ public class GameController {
     game.setVisible(true);
   }
 
+  /** This method displays the post game scene */
   private void displayPostGame() {
     // Shows the postGamePane whilst disabling all the other panes
     preGamePane.setDisable(true);

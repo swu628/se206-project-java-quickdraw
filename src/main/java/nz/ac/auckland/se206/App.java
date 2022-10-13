@@ -88,6 +88,11 @@ public class App extends Application {
     return gameController;
   }
 
+  /**
+   * Gets the main menu fxml controller
+   *
+   * @return main menu controller
+   */
   public static MainMenuController getMainMenuController() {
     return mainMenuController;
   }
@@ -96,6 +101,11 @@ public class App extends Application {
     return modeSelectController;
   }
 
+  /**
+   * This method loads all the categories in the category_difficulty csv
+   *
+   * @throws IOException when category_difficulty file doesn't exist
+   */
   private void loadCategories() throws IOException {
     // Loads all the categories from category_difficulty.csv and splits them into
     // lists of Easy,
