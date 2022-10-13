@@ -82,6 +82,7 @@ public class GameController {
   private Color colour;
   private boolean isExitBtnClicked;
   private String btnClicked;
+  private int numberOfZenPlayed;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -119,7 +120,7 @@ public class GameController {
     wordLabel.setText("Draw: " + CategoryManager.getWord());
     predDirectionLabel.setText("");
 
-    // Set pen colour to read
+    // Set pen colour to black
     if (colourPicker.isVisible()) {
       colourPicker.setValue(Color.BLACK);
     }
@@ -162,6 +163,9 @@ public class GameController {
         colour = Color.BLACK;
 
         getPredictTask(maxGuessNum, minConfidence, currentUser);
+
+        // Get the total number of zen mode played
+        currentUser.setNumberOfZenPlayed(currentUser.getNumberOfZenPlayed());
 
         // Save the word to history
         // Updates the user's history of words encountered

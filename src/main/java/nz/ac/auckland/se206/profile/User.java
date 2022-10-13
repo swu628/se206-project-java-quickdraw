@@ -23,6 +23,8 @@ public class User {
   private String underThirty;
   private String underTwenty;
   private String underTen;
+  private String zenBadge;
+  private int numberOfZenPlayed;
 
   public User(String username) {
     this.username = username;
@@ -43,6 +45,8 @@ public class User {
     wordsDifficulty = DifficultySettingsController.WordsDifficulty.EASY;
     timeDifficulty = DifficultySettingsController.TimeDifficulty.EASY;
     confidenceDifficulty = DifficultySettingsController.ConfidenceDifficulty.EASY;
+
+    numberOfZenPlayed = 0;
   }
 
   public String getName() {
@@ -204,5 +208,21 @@ public class User {
 
   public void setUnderTenBadge(String underTen) {
     this.underTen = underTen;
+  }
+
+  public String getZenBadge() {
+    return zenBadge;
+  }
+
+  public void setZenBadge(String zenBadge) {
+    this.zenBadge = zenBadge;
+  }
+
+  public int getNumberOfZenPlayed() {
+    return numberOfZenPlayed;
+  }
+
+  public void setNumberOfZenPlayed(int numberOfZenPlayed) {
+    this.numberOfZenPlayed++;
   }
 }

@@ -20,12 +20,13 @@ public class StatisticsController {
   @FXML private TextArea wordsHistory;
   @FXML private Button wordsHistoryNext;
   @FXML private Button wordsHistoryPrevious;
-  private int wordsHistoryStart;
-  private int wordsHistoryEnd;
-  private ArrayList<String> history;
   @FXML private ImageView underThirtyBadge;
   @FXML private ImageView underTwentyBadge;
   @FXML private ImageView underTenBadge;
+  @FXML private ImageView zenBadge;
+  private int wordsHistoryStart;
+  private int wordsHistoryEnd;
+  private ArrayList<String> history;
   private ArrayList<Integer> timeTakenHistory;
   private int countsUnderThirty;
   private int countsUnderTwenty;
@@ -193,6 +194,21 @@ public class StatisticsController {
     } else {
       currentUser.setUnderTenBadge("/images/under10_gold.png");
       underTenBadge.setImage(new Image(currentUser.getUnderTenBadge()));
+    }
+
+    if (currentUser.getNumberOfZenPlayed() < 3) {
+      currentUser.setZenBadge("/images/zen_opacity80.png");
+      zenBadge.setImage(new Image(currentUser.getZenBadge()));
+    } else if (currentUser.getNumberOfZenPlayed() >= 3 && currentUser.getNumberOfZenPlayed() < 10) {
+      currentUser.setZenBadge("/images/zen_bronze.png");
+      zenBadge.setImage(new Image(currentUser.getZenBadge()));
+    } else if (currentUser.getNumberOfZenPlayed() >= 10
+        && currentUser.getNumberOfZenPlayed() < 50) {
+      currentUser.setZenBadge("/images/zen_silver.png");
+      zenBadge.setImage(new Image(currentUser.getZenBadge()));
+    } else {
+      currentUser.setZenBadge("/images/zen_gold.png");
+      zenBadge.setImage(new Image(currentUser.getZenBadge()));
     }
   }
 }
