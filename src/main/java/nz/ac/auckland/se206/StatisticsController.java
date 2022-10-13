@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import nz.ac.auckland.se206.profile.User;
 
@@ -21,6 +23,9 @@ public class StatisticsController {
   private int wordsHistoryStart;
   private int wordsHistoryEnd;
   private ArrayList<String> history;
+  @FXML private ImageView underThirtyBadge;
+  private ArrayList<Integer> timeTakenHistory;
+  private int countsUnderThirty;
 
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
@@ -57,6 +62,9 @@ public class StatisticsController {
     wordsHistoryNext.setDisable(false);
 
     wordsHistory.setText(sb.toString());
+
+    timeTakenHistory = currentUser.getTimeTakenHistory();
+    setBadge(currentUser);
   }
 
   @FXML
@@ -114,5 +122,37 @@ public class StatisticsController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
+  }
+
+  /**
+   * This method will give user badges based on their history
+   *
+   * @param currentUser is the account that is currently logged in
+   */
+  private void setBadge(User currentUser) {
+    // Set default to zero
+    countsUnderThirty = 0;
+
+    // Counts the number of games where the time spent is under 30 seconds
+    for (int i = 0; i < timeTakenHistory.size(); i++) {
+      if (timeTakenHistory.get(i) <= 30) {
+        countsUnderThirty++;
+      }
+    }
+
+    // Update corresponding badge
+    if (countsUnderThirty < 3) {
+      currentUser.setUnderThirtyBadge("/images/under30_opacity80.png");
+      underThirtyBadge.setImage(new Image(currentUser.getUnderThirtyBadge()));
+    } else if (countsUnderThirty >= 3 && countsUnderThirty < 10) {
+      currentUser.setUnderThirtyBadge("/images/under30_bronze.png");
+      underThirtyBadge.setImage(new Image(currentUser.getUnderThirtyBadge()));
+    } else if (countsUnderThirty >= 10 && countsUnderThirty < 50) {
+      currentUser.setUnderThirtyBadge("/images/under30_silver.png");
+      underThirtyBadge.setImage(new Image(currentUser.getUnderThirtyBadge()));
+    } else {
+      currentUser.setUnderThirtyBadge("/images/under30_gold.png");
+      underThirtyBadge.setImage(new Image(currentUser.getUnderThirtyBadge()));
+    }
   }
 }

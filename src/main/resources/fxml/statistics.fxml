@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -28,7 +29,7 @@
          <children>
             <AnchorPane layoutX="79.0" layoutY="17.0" prefHeight="300.0" prefWidth="300.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" layoutX="-2.0" layoutY="-2.0" prefHeight="100.0" prefWidth="465.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="-2.0" layoutY="108.0" prefHeight="100.0" prefWidth="465.0">
                      <children>
                         <Label text="Games Won: ">
                            <font>
@@ -42,7 +43,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="-3.0" layoutY="163.0" prefHeight="100.0" prefWidth="465.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="-2.0" layoutY="218.0" prefHeight="100.0" prefWidth="465.0">
                      <children>
                         <Label text="Games Lost: ">
                            <font>
@@ -68,6 +69,16 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="-1.0" layoutY="-2.0" prefHeight="100.0" prefWidth="465.0">
+                     <children>
+                        <Label text="Badges: ">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="underThirtyBadge" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </HBox>
                </children>

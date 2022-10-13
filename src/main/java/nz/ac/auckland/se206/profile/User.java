@@ -11,6 +11,7 @@ public class User {
   private int gamesWon;
   private int gamesLost;
   private ArrayList<String> wordsHistory;
+  private ArrayList<Integer> timeTakenHistory;
   private ArrayList<String> notPlayedEasyWords = CategoryManager.getEasyWords();
   private ArrayList<String> notPlayedMediumWords = CategoryManager.getMediumWords();
   private ArrayList<String> notPlayedHardWords = CategoryManager.getHardWords();
@@ -19,6 +20,7 @@ public class User {
   private DifficultySettingsController.WordsDifficulty wordsDifficulty;
   private DifficultySettingsController.TimeDifficulty timeDifficulty;
   private DifficultySettingsController.ConfidenceDifficulty confidenceDifficulty;
+  private String underThirty;
 
   public User(String username) {
     this.username = username;
@@ -26,6 +28,7 @@ public class User {
     gamesWon = 0;
     gamesLost = 0;
     wordsHistory = new ArrayList<>();
+    timeTakenHistory = new ArrayList<>();
     // The default fastest won time is set to -1 as there is no game that has been
     // won yet
     fastestWon = -1;
@@ -167,5 +170,21 @@ public class User {
   public void setConfidenceDifficulty(
       DifficultySettingsController.ConfidenceDifficulty confidenceDifficulty) {
     this.confidenceDifficulty = confidenceDifficulty;
+  }
+
+  public ArrayList<Integer> getTimeTakenHistory() {
+    return timeTakenHistory;
+  }
+
+  public void setTimeTakenHistory(ArrayList<Integer> timeTakenHistory) {
+    this.timeTakenHistory = timeTakenHistory;
+  }
+
+  public String getUnderThirtyBadge() {
+    return underThirty;
+  }
+
+  public void setUnderThirtyBadge(String underThirty) {
+    this.underThirty = underThirty;
   }
 }

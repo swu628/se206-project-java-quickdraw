@@ -437,10 +437,13 @@ public class GameController {
 
             // Updates the user's history of words encountered
             ArrayList<String> wordsHistory = user.getWordsHistory();
-
             wordsHistory.add(CategoryManager.getWord());
-
             user.setWordsHistory(wordsHistory);
+
+            // Updates the user's history of time taken
+            ArrayList<Integer> timeTakenHistory = user.getTimeTakenHistory();
+            timeTakenHistory.add(timeTaken);
+            user.setTimeTakenHistory(timeTakenHistory);
 
             // Create json file named as the username
             FileWriter fileWriter =
