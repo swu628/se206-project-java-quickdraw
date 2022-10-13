@@ -39,6 +39,7 @@
                                 <Font size="18.0" />
                             </font>
                         </Label>
+                  <Button fx:id="getDefWindowButton" alignment="CENTER_RIGHT" layoutX="522.0" layoutY="45.0" mnemonicParsing="false" onAction="#onGetDefWindow" prefHeight="66.0" prefWidth="361.0" text="View word meaning" visible="false" />
                         <TextArea fx:id="predictionsList" editable="false" layoutX="26.0" layoutY="112.0" prefHeight="566.0" prefWidth="433.0" text="Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;The Great Wall of China - 100.00%&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction" />
                         <Label fx:id="timerLabel" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="107.0" prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Time Left:" textAlignment="CENTER">
                             <font>

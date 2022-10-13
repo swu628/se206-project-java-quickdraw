@@ -214,3 +214,8 @@ CheckBox .box .mark {
     -fx-background-image: url("../images/background-four.png");
     -fx-background-size: 100% 100%;
 }
+
+.definition {
+	-fx-font-family: "Indie Flower";
+    -fx-font-size: 28px;
+}

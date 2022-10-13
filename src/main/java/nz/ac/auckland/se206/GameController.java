@@ -16,8 +16,11 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -31,6 +34,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.dict.DictionarySearch;
 import nz.ac.auckland.se206.dict.WordEntry;
@@ -59,6 +64,7 @@ public class GameController {
   @FXML private Button eraserButton;
   @FXML private ImageView toolImage;
   @FXML private Label wordLabel;
+  @FXML private Button getDefWindowButton;
   @FXML private Label preGameWordLabel;
   @FXML private Label clickLabel;
   @FXML private AnchorPane preGamePane;
@@ -93,6 +99,7 @@ public class GameController {
   private String currentWord;
   private int entryIndex;
   private int definitionIndex;
+  private String wordText;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -146,6 +153,7 @@ public class GameController {
     // Clears the canvas
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     User currentUser = App.getCurrentUser();
+
     // Displays the difficulty for the next game
     accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
     timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
@@ -161,7 +169,6 @@ public class GameController {
     definitionIndex = 0;
 
     // Checks if hidden word mode is selected
-    String wordText;
     if (hiddenWordMode) {
       clickLabel.setText("Click anywhere to begin drawing what you think this is");
       nextDefButton.setVisible(true);
@@ -172,14 +179,19 @@ public class GameController {
         currentWord = CategoryManager.getWord();
         wordText = getDefinition(currentWord);
       }
+      wordLabel.setVisible(false);
+      getDefWindowButton.setVisible(true);
     } else {
       nextDefButton.setVisible(false);
       wordText = "Draw: " + currentWord;
+      wordLabel.setVisible(true);
+      getDefWindowButton.setVisible(false);
     }
 
     nextDefButton.setDisable(false);
     nextDefButton.setText("Next meaning");
     preGameWordLabel.setText(wordText);
+
     wordLabel.setText(wordText);
     predDirectionLabel.setText("");
 
@@ -538,9 +550,9 @@ public class GameController {
   @FXML
   private void onNextDef() {
     // Changes the definition of the current word being displayed
-    String definition = getDefinition(currentWord);
-    preGameWordLabel.setText(definition);
-    wordLabel.setText(definition);
+    wordText = getDefinition(currentWord);
+    preGameWordLabel.setText(wordText);
+    wordLabel.setText(wordText);
   }
 
   /** This method is called when the "Clear" button is pressed. */
@@ -619,6 +631,30 @@ public class GameController {
           // update the coordinates
           currentX = x;
           currentY = y;
+        });
+  }
+
+  @FXML
+  private void onGetDefWindow() throws IOException {
+    // Creates a new window containing the word definition
+    getDefWindowButton.setDisable(true);
+
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/definition.fxml"));
+    Parent parent = loader.load();
+    DefinitionController definitionController = loader.getController();
+    definitionController.updateScene(wordText);
+
+    Stage stage = new Stage();
+    Scene scene = new Scene(parent, 480, 240);
+    stage.getIcons().add(new Image("/images/icon.png"));
+    stage.setResizable(false);
+    stage.setScene(scene);
+    stage.show();
+    stage.setOnCloseRequest(
+        new EventHandler<WindowEvent>() {
+          public void handle(WindowEvent we) {
+            getDefWindowButton.setDisable(false);
+          }
         });
   }
 
