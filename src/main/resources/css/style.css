@@ -38,11 +38,12 @@ Text {
 
 .preGameBody #category {
     -fx-font-size: 38px;
-    -fx-line-spacing: -0.25em;
+    -fx-line-spacing: -0.24em;
 }
 
 .preGameBody #prompt {
     -fx-font-size: 38px;
+    -fx-line-spacing: -0.24em;
 }
 
 .preGameBody .difficultySettings {
@@ -183,6 +184,15 @@ TextField {
 Button:hover {
     -fx-text-fill: grey;
     -fx-cursor: hand;
+}
+
+CheckBox {
+	-fx-font-family: "Indie Flower";
+	-fx-font-size: 45px;
+}
+
+CheckBox .box .mark {
+	-fx-padding: 10px;
 }
 
 .backgroundOne {

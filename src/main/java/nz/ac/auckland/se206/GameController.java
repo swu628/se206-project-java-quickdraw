@@ -60,7 +60,9 @@ public class GameController {
   @FXML private ImageView toolImage;
   @FXML private Label wordLabel;
   @FXML private Label preGameWordLabel;
+  @FXML private Label clickLabel;
   @FXML private AnchorPane preGamePane;
+  @FXML private Button nextDefButton;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
   @FXML private AnchorPane game;
@@ -87,7 +89,10 @@ public class GameController {
   private Color colour;
   private boolean isExitBtnClicked;
   private String btnClicked;
-  private boolean hiddenWord;
+  private boolean hiddenWordMode;
+  private String currentWord;
+  private int entryIndex;
+  private int definitionIndex;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -103,16 +108,31 @@ public class GameController {
     model = new DoodlePrediction();
   }
 
-  public void updateScene(boolean hiddenWord) {
-    this.hiddenWord = hiddenWord;
+  public void updateScene(boolean hiddenWordMode) {
+    this.hiddenWordMode = hiddenWordMode;
     onResetGame();
   }
 
   private String getDefinition(String word) {
     try {
+      // Searches definitions for the given word
       WordInfo wordResult = DictionarySearch.searchWordInfo(word);
       List<WordEntry> entries = wordResult.getWordEntries();
-      return entries.get(0).getDefinitions().get(0);
+      String textString = entries.get(entryIndex).getDefinitions().get(definitionIndex);
+
+      // Gets index position of next definition of the given word
+      if (entryIndex < entries.size()) {
+        if (definitionIndex + 1 < entries.get(entryIndex).getDefinitions().size()) {
+          definitionIndex++;
+        } else if (entryIndex + 1 < entries.size()) {
+          entryIndex++;
+          definitionIndex = 0;
+        } else {
+          nextDefButton.setDisable(true);
+          nextDefButton.setText("No more meanings");
+        }
+      }
+      return textString;
     } catch (IOException e) {
       e.printStackTrace();
       return "Word not found";
@@ -135,15 +155,32 @@ public class GameController {
 
     // Chooses a random category for next game
     CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
+    currentWord = CategoryManager.getWord();
 
-    String wordText = CategoryManager.getWord();
-    if (hiddenWord) {
-      wordText = getDefinition(wordText);
-      // wordLabel.setFont(new Font(10));
+    entryIndex = 0;
+    definitionIndex = 0;
+
+    // Checks if hidden word mode is selected
+    String wordText;
+    if (hiddenWordMode) {
+      clickLabel.setText("Click anywhere to begin drawing what you think this is");
+      nextDefButton.setVisible(true);
+      wordText = getDefinition(currentWord);
+      // Checks if the current word has a definition
+      while (wordText.equals("Word not found")) {
+        CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
+        currentWord = CategoryManager.getWord();
+        wordText = getDefinition(currentWord);
+      }
+    } else {
+      nextDefButton.setVisible(false);
+      wordText = "Draw: " + currentWord;
     }
 
-    preGameWordLabel.setText("Draw: " + wordText);
-    wordLabel.setText("Draw: " + wordText);
+    nextDefButton.setDisable(false);
+    nextDefButton.setText("Next meaning");
+    preGameWordLabel.setText(wordText);
+    wordLabel.setText(wordText);
     predDirectionLabel.setText("");
 
     // Set pen colour to read
@@ -479,10 +516,14 @@ public class GameController {
 
     Thread saveThread = new Thread(saveUserDataTask);
 
+    String hiddenText = "";
+    if (hiddenWordMode) {
+      hiddenText = " The word was: " + currentWord;
+    }
     if (gameWon) {
-      postGameOutcomeLabel.setText("You won!");
+      postGameOutcomeLabel.setText("You won!" + hiddenText);
     } else {
-      postGameOutcomeLabel.setText("You lost!");
+      postGameOutcomeLabel.setText("You lost!" + hiddenText);
     }
 
     ttsThread.start();
@@ -491,6 +532,15 @@ public class GameController {
     // Sets the postGame pane to visible so save, play again and quit utilities are
     // available to the player
     displayPostGame();
+  }
+
+  /** This method is called when the "Next meaning" button is pressed. */
+  @FXML
+  private void onNextDef() {
+    // Changes the definition of the current word being displayed
+    String definition = getDefinition(currentWord);
+    preGameWordLabel.setText(definition);
+    wordLabel.setText(definition);
   }
 
   /** This method is called when the "Clear" button is pressed. */

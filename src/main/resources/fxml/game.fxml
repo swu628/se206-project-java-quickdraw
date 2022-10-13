@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -95,14 +94,19 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onStartDrawing" prefHeight="480.0" prefWidth="640.0" styleClass="preGameBody" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onStartDrawing" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label id="category" fx:id="preGameWordLabel" alignment="BOTTOM_CENTER" layoutX="57.0" layoutY="182.0" prefHeight="180.0" prefWidth="844.0" text="Word: " textAlignment="CENTER" wrapText="true">
+            <Button fx:id="nextDefButton" alignment="TOP_CENTER" layoutX="280.0" layoutY="620.0" mnemonicParsing="false" onAction="#onNextDef" pickOnBounds="false" prefHeight="66.0" prefWidth="400.0" styleClass="profileSelectButton" text="Next meaning" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+                <Label id="category" fx:id="preGameWordLabel" alignment="TOP_CENTER" layoutX="57.0" layoutY="242.0" prefHeight="214.0" prefWidth="844.0" text="Word: " textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <Label id="prompt" alignment="CENTER" contentDisplay="CENTER" layoutX="161.0" layoutY="353.0" prefHeight="23.0" prefWidth="640.0" text="Click anywhere to begin drawing" textAlignment="CENTER">
+                <Label id="prompt" fx:id="clickLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="462.0" prefHeight="207.0" prefWidth="640.0" text="Click anywhere to begin drawing" textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -128,9 +132,6 @@
                     </font>
                 </Label>
             </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
         </AnchorPane>
         <AnchorPane fx:id="postGame" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody" visible="false">
             <children>

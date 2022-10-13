@@ -7,13 +7,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="background" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.ModeSelectController">
    <children>
-      <VBox alignment="CENTER" layoutX="342.0" layoutY="228.0">
+      <VBox alignment="CENTER" layoutX="212.0" layoutY="228.0" prefHeight="264.0" prefWidth="537.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onZenMode" text="Zen mode" />
             <Button mnemonicParsing="false" onAction="#onNormalMode" text="Normal mode" />
+            <CheckBox fx:id="checkBoxHidWordMode" alignment="CENTER" mnemonicParsing="false" prefHeight="66.0" prefWidth="328.0" text="Hidden Words" />
             <Button mnemonicParsing="false" onAction="#onBack" text="Back" />
          </children>
       </VBox>
-      <CheckBox fx:id="checkBoxHidWordMode" layoutX="688.0" layoutY="294.0" mnemonicParsing="false" text="Hidden Word mode" />
    </children>
 </AnchorPane>
