@@ -82,7 +82,7 @@ public class GameController {
   private Color colour;
   private boolean isExitBtnClicked;
   private String btnClicked;
-  private int numberOfZenPlayed;
+  private ArrayList<String> wonOrLost;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -165,7 +165,7 @@ public class GameController {
         getPredictTask(maxGuessNum, minConfidence, currentUser);
 
         // Get the total number of zen mode played
-        currentUser.setNumberOfZenPlayed(currentUser.getNumberOfZenPlayed());
+        currentUser.setNumberOfZenPlayed();
 
         // Save the word to history
         // Updates the user's history of words encountered
@@ -434,9 +434,11 @@ public class GameController {
               user.setGamesWon(user.getGamesWon() + 1);
               if (user.getFastestWon() > timeTaken || user.getFastestWon() == -1) {
                 user.setFastestWon(timeTaken);
+                wonOrLost.add("won");
               }
             } else {
               user.setGamesLost(user.getGamesLost() + 1);
+              wonOrLost.add("lost");
             }
 
             // Updates the user's history of words encountered

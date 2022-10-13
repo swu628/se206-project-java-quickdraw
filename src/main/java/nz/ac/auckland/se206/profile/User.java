@@ -24,7 +24,9 @@ public class User {
   private String underTwenty;
   private String underTen;
   private String zenBadge;
+  private String consecutiveWins;
   private int numberOfZenPlayed;
+  private ArrayList<String> wonOrLostHistory;
 
   public User(String username) {
     this.username = username;
@@ -218,11 +220,27 @@ public class User {
     this.zenBadge = zenBadge;
   }
 
+  public String getConsecutiveWinsBadge() {
+    return consecutiveWins;
+  }
+
+  public void setConsecutiveWinsBadge(String consecutiveWins) {
+    this.consecutiveWins = consecutiveWins;
+  }
+
   public int getNumberOfZenPlayed() {
     return numberOfZenPlayed;
   }
 
-  public void setNumberOfZenPlayed(int numberOfZenPlayed) {
+  public void setNumberOfZenPlayed() {
     this.numberOfZenPlayed++;
+  }
+
+  public ArrayList<String> getWonOrLostHistory() {
+    return wonOrLostHistory;
+  }
+
+  public void setWonOrLostHistory(ArrayList<String> wonOrLostHistory) {
+    this.wonOrLostHistory = wonOrLostHistory;
   }
 }
