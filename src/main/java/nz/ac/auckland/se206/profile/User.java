@@ -26,7 +26,6 @@ public class User {
   private String zenBadge;
   private String consecutiveWins;
   private int numberOfZenPlayed;
-  private ArrayList<String> wonOrLostHistory;
 
   public User(String username) {
     this.username = username;
@@ -234,13 +233,5 @@ public class User {
 
   public void setNumberOfZenPlayed() {
     this.numberOfZenPlayed++;
-  }
-
-  public ArrayList<String> getWonOrLostHistory() {
-    return wonOrLostHistory;
-  }
-
-  public void setWonOrLostHistory(ArrayList<String> wonOrLostHistory) {
-    this.wonOrLostHistory = wonOrLostHistory;
   }
 }

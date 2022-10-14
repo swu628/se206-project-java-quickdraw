@@ -29,7 +29,6 @@ public class StatisticsController {
   private int wordsHistoryEnd;
   private ArrayList<String> history;
   private ArrayList<Integer> timeTakenHistory;
-  private ArrayList<String> winsOrLoss;
   private int countsUnderThirty;
   private int countsUnderTwenty;
   private int countsUnderTen;
@@ -72,6 +71,7 @@ public class StatisticsController {
 
     timeTakenHistory = currentUser.getTimeTakenHistory();
     setBadge(currentUser);
+
     currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_opacity80.png");
     consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
   }
