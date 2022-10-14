@@ -142,7 +142,11 @@ public class GameController {
           entryIndex++;
           definitionIndex = 0;
         } else {
-          nextDefButton.setText("No more meanings");
+          Platform.runLater(
+              () -> {
+                nextDefButton.setText("No more meanings");
+                nextDefButton.setDisable(true);
+              });
         }
       }
 
@@ -576,14 +580,35 @@ public class GameController {
    */
   @FXML
   private void onNextDef() {
-    // Changes the definition of the current word being displayed
     nextDefButton.setDisable(true);
-    wordText = getDefinition(currentWord);
-    preGameWordLabel.setText(wordText);
-    wordLabel.setText(wordText);
-    if (!nextDefButton.getText().equals("No more meanings")) {
-      nextDefButton.setDisable(false);
-    }
+
+    // Changes the definition of the current word being displayed
+    Task<Object> getDefTask =
+        new Task<>() {
+          @Override
+          protected Object call() throws Exception {
+            String definition = getDefinition(currentWord);
+
+            Platform.runLater(
+                () -> {
+                  wordText = definition;
+                  preGameWordLabel.setText(wordText);
+                  wordLabel.setText(wordText);
+                });
+
+            return null;
+          }
+        };
+
+    getDefTask.setOnSucceeded(
+        (e) -> {
+          if (!nextDefButton.getText().equals("No more meanings")) {
+            nextDefButton.setDisable(false);
+          }
+        });
+
+    Thread getDefThread = new Thread(getDefTask);
+    getDefThread.start();
   }
 
   /** This method is called when the "Clear" button is pressed. */
