@@ -26,6 +26,7 @@ public class User {
   private String zenBadge;
   private String consecutiveWins;
   private int numberOfZenPlayed;
+  private ArrayList<String> wonOrLostHistory;
 
   public User(String username) {
     this.username = username;
@@ -34,6 +35,7 @@ public class User {
     gamesLost = 0;
     wordsHistory = new ArrayList<>();
     timeTakenHistory = new ArrayList<>();
+    wonOrLostHistory = new ArrayList<>();
     // The default fastest won time is set to -1 as there is no game that has been
     // won yet
     fastestWon = -1;
@@ -233,5 +235,13 @@ public class User {
 
   public void setNumberOfZenPlayed() {
     this.numberOfZenPlayed++;
+  }
+
+  public ArrayList<String> getWonOrLostHistory() {
+    return wonOrLostHistory;
+  }
+
+  public void setWonOrLostHistory(ArrayList<String> wonOrLostHistory) {
+    this.wonOrLostHistory = wonOrLostHistory;
   }
 }

@@ -29,6 +29,7 @@ public class StatisticsController {
   private int wordsHistoryEnd;
   private ArrayList<String> history;
   private ArrayList<Integer> timeTakenHistory;
+  ArrayList<String> wonOrLostHistory;
   private int countsUnderThirty;
   private int countsUnderTwenty;
   private int countsUnderTen;
@@ -70,10 +71,8 @@ public class StatisticsController {
     wordsHistory.setText(sb.toString());
 
     timeTakenHistory = currentUser.getTimeTakenHistory();
+    wonOrLostHistory = currentUser.getWonOrLostHistory();
     setBadge(currentUser);
-
-    currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_opacity80.png");
-    consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
   }
 
   @FXML
@@ -213,6 +212,30 @@ public class StatisticsController {
     } else {
       currentUser.setZenBadge("/images/zen_gold.png");
       zenBadge.setImage(new Image(currentUser.getZenBadge()));
+    }
+
+    int numberOfConsecutiveWins = 0;
+
+    for (int i = 0; i < currentUser.getWonOrLostHistory().size(); i++) {
+      if (wonOrLostHistory.get(i).equals("won")) {
+        numberOfConsecutiveWins++;
+      } else if (wonOrLostHistory.get(i).equals("lost")) {
+        numberOfConsecutiveWins = 0;
+      }
+    }
+
+    if (numberOfConsecutiveWins < 3) {
+      currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_opacity80.png");
+      consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
+    } else if (numberOfConsecutiveWins >= 3 && numberOfConsecutiveWins < 10) {
+      currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_bronze.png");
+      consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
+    } else if (numberOfConsecutiveWins >= 10 && numberOfConsecutiveWins < 50) {
+      currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_silver.png");
+      consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
+    } else {
+      currentUser.setConsecutiveWinsBadge("/images/consecutiveWinsgold.png");
+      consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
     }
   }
 }

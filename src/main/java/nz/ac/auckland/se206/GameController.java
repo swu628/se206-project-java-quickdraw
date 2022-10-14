@@ -431,11 +431,17 @@ public class GameController {
             // If game won, checks if it is a new fastest won and updates if true
             if (gameWon) {
               user.setGamesWon(user.getGamesWon() + 1);
+              ArrayList<String> wonOrLostHistory = user.getWonOrLostHistory();
+              wonOrLostHistory.add("won");
+              user.setWonOrLostHistory(wonOrLostHistory);
               if (user.getFastestWon() > timeTaken || user.getFastestWon() == -1) {
                 user.setFastestWon(timeTaken);
               }
             } else {
               user.setGamesLost(user.getGamesLost() + 1);
+              ArrayList<String> wonOrLostHistory = user.getWonOrLostHistory();
+              wonOrLostHistory.add("lost");
+              user.setWonOrLostHistory(wonOrLostHistory);
             }
 
             // Updates the user's history of words encountered
