@@ -142,10 +142,10 @@ public class GameController {
           entryIndex++;
           definitionIndex = 0;
         } else {
-          nextDefButton.setDisable(true);
           nextDefButton.setText("No more meanings");
         }
       }
+
       return textString;
     } catch (IOException e) {
       e.printStackTrace();
@@ -181,7 +181,7 @@ public class GameController {
 
     // Checks if hidden word mode is selected
     if (hiddenWordMode) {
-      clickLabel.setText("Click anywhere to begin drawing what you think this is");
+      clickLabel.setText("Click 'Draw' to begin drawing what you think this is");
       nextDefButton.setVisible(true);
       wordText = getDefinition(currentWord);
       // Checks if the current word has a definition
@@ -193,6 +193,7 @@ public class GameController {
       wordLabel.setVisible(false);
       getDefWindowButton.setVisible(true);
     } else {
+      clickLabel.setText("Click 'Draw' to begin drawing");
       nextDefButton.setVisible(false);
       wordText = "Draw: " + currentWord;
       wordLabel.setVisible(true);
@@ -576,9 +577,13 @@ public class GameController {
   @FXML
   private void onNextDef() {
     // Changes the definition of the current word being displayed
+    nextDefButton.setDisable(true);
     wordText = getDefinition(currentWord);
     preGameWordLabel.setText(wordText);
     wordLabel.setText(wordText);
+    if (!nextDefButton.getText().equals("No more meanings")) {
+      nextDefButton.setDisable(false);
+    }
   }
 
   /** This method is called when the "Clear" button is pressed. */

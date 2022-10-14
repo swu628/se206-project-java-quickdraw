@@ -95,23 +95,28 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onStartDrawing" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-            <Button fx:id="nextDefButton" alignment="TOP_CENTER" layoutX="280.0" layoutY="620.0" mnemonicParsing="false" onAction="#onNextDef" pickOnBounds="false" prefHeight="66.0" prefWidth="400.0" styleClass="profileSelectButton" text="Next meaning" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-                <Label id="category" fx:id="preGameWordLabel" alignment="TOP_CENTER" layoutX="57.0" layoutY="242.0" prefHeight="214.0" prefWidth="844.0" text="Word: " textAlignment="CENTER" wrapText="true">
+                <Label id="category" fx:id="preGameWordLabel" alignment="TOP_CENTER" layoutX="58.0" layoutY="248.0" prefHeight="177.0" prefWidth="844.0" text="Word: " textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <Label id="prompt" fx:id="clickLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="462.0" prefHeight="207.0" prefWidth="640.0" text="Click anywhere to begin drawing" textAlignment="CENTER" wrapText="true">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Label>
+            <VBox alignment="TOP_CENTER" layoutY="405.0" prefHeight="294.0" prefWidth="960.0">
+               <children>
+                      <Label id="prompt" fx:id="clickLabel" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="104.0" prefWidth="844.0" text="Click 'Draw' to begin drawing" textAlignment="CENTER" wrapText="true">
+                          <font>
+                              <Font size="16.0" />
+                          </font>
+                      </Label>
+                  <Button alignment="BOTTOM_CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStartDrawing" prefHeight="55.0" prefWidth="400.0" text="Draw" />
+                  <Button fx:id="nextDefButton" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onNextDef" pickOnBounds="false" prefHeight="80.0" prefWidth="400.0" styleClass="profileSelectButton" text="Next meaning" textAlignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
                 <Label fx:id="accuracyDifficultyLabel" layoutX="78.0" layoutY="85.0" prefHeight="55.0" prefWidth="265.0" styleClass="difficultySettings" text="Accuracy: MEDIUM">
                     <font>
                         <Font size="16.0" />

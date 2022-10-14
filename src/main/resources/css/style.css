@@ -37,13 +37,12 @@ Text {
 }
 
 .preGameBody #category {
-    -fx-font-size: 38px;
-    -fx-line-spacing: -0.24em;
+    -fx-font-size: 35px;
+    -fx-line-spacing: -0.1em;
 }
 
 .preGameBody #prompt {
-    -fx-font-size: 38px;
-    -fx-line-spacing: -0.24em;
+    -fx-font-size: 40px;
 }
 
 .preGameBody .difficultySettings {
