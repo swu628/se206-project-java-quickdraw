@@ -22,6 +22,7 @@ public class ModeSelectController {
 
   @FXML
   private void onBack(ActionEvent e) {
+    AudioController.playButtonClick();
     event = e;
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
@@ -31,6 +32,7 @@ public class ModeSelectController {
 
   @FXML
   private void onZenMode(ActionEvent e) {
+    AudioController.playButtonClick();
     event = e;
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
@@ -42,6 +44,7 @@ public class ModeSelectController {
 
   @FXML
   private void onNormalMode(ActionEvent e) {
+    AudioController.playButtonClick();
     event = e;
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();

@@ -21,6 +21,11 @@ public class AudioController {
           Objects.requireNonNull(AudioController.class.getResource("/sounds/Carefree.mp3"))
               .toExternalForm());
 
+  private static Media pencilWriteSound =
+      new Media(
+          Objects.requireNonNull(AudioController.class.getResource("/sounds/write_pencil.mp3"))
+              .toExternalForm());
+
   public static void playButtonClick() {
     Thread buttonClickThread =
         new Thread(
@@ -32,6 +37,19 @@ public class AudioController {
             });
 
     buttonClickThread.start();
+  }
+
+  public static void playPencilWrite() {
+    Thread pencilWriteThread =
+        new Thread(
+            () -> {
+              mediaPlayer = new MediaPlayer(pencilWriteSound);
+              // Plays the button click sound
+              mediaPlayer.setVolume(0.7);
+              mediaPlayer.play();
+            });
+
+    pencilWriteThread.start();
   }
 
   public static void playBackgroundMusic() {

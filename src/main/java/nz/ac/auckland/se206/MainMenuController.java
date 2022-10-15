@@ -133,6 +133,7 @@ public class MainMenuController {
    */
   @FXML
   private void onToPreviousUser(MouseEvent e) {
+    AudioController.playPencilWrite();
     // Changes current user to previous user in list
     currentUser -= 1;
     username.setText(userList.get(currentUser).getName());
@@ -151,6 +152,7 @@ public class MainMenuController {
    */
   @FXML
   private void onToNextUser(MouseEvent e) {
+    AudioController.playPencilWrite();
     // Changes current user to next user in list
     currentUser += 1;
     username.setText(userList.get(currentUser).getName());

@@ -240,6 +240,7 @@ public class GameController {
 
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
+    AudioController.playButtonClick();
     displayPreGame();
   }
 
@@ -260,6 +261,7 @@ public class GameController {
     int maxGuessNum = currentUser.getAccuracyDifficulty().getNumGuesses();
     double minConfidence = currentUser.getConfidenceDifficulty().getMinConfidence();
     onSwitchToPen();
+    AudioController.playButtonClick();
     displayGame();
 
     if (btnClicked.equals("Zen mode")) {
@@ -625,6 +627,8 @@ public class GameController {
           protected Object call() throws Exception {
             String definition = getDefinition(currentWord);
 
+            AudioController.playPencilWrite();
+
             Platform.runLater(
                 () -> {
                   wordText = definition;
@@ -748,6 +752,7 @@ public class GameController {
     stage.getIcons().add(new Image("/images/icon.png"));
     stage.setResizable(false);
     stage.setScene(scene);
+    AudioController.playButtonClick();
     stage.show();
 
     stage.setOnCloseRequest(
@@ -795,6 +800,7 @@ public class GameController {
    */
   @FXML
   private void onGameMenu(ActionEvent e) {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));

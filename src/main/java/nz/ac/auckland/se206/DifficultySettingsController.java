@@ -253,6 +253,7 @@ public class DifficultySettingsController {
   /** This method changes the difficulty to the previous difficulty in the accuracy array */
   @FXML
   private void onToPreviousAccuracyDifficulty() {
+    AudioController.playPencilWrite();
     // Changes current accuracy difficulty to previous accuracy difficulty in list
     accuracyDifficulty -= 1;
     accuracySettingsLabel.setText(accuracyDifficultyList.get(accuracyDifficulty).toString());
@@ -268,6 +269,7 @@ public class DifficultySettingsController {
   /** This method changes the difficulty to the next difficulty in the accuracy array */
   @FXML
   private void onToNextAccuracyDifficulty() {
+    AudioController.playPencilWrite();
     // Changes current accuracy difficulty to next accuracy difficulty in list
     accuracyDifficulty += 1;
     accuracySettingsLabel.setText(accuracyDifficultyList.get(accuracyDifficulty).toString());
@@ -283,6 +285,7 @@ public class DifficultySettingsController {
   /** This method changes the difficulty to the previous difficulty in the word array */
   @FXML
   private void onToPreviousWordDifficulty() {
+    AudioController.playPencilWrite();
     // Changes current word difficulty to previous word difficulty in list
     wordsDifficulty -= 1;
     wordsSettingsLabel.setText(wordsDifficultyList.get(wordsDifficulty).toString());
@@ -298,6 +301,7 @@ public class DifficultySettingsController {
   /** This method changes the difficulty to the next difficulty in the word array */
   @FXML
   private void onToNextWordDifficulty() {
+    AudioController.playPencilWrite();
     // Changes current word difficulty to next word difficulty in list
     wordsDifficulty += 1;
     wordsSettingsLabel.setText(wordsDifficultyList.get(wordsDifficulty).toString());
@@ -313,6 +317,7 @@ public class DifficultySettingsController {
   /** This method changes the difficulty to the previous difficulty in the time array */
   @FXML
   private void onToPreviousTimeDifficulty() {
+    AudioController.playPencilWrite();
     // Changes current time difficulty to previous time difficulty in list
     timeDifficulty -= 1;
     timeSettingsLabel.setText(timeDifficultyList.get(timeDifficulty).toString());
@@ -328,6 +333,7 @@ public class DifficultySettingsController {
   /** This method changes the difficulty to the next difficulty in the time array */
   @FXML
   private void onToNextTimeDifficulty() {
+    AudioController.playPencilWrite();
     // Changes current time difficulty to next time difficulty in list
     timeDifficulty += 1;
     timeSettingsLabel.setText(timeDifficultyList.get(timeDifficulty).toString());
@@ -343,6 +349,7 @@ public class DifficultySettingsController {
   /** This method changes the difficulty to the previous difficulty in the confidence array */
   @FXML
   private void onToPreviousConfidenceDifficulty() {
+    AudioController.playPencilWrite();
     // Changes current confidence difficulty to previous confidence difficulty in list
     confidenceDifficulty -= 1;
     confidenceSettingsLabel.setText(confidenceDifficultyList.get(confidenceDifficulty).toString());
@@ -359,6 +366,7 @@ public class DifficultySettingsController {
   /** This method changes the difficulty to the next difficulty in the confidence array */
   @FXML
   private void onToNextConfidenceDifficulty() {
+    AudioController.playPencilWrite();
     // Changes current confidence difficulty to next confidence difficulty in list
     confidenceDifficulty += 1;
     confidenceSettingsLabel.setText(confidenceDifficultyList.get(confidenceDifficulty).toString());
@@ -471,6 +479,7 @@ public class DifficultySettingsController {
   /** This method toggles the accuracy help blurb */
   @FXML
   private void onGetAccuracyHelp() {
+    AudioController.playPencilWrite();
     // Checks if help blurb is enabled/disabled and does the opposite
     if (accuracyDescriptionPane.isVisible()) {
       // Disables help blurb for respective accuracy difficulty
@@ -487,6 +496,7 @@ public class DifficultySettingsController {
   /** This method toggles the word help blurb */
   @FXML
   private void onGetWordsHelp() {
+    AudioController.playPencilWrite();
     // Checks if help blurb is enabled/disabled and does the opposite
     if (wordDescriptionPane.isVisible()) {
       // Disables help blurb for respective accuracy difficulty
@@ -503,6 +513,7 @@ public class DifficultySettingsController {
   /** This method toggles the time help blurb */
   @FXML
   private void onGetTimeHelp() {
+    AudioController.playPencilWrite();
     // Checks if help blurb is enabled/disabled and does the opposite
     if (timeDescriptionPane.isVisible()) {
       // Disables help blurb for respective accuracy difficulty
@@ -519,6 +530,7 @@ public class DifficultySettingsController {
   /** This method toggles the confidence help blurb */
   @FXML
   private void onGetConfidenceHelp() {
+    AudioController.playPencilWrite();
     // Checks if help blurb is enabled/disabled and does the opposite
     if (confidenceDescriptionPane.isVisible()) {
       // Disables help blurb for respective accuracy difficulty
@@ -541,6 +553,7 @@ public class DifficultySettingsController {
    */
   @FXML
   private void onGameMenu(ActionEvent e) throws IOException {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 

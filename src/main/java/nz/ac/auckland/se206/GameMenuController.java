@@ -30,6 +30,7 @@ public class GameMenuController {
 
   @FXML
   private void onStartGame(ActionEvent e) {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
@@ -43,6 +44,7 @@ public class GameMenuController {
    */
   @FXML
   private void onShowStatistics(ActionEvent e) {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
@@ -58,6 +60,7 @@ public class GameMenuController {
    */
   @FXML
   private void onShowDifficultySettings(ActionEvent e) {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
@@ -73,6 +76,7 @@ public class GameMenuController {
    */
   @FXML
   private void onSignOut(ActionEvent e) {
+    AudioController.playButtonClick();
     App.setCurrentUser(null);
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
