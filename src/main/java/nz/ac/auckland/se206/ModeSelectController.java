@@ -4,10 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.text.Font;
 
 public class ModeSelectController {
 
+  @FXML private CheckBox checkBoxHidWordMode;
   private static ActionEvent event;
 
   /**
@@ -38,9 +40,6 @@ public class ModeSelectController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
-    // Updating the game scene to get ready for a new game
-    App.getGameController().updateScene();
-
     // Sets the scene to the game menu
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
   }
@@ -57,7 +56,7 @@ public class ModeSelectController {
     Scene currentScene = button.getScene();
 
     // Updating the game scene to get ready for a new game
-    App.getGameController().updateScene();
+    App.getGameController().updateScene(checkBoxHidWordMode.isSelected());
 
     // Sets the scene to the game
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
@@ -75,7 +74,7 @@ public class ModeSelectController {
     Scene currentScene = button.getScene();
 
     // Updating the game scene to get ready for a new game
-    App.getGameController().updateScene();
+    App.getGameController().updateScene(checkBoxHidWordMode.isSelected());
 
     // Sets the scene to the game menu
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));

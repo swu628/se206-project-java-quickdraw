@@ -162,6 +162,12 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * This method signs in the user and changes the scene to the game menu.
+   *
+   * @param e the action event that triggered this method
+   * @throws IOException if the user profile doesn't exist
+   */
   @FXML
   private void onSignIn(ActionEvent e) throws IOException {
     App.setCurrentUser(userList.get(currentUser));
@@ -174,6 +180,11 @@ public class MainMenuController {
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
   }
 
+  /**
+   * This method sets the scene to the register.
+   *
+   * @param e The action even that triggered this method
+   */
   @FXML
   private void onCreateAccount(ActionEvent e) {
     // Resets the scene and replaces root scene with register scene

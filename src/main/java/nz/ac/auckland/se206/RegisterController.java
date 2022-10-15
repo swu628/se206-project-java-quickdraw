@@ -30,6 +30,11 @@ public class RegisterController {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
   }
 
+  /**
+   * This method signs in the user.
+   *
+   * @throws IOException if the user profile could not be created
+   */
   @FXML
   private void onSignUp() throws IOException {
     // Checks if username is valid
@@ -70,6 +75,7 @@ public class RegisterController {
     }
   }
 
+  /** This method resets the scene. */
   private void sceneReset() {
     // Sets the scene to the initial state
     text.setText("");
@@ -80,6 +86,11 @@ public class RegisterController {
     backButton.setDisable(false);
   }
 
+  /**
+   * This method sets the scene to the main menu.
+   *
+   * @param e the action event that triggered this method
+   */
   @FXML
   private void onBack(ActionEvent e) {
     // Resets the scene and replaces root scene with main menu scene

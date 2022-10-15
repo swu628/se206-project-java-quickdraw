@@ -9,14 +9,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -30,7 +34,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javax.imageio.ImageIO;
+import nz.ac.auckland.se206.dict.DictionarySearch;
+import nz.ac.auckland.se206.dict.WordEntry;
+import nz.ac.auckland.se206.dict.WordInfo;
+import nz.ac.auckland.se206.dict.WordNotFoundException;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profile.User;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -54,8 +64,11 @@ public class GameController {
   @FXML private Button eraserButton;
   @FXML private ImageView toolImage;
   @FXML private Label wordLabel;
+  @FXML private Button getDefWindowButton;
   @FXML private Label preGameWordLabel;
+  @FXML private Label clickLabel;
   @FXML private AnchorPane preGamePane;
+  @FXML private Button nextDefButton;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
   @FXML private AnchorPane game;
@@ -82,6 +95,11 @@ public class GameController {
   private Color colour;
   private boolean isExitBtnClicked;
   private String btnClicked;
+  private boolean hiddenWordMode;
+  private String currentWord;
+  private int entryIndex;
+  private int definitionIndex;
+  private String wordText;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -97,8 +115,48 @@ public class GameController {
     model = new DoodlePrediction();
   }
 
-  public void updateScene() {
+  public void updateScene(boolean hiddenWordMode) {
+    this.hiddenWordMode = hiddenWordMode;
     onResetGame();
+  }
+
+  /**
+   * This method searches the definition from the given word input. Keeps track of current
+   * definition to avoid reuse.
+   *
+   * @param word that is being searched in the dictionary
+   * @return string with the definition of the word
+   */
+  private String getDefinition(String word) {
+    try {
+      // Searches definitions for the given word in a dictionary
+      WordInfo wordResult = DictionarySearch.searchWordInfo(word);
+      List<WordEntry> entries = wordResult.getWordEntries();
+      String textString = entries.get(entryIndex).getDefinitions().get(definitionIndex);
+
+      // Gets index position of next definition of the given word
+      if (entryIndex < entries.size()) {
+        if (definitionIndex + 1 < entries.get(entryIndex).getDefinitions().size()) {
+          definitionIndex++;
+        } else if (entryIndex + 1 < entries.size()) {
+          entryIndex++;
+          definitionIndex = 0;
+        } else {
+          Platform.runLater(
+              () -> {
+                nextDefButton.setText("No more meanings");
+                nextDefButton.setDisable(true);
+              });
+        }
+      }
+
+      return textString;
+    } catch (IOException e) {
+      e.printStackTrace();
+      return "Word not found";
+    } catch (WordNotFoundException e) {
+      return "Word not found";
+    }
   }
 
   /**
@@ -110,6 +168,7 @@ public class GameController {
     // Clears the canvas
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     User currentUser = App.getCurrentUser();
+
     // Displays the difficulty for the next game
     accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
     timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
@@ -119,11 +178,40 @@ public class GameController {
 
     // Chooses a random category for next game
     CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
-    preGameWordLabel.setText("Draw: " + CategoryManager.getWord());
-    wordLabel.setText("Draw: " + CategoryManager.getWord());
+    currentWord = CategoryManager.getWord();
+
+    entryIndex = 0;
+    definitionIndex = 0;
+
+    // Checks if hidden word mode is selected
+    if (hiddenWordMode) {
+      clickLabel.setText("Click 'Draw' to begin drawing what you think this is");
+      nextDefButton.setVisible(true);
+      wordText = getDefinition(currentWord);
+      // Checks if the current word has a definition
+      while (wordText.equals("Word not found")) {
+        CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
+        currentWord = CategoryManager.getWord();
+        wordText = getDefinition(currentWord);
+      }
+      wordLabel.setVisible(false);
+      getDefWindowButton.setVisible(true);
+    } else {
+      clickLabel.setText("Click 'Draw' to begin drawing");
+      nextDefButton.setVisible(false);
+      wordText = "Draw: " + currentWord;
+      wordLabel.setVisible(true);
+      getDefWindowButton.setVisible(false);
+    }
+
+    nextDefButton.setDisable(false);
+    nextDefButton.setText("Next meaning");
+    preGameWordLabel.setText(wordText);
+
+    wordLabel.setText(wordText);
     predDirectionLabel.setText("");
 
-    // Set pen colour to read
+    // Set pen colour to black
     if (colourPicker.isVisible()) {
       colourPicker.setValue(Color.BLACK);
     }
@@ -131,10 +219,10 @@ public class GameController {
     // Set visibility of time label
     Button button = (Button) ModeSelectController.getActionEvent().getSource();
     btnClicked = button.getText();
-    if (btnClicked.equals("Normal mode")) {
-      timeDifficultyLabel.setVisible(true);
-    } else if (btnClicked.equals("Zen mode")) {
+    if (btnClicked.equals("Zen mode")) {
       timeDifficultyLabel.setVisible(false);
+    } else {
+      timeDifficultyLabel.setVisible(true);
     }
 
     onSwitchToPen();
@@ -161,45 +249,42 @@ public class GameController {
     onSwitchToPen();
     displayGame();
 
-    switch (btnClicked) {
-      case "Zen mode":
-        timerLabel.setVisible(false);
-        exitButton.setVisible(true);
-        saveButton.setVisible(true);
-        colourPicker.setVisible(true);
-        timeDifficultyLabel.setVisible(false);
-        isExitBtnClicked = false;
-        colour = Color.BLACK;
+    if (btnClicked.equals("Zen mode")) {
+      timerLabel.setVisible(false);
+      exitButton.setVisible(true);
+      saveButton.setVisible(true);
+      colourPicker.setVisible(true);
+      timeDifficultyLabel.setVisible(false);
+      isExitBtnClicked = false;
+      colour = Color.BLACK;
 
-        getPredictTask(maxGuessNum, minConfidence, currentUser);
+      // Get the total number of zen mode played
+      currentUser.setNumberOfZenPlayed();
 
-        // Save the word to history
-        // Updates the user's history of words encountered
-        ArrayList<String> wordsHistory = currentUser.getWordsHistory();
-        wordsHistory.add(CategoryManager.getWord());
-        currentUser.setWordsHistory(wordsHistory);
-        // Create json file named as the username
-        FileWriter fileWriter =
-            new FileWriter("src/main/resources/UserProfiles/" + currentUser.getName() + ".json");
-        // Write user details into the file
-        Gson gson = new Gson();
-        gson.toJson(currentUser, fileWriter);
-        fileWriter.close();
+      getPredictTask(maxGuessNum, minConfidence, currentUser);
 
-        break;
+      // Save the word to history
+      // Updates the user's history of words encountered
+      ArrayList<String> wordsHistory = currentUser.getWordsHistory();
+      wordsHistory.add(CategoryManager.getWord());
+      currentUser.setWordsHistory(wordsHistory);
+      // Create json file named as the username
+      FileWriter fileWriter =
+          new FileWriter("src/main/resources/UserProfiles/" + currentUser.getName() + ".json");
+      // Write user details into the file
+      Gson gson = new Gson();
+      gson.toJson(currentUser, fileWriter);
+      fileWriter.close();
+    } else {
+      timerLabel.setVisible(true);
+      exitButton.setVisible(false);
+      saveButton.setVisible(false);
+      colourPicker.setVisible(false);
+      timeDifficultyLabel.setVisible(true);
+      colour = Color.BLACK;
 
-      case "Normal mode":
-        timerLabel.setVisible(true);
-        exitButton.setVisible(false);
-        saveButton.setVisible(false);
-        colourPicker.setVisible(false);
-        timeDifficultyLabel.setVisible(true);
-        colour = Color.BLACK;
-
-        getTimerTask();
-        getPredictTask(maxGuessNum, minConfidence, currentUser);
-
-        break;
+      getTimerTask();
+      getPredictTask(maxGuessNum, minConfidence, currentUser);
     }
   }
 
@@ -262,21 +347,19 @@ public class GameController {
    */
   private boolean getStatement() {
     boolean statement = false;
-    switch (btnClicked) {
-      case "Normal mode":
-        if (timeLeft >= 0 && !gameWon) {
-          statement = true;
-        } else {
-          statement = false;
-        }
-        break;
-      case "Zen mode":
-        if (!isExitBtnClicked) {
-          statement = true;
-        } else {
-          statement = false;
-        }
-        break;
+
+    if (btnClicked.equals("Zen mode")) {
+      if (!isExitBtnClicked) {
+        statement = true;
+      } else {
+        statement = false;
+      }
+    } else {
+      if (timeLeft >= 0 && !gameWon) {
+        statement = true;
+      } else {
+        statement = false;
+      }
     }
     return statement;
   }
@@ -444,19 +527,28 @@ public class GameController {
             // If game won, checks if it is a new fastest won and updates if true
             if (gameWon) {
               user.setGamesWon(user.getGamesWon() + 1);
+              ArrayList<String> wonOrLostHistory = user.getWonOrLostHistory();
+              wonOrLostHistory.add("won");
+              user.setWonOrLostHistory(wonOrLostHistory);
               if (user.getFastestWon() > timeTaken || user.getFastestWon() == -1) {
                 user.setFastestWon(timeTaken);
               }
             } else {
               user.setGamesLost(user.getGamesLost() + 1);
+              ArrayList<String> wonOrLostHistory = user.getWonOrLostHistory();
+              wonOrLostHistory.add("lost");
+              user.setWonOrLostHistory(wonOrLostHistory);
             }
 
             // Updates the user's history of words encountered
             ArrayList<String> wordsHistory = user.getWordsHistory();
-
             wordsHistory.add(CategoryManager.getWord());
-
             user.setWordsHistory(wordsHistory);
+
+            // Updates the user's history of time taken
+            ArrayList<Integer> timeTakenHistory = user.getTimeTakenHistory();
+            timeTakenHistory.add(timeTaken);
+            user.setTimeTakenHistory(timeTakenHistory);
 
             // Create json file named as the username
             FileWriter fileWriter =
@@ -476,10 +568,14 @@ public class GameController {
 
     Thread saveThread = new Thread(saveUserDataTask);
 
+    String hiddenText = "";
+    if (hiddenWordMode) {
+      hiddenText = " The word was: " + currentWord;
+    }
     if (gameWon) {
-      postGameOutcomeLabel.setText("You won!");
+      postGameOutcomeLabel.setText("You won!" + hiddenText);
     } else {
-      postGameOutcomeLabel.setText("You lost!");
+      postGameOutcomeLabel.setText("You lost!" + hiddenText);
     }
 
     ttsThread.start();
@@ -488,6 +584,43 @@ public class GameController {
     // Sets the postGame pane to visible so save, play again and quit utilities are
     // available to the player
     displayPostGame();
+  }
+
+  /**
+   * This method is called when the "Next meaning" button is pressed. Updates to a new definition
+   * for the current word
+   */
+  @FXML
+  private void onNextDef() {
+    nextDefButton.setDisable(true);
+
+    // Changes the definition of the current word being displayed
+    Task<Object> getDefTask =
+        new Task<>() {
+          @Override
+          protected Object call() throws Exception {
+            String definition = getDefinition(currentWord);
+
+            Platform.runLater(
+                () -> {
+                  wordText = definition;
+                  preGameWordLabel.setText(wordText);
+                  wordLabel.setText(wordText);
+                });
+
+            return null;
+          }
+        };
+
+    getDefTask.setOnSucceeded(
+        (e) -> {
+          if (!nextDefButton.getText().equals("No more meanings")) {
+            nextDefButton.setDisable(false);
+          }
+        });
+
+    Thread getDefThread = new Thread(getDefTask);
+    getDefThread.start();
   }
 
   /** This method is called when the "Clear" button is pressed. */
@@ -572,6 +705,35 @@ public class GameController {
   }
 
   /**
+   * This method will open a new window that displays the current word's definition
+   *
+   * @throws IOException
+   */
+  @FXML
+  private void onGetDefWindow() throws IOException {
+    // Creates a new window containing the word definition
+    getDefWindowButton.setDisable(true);
+
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/definition.fxml"));
+    Parent parent = loader.load();
+    DefinitionController definitionController = loader.getController();
+    definitionController.updateScene(wordText);
+
+    Stage stage = new Stage();
+    Scene scene = new Scene(parent, 480, 240);
+    stage.getIcons().add(new Image("/images/icon.png"));
+    stage.setResizable(false);
+    stage.setScene(scene);
+    stage.show();
+    stage.setOnCloseRequest(
+        new EventHandler<WindowEvent>() {
+          public void handle(WindowEvent we) {
+            getDefWindowButton.setDisable(false);
+          }
+        });
+  }
+
+  /**
    * This method will save the user's drawing
    *
    * @throws IOException if file path specified doesn't exist
@@ -608,8 +770,6 @@ public class GameController {
    */
   @FXML
   private void onGameMenu(ActionEvent e) {
-    // Resets the game and switches scene to the main menu
-    onResetGame();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));

@@ -37,11 +37,12 @@ Text {
 }
 
 .preGameBody #category {
-    -fx-font-size: 45px;
+    -fx-font-size: 35px;
+    -fx-line-spacing: -0.1em;
 }
 
 .preGameBody #prompt {
-    -fx-font-size: 38px;
+    -fx-font-size: 40px;
 }
 
 .preGameBody .difficultySettings {
@@ -184,6 +185,15 @@ Button:hover {
     -fx-cursor: hand;
 }
 
+CheckBox {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 45px;
+}
+
+CheckBox .box .mark {
+    -fx-padding: 10px;
+}
+
 .backgroundOne {
     -fx-background-image: url("../images/background-one.png");
     -fx-background-size: 100% 100%;
@@ -202,4 +212,17 @@ Button:hover {
 .backgroundFour {
     -fx-background-image: url("../images/background-four.png");
     -fx-background-size: 100% 100%;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.definition {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 28px;
 }

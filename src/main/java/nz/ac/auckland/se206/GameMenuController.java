@@ -28,6 +28,11 @@ public class GameMenuController {
     welcomeText.setText("Welcome " + App.getCurrentUser().getName());
   }
 
+  /**
+   * This method will change the scene to the mode select screen.
+   *
+   * @param e the action event that triggered this method
+   */
   @FXML
   private void onStartGame(ActionEvent e) {
     Button button = (Button) e.getSource();
