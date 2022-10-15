@@ -93,6 +93,7 @@ public class RegisterController {
    */
   @FXML
   private void onBack(ActionEvent e) {
+    AudioController.playButtonClick();
     // Resets the scene and replaces root scene with main menu scene
     sceneReset();
     // Sets up main menu scene

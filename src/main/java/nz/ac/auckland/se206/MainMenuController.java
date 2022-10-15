@@ -133,6 +133,7 @@ public class MainMenuController {
    */
   @FXML
   private void onToPreviousUser(MouseEvent e) {
+    AudioController.playPencilWrite();
     // Changes current user to previous user in list
     currentUser -= 1;
     username.setText(userList.get(currentUser).getName());
@@ -151,6 +152,7 @@ public class MainMenuController {
    */
   @FXML
   private void onToNextUser(MouseEvent e) {
+    AudioController.playPencilWrite();
     // Changes current user to next user in list
     currentUser += 1;
     username.setText(userList.get(currentUser).getName());
@@ -170,6 +172,7 @@ public class MainMenuController {
    */
   @FXML
   private void onSignIn(ActionEvent e) throws IOException {
+    AudioController.playButtonClick();
     App.setCurrentUser(userList.get(currentUser));
 
     // Switches to the game scene
@@ -187,6 +190,7 @@ public class MainMenuController {
    */
   @FXML
   private void onCreateAccount(ActionEvent e) {
+    AudioController.playButtonClick();
     // Resets the scene and replaces root scene with register scene
     setUpUsers();
     Button button = (Button) e.getSource();

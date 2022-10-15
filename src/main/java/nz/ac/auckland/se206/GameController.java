@@ -240,6 +240,7 @@ public class GameController {
 
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
+    AudioController.playButtonClick();
     displayPreGame();
   }
 
@@ -260,6 +261,7 @@ public class GameController {
     int maxGuessNum = currentUser.getAccuracyDifficulty().getNumGuesses();
     double minConfidence = currentUser.getConfidenceDifficulty().getMinConfidence();
     onSwitchToPen();
+    AudioController.playButtonClick();
     displayGame();
 
     if (btnClicked.equals("Zen mode")) {
@@ -395,6 +397,7 @@ public class GameController {
 
             // Setting initial conditions for prediction
             TextToSpeech textToSpeech = new TextToSpeech();
+            boolean givenWarning = false;
             String prevTopPred = "";
             String currentTopPred = "";
             int prevPredPos = Integer.MAX_VALUE;
@@ -408,6 +411,10 @@ public class GameController {
               // If 1000 milliseconds has elapsed, it has been 1 second, so the DL model is
               // queried
               if (deltaTime >= 1000) {
+                if (timeLeft <= 10 && !givenWarning) {
+                  textToSpeech.speak("Less than 10 seconds remaining");
+                  givenWarning = true;
+                }
                 if (doPredict) {
                   // Uses game thread to get current snapshot of canvas
                   // Returns to predictThread to query DL model
@@ -590,6 +597,7 @@ public class GameController {
       // Moving game outcome label up to accomodate for hidden word label
       postGameOutcomeLabel.setLayoutY(107);
     }
+    // Setting game outcome text
     postGameHiddenWordLabel.setText(hiddenText);
     if (gameWon) {
       postGameOutcomeLabel.setText("You won!");
@@ -619,6 +627,8 @@ public class GameController {
           @Override
           protected Object call() throws Exception {
             String definition = getDefinition(currentWord);
+
+            AudioController.playPencilWrite();
 
             Platform.runLater(
                 () -> {
@@ -738,11 +748,13 @@ public class GameController {
     DefinitionController definitionController = loader.getController();
     definitionController.updateScene(wordText);
 
+    // Setting game icons and scene
     Stage stage = new Stage();
     Scene scene = new Scene(parent);
     stage.getIcons().add(new Image("/images/icon.png"));
     stage.setResizable(false);
     stage.setScene(scene);
+    AudioController.playButtonClick();
     stage.show();
 
     stage.setOnCloseRequest(
@@ -768,6 +780,7 @@ public class GameController {
             new FileChooser.ExtensionFilter("PNG Files", "*.png"),
             new FileChooser.ExtensionFilter("JPG Files", "*.jpg"));
     File filePath = fc.showSaveDialog(null);
+    // Saves file if file path exists
     if (filePath != null) {
       File file = new File(filePath.getAbsolutePath());
       String fileName = filePath.getName();
@@ -790,6 +803,7 @@ public class GameController {
    */
   @FXML
   private void onGameMenu(ActionEvent e) {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));

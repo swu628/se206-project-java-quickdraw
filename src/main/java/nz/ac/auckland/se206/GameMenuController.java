@@ -35,9 +35,11 @@ public class GameMenuController {
    */
   @FXML
   private void onStartGame(ActionEvent e) {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
+    // Changes scene to Mode Select
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MODE_SELECT));
   }
 
@@ -48,9 +50,11 @@ public class GameMenuController {
    */
   @FXML
   private void onShowStatistics(ActionEvent e) {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
+    // Sets up the statistics scene
     App.getStatisticsController().updateScene(App.getCurrentUser());
 
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.STATISTICS));
@@ -62,13 +66,15 @@ public class GameMenuController {
    * @param e the action event that triggered this method
    */
   @FXML
-  private void onShowDifficultySettings(ActionEvent e) {
+  private void onShowSettings(ActionEvent e) {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
-    App.getDifficultySettingsController().setUpScene(App.getCurrentUser());
+    // Sets up the settings scene
+    App.getSettingsController().setUpScene(App.getCurrentUser());
 
-    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.DIFFICULTY_SETTINGS));
+    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.SETTINGS));
   }
 
   /**
@@ -78,6 +84,7 @@ public class GameMenuController {
    */
   @FXML
   private void onSignOut(ActionEvent e) {
+    AudioController.playButtonClick();
     App.setCurrentUser(null);
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();

@@ -122,6 +122,7 @@ public class StatisticsController {
    */
   @FXML
   private void onToNextWordHistory() {
+    AudioController.playPencilWrite();
     // Gets next 5 words in history
     wordsHistoryStart = wordsHistoryEnd + 1;
     wordsHistoryEnd += 5;
@@ -150,6 +151,7 @@ public class StatisticsController {
    */
   @FXML
   private void onToPreviousWordHistory() {
+    AudioController.playPencilWrite();
     // Gets previous 5 words in history
     wordsHistoryEnd = wordsHistoryStart - 1;
     wordsHistoryStart -= 5;
@@ -203,6 +205,7 @@ public class StatisticsController {
    */
   @FXML
   private void onGameMenu(ActionEvent e) {
+    AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
