@@ -28,7 +28,7 @@ Text {
 }
 
 .preGameBody {
-    -fx-background-image: url("../images/background-five.png");
+    -fx-background-image: url("../images/background-nonHidden.png");
     -fx-background-size: 100% 100%;
 }
 
@@ -37,11 +37,12 @@ Text {
 }
 
 .preGameBody #category {
-    -fx-font-size: 45px;
+    -fx-font-size: 35px;
+    -fx-line-spacing: -0.09em;
 }
 
 .preGameBody #prompt {
-    -fx-font-size: 38px;
+    -fx-font-size: 40px;
 }
 
 .preGameBody .difficultySettings {
@@ -78,7 +79,6 @@ Text {
     -fx-background-color: transparent;
 }
 
-
 .gameBody TextArea .scroll-pane .content {
     -fx-background-color: transparent;
 }
@@ -89,7 +89,7 @@ Text {
 }
 
 .postGameBody {
-    -fx-background-image: url("../images/background-one.png");
+    -fx-background-image: url("../images/background-main.png");
     -fx-background-size: 100% 100%;
 }
 
@@ -189,22 +189,54 @@ Button:hover {
     -fx-cursor: hand;
 }
 
-.backgroundOne {
-    -fx-background-image: url("../images/background-one.png");
+CheckBox {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 45px;
+}
+
+Checkbox:hover {
+    -fx-cursor: hand;
+}
+
+CheckBox .box {
+    -fx-background-color: rgb(243, 243, 243);
+    -fx-border-color: rgb(198, 198, 198);;
+    -fx-padding: 1px;
+}
+
+CheckBox .box .mark {
+    -fx-padding: 10px;
+}
+
+.backgroundMain {
+    -fx-background-image: url("../images/background-main.png");
     -fx-background-size: 100% 100%;
 }
 
-.backgroundTwo {
-    -fx-background-image: url("../images/background-two.png");
+.backgroundBlank {
+    -fx-background-image: url("../images/background-blank.png");
     -fx-background-size: 100% 100%;
 }
 
-.backgroundThree {
-    -fx-background-image: url("../images/background-three.png");
+.backgroundDifficulty {
+    -fx-background-image: url("../images/background-difficulty.png");
     -fx-background-size: 100% 100%;
 }
 
-.backgroundFour {
-    -fx-background-image: url("../images/background-four.png");
+.backgroundStatistics {
+    -fx-background-image: url("../images/background-stats.png");
     -fx-background-size: 100% 100%;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.definition {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 28px;
 }

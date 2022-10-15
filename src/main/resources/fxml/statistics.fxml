@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="backgroundFour" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.StatisticsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="backgroundStatistics" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.StatisticsController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
@@ -26,9 +28,36 @@
       </VBox>
       <AnchorPane layoutX="1.0" layoutY="156.0" prefHeight="450.0" prefWidth="960.0" styleClass="statisticsPane">
          <children>
+            <AnchorPane layoutX="526.0" layoutY="7.0" prefHeight="300.0" prefWidth="375.0" styleClass="wordsHistory">
+               <children>
+                  <TextArea fx:id="wordsHistory" editable="false" layoutX="-17.0" layoutY="84.0" maxWidth="453.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="343.0" prefWidth="408.0" text="The Great Wall of China&#10;The Great Wall of China&#10;The Great Wall of China&#10;The Great Wall of China&#10;The Great Wall of China">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TextArea>
+                  <Label alignment="TOP_RIGHT" layoutX="124.0" layoutY="25.0" prefWidth="250.0" text="Words History">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="wordsHistoryNext" layoutX="228.0" layoutY="351.0" mnemonicParsing="false" onMouseClicked="#onToNextWordHistory" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0" rotate="90.0" styleClass="profileSelectButton">
+                     <graphic>
+                        <SVGPath content="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="wordsHistoryPrevious" layoutX="228.0" layoutY="53.0" mnemonicParsing="false" onMouseClicked="#onToPreviousWordHistory" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0" rotate="-90.0" styleClass="profileSelectButton">
+                     <graphic>
+                        <SVGPath content="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow" />
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
             <AnchorPane layoutX="79.0" layoutY="17.0" prefHeight="300.0" prefWidth="300.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" layoutX="-2.0" layoutY="-2.0" prefHeight="100.0" prefWidth="465.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="-2.0" layoutY="108.0" prefHeight="100.0" prefWidth="465.0">
                      <children>
                         <Label text="Games Won: ">
                            <font>
@@ -42,7 +71,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="-3.0" layoutY="163.0" prefHeight="100.0" prefWidth="465.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="-2.0" layoutY="218.0" prefHeight="100.0" prefWidth="465.0">
                      <children>
                         <Label text="Games Lost: ">
                            <font>
@@ -70,33 +99,44 @@
                         </Label>
                      </children>
                   </HBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="526.0" layoutY="7.0" prefHeight="300.0" prefWidth="375.0" styleClass="wordsHistory">
-               <children>
-                  <TextArea fx:id="wordsHistory" editable="false" layoutX="-17.0" layoutY="84.0" maxWidth="453.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="343.0" prefWidth="408.0" text="The Great Wall of China&#10;The Great Wall of China&#10;The Great Wall of China&#10;The Great Wall of China&#10;The Great Wall of China">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </TextArea>
-                  <Label alignment="TOP_RIGHT" layoutX="124.0" layoutY="25.0" prefWidth="250.0" text="Words History">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="wordsHistoryNext" layoutX="228.0" layoutY="351.0" mnemonicParsing="false" onMouseClicked="#onToNextWordHistory" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0" rotate="90.0" styleClass="profileSelectButton">
-                     <graphic>
-                        <SVGPath content="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="wordsHistoryPrevious" layoutX="228.0" layoutY="53.0" mnemonicParsing="false" onMouseClicked="#onToPreviousWordHistory" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0" rotate="-90.0" styleClass="profileSelectButton">
-                     <graphic>
-                        <SVGPath content="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow" />
-                     </graphic>
-                  </Button>
+                  <HBox alignment="CENTER_LEFT" layoutX="-1.0" layoutY="-2.0" maxHeight="100.0" maxWidth="538.0" minHeight="100.0" minWidth="465.0" prefHeight="100.0" prefWidth="520.0">
+                     <children>
+                        <Label minWidth="120.0" text="Badges: ">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <HBox>
+                           <children>
+                              <ImageView fx:id="underThirtyBadge" fitHeight="80.0" fitWidth="80.0" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="underTwentyBadge" fitHeight="80.0" fitWidth="80.0" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="underTenBadge" fitHeight="80.0" fitWidth="80.0" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="zenBadge" fitHeight="80.0" fitWidth="80.0" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="consecutiveWinsBadge" fitHeight="80.0" fitWidth="80.0" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>
