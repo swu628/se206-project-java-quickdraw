@@ -3,7 +3,7 @@ package nz.ac.auckland.se206.profile;
 import java.util.ArrayList;
 import java.util.Random;
 import nz.ac.auckland.se206.CategoryManager;
-import nz.ac.auckland.se206.DifficultySettingsController;
+import nz.ac.auckland.se206.SettingsController;
 
 public class User {
   private final int[] userProfileColour;
@@ -16,10 +16,10 @@ public class User {
   private ArrayList<String> notPlayedMediumWords = CategoryManager.getMediumWords();
   private ArrayList<String> notPlayedHardWords = CategoryManager.getHardWords();
   private int fastestWon;
-  private DifficultySettingsController.AccuracyDifficulty accuracyDifficulty;
-  private DifficultySettingsController.WordsDifficulty wordsDifficulty;
-  private DifficultySettingsController.TimeDifficulty timeDifficulty;
-  private DifficultySettingsController.ConfidenceDifficulty confidenceDifficulty;
+  private SettingsController.AccuracyDifficulty accuracyDifficulty;
+  private SettingsController.WordsDifficulty wordsDifficulty;
+  private SettingsController.TimeDifficulty timeDifficulty;
+  private SettingsController.ConfidenceDifficulty confidenceDifficulty;
   private String underThirty;
   private String underTwenty;
   private String underTen;
@@ -44,10 +44,10 @@ public class User {
     userProfileColour = new int[] {rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)};
 
     // Sets the default difficulties
-    accuracyDifficulty = DifficultySettingsController.AccuracyDifficulty.EASY;
-    wordsDifficulty = DifficultySettingsController.WordsDifficulty.EASY;
-    timeDifficulty = DifficultySettingsController.TimeDifficulty.EASY;
-    confidenceDifficulty = DifficultySettingsController.ConfidenceDifficulty.EASY;
+    accuracyDifficulty = SettingsController.AccuracyDifficulty.EASY;
+    wordsDifficulty = SettingsController.WordsDifficulty.EASY;
+    timeDifficulty = SettingsController.TimeDifficulty.EASY;
+    confidenceDifficulty = SettingsController.ConfidenceDifficulty.EASY;
 
     numberOfZenPlayed = 0;
   }
@@ -147,37 +147,36 @@ public class User {
     return sb.toString();
   }
 
-  public DifficultySettingsController.AccuracyDifficulty getAccuracyDifficulty() {
+  public SettingsController.AccuracyDifficulty getAccuracyDifficulty() {
     return accuracyDifficulty;
   }
 
-  public void setAccuracyDifficulty(
-      DifficultySettingsController.AccuracyDifficulty accuracyDifficulty) {
+  public void setAccuracyDifficulty(SettingsController.AccuracyDifficulty accuracyDifficulty) {
     this.accuracyDifficulty = accuracyDifficulty;
   }
 
-  public DifficultySettingsController.WordsDifficulty getWordsDifficulty() {
+  public SettingsController.WordsDifficulty getWordsDifficulty() {
     return wordsDifficulty;
   }
 
-  public void setWordsDifficulty(DifficultySettingsController.WordsDifficulty wordsDifficulty) {
+  public void setWordsDifficulty(SettingsController.WordsDifficulty wordsDifficulty) {
     this.wordsDifficulty = wordsDifficulty;
   }
 
-  public DifficultySettingsController.TimeDifficulty getTimeDifficulty() {
+  public SettingsController.TimeDifficulty getTimeDifficulty() {
     return timeDifficulty;
   }
 
-  public void setTimeDifficulty(DifficultySettingsController.TimeDifficulty timeDifficulty) {
+  public void setTimeDifficulty(SettingsController.TimeDifficulty timeDifficulty) {
     this.timeDifficulty = timeDifficulty;
   }
 
-  public DifficultySettingsController.ConfidenceDifficulty getConfidenceDifficulty() {
+  public SettingsController.ConfidenceDifficulty getConfidenceDifficulty() {
     return confidenceDifficulty;
   }
 
   public void setConfidenceDifficulty(
-      DifficultySettingsController.ConfidenceDifficulty confidenceDifficulty) {
+      SettingsController.ConfidenceDifficulty confidenceDifficulty) {
     this.confidenceDifficulty = confidenceDifficulty;
   }
 

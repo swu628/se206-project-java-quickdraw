@@ -11,12 +11,13 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import nz.ac.auckland.se206.profile.User;
 
-public class DifficultySettingsController {
+public class SettingsController {
   public enum AccuracyDifficulty {
     EASY(3, "The player wins the game if the word to draw is within the top 3 guesses"),
     MEDIUM(2, "The player wins the game if the word to draw is within the top 2 guesses"),
@@ -156,6 +157,14 @@ public class DifficultySettingsController {
   @FXML private TextArea wordDescription;
   @FXML private TextArea timeDescription;
   @FXML private TextArea confidenceDescription;
+  @FXML private Slider musicSlider;
+  @FXML private Slider sfxSlider;
+  @FXML private Slider ttsSlider;
+  @FXML private Button difficultyButton;
+  @FXML private Button audioButton;
+  @FXML private AnchorPane audioSettings;
+  @FXML private AnchorPane difficultySettings;
+  private boolean settingType;
 
   /**
    * This method is called upon first load of the fxml. It sets the font to the custom IndieFlower
@@ -169,6 +178,62 @@ public class DifficultySettingsController {
     wordsDifficultyList = new ArrayList<>(Arrays.asList(WordsDifficulty.values()));
     timeDifficultyList = new ArrayList<>(Arrays.asList(TimeDifficulty.values()));
     confidenceDifficultyList = new ArrayList<>(Arrays.asList(ConfidenceDifficulty.values()));
+    // Setting the setting type to difficulty (false difficulty, true audio)
+    settingType = false;
+
+    // Enabling difficulty settings
+    difficultyButton.setStyle("-fx-text-fill: black");
+    difficultySettings.setVisible(true);
+    difficultySettings.setDisable(false);
+
+    // Disabling audio settings
+    audioButton.setStyle("-fx-text-fill: grey");
+    audioSettings.setVisible(false);
+    audioSettings.setDisable(true);
+  }
+
+  /** This method changes settings to difficulty settings */
+  @FXML
+  private void changeToDifficulty() {
+    AudioController.playPencilWrite();
+    // Enabling difficulty settings
+    difficultyButton.setStyle("-fx-text-fill: black");
+    difficultySettings.setVisible(true);
+    difficultySettings.setDisable(false);
+
+    // Disabling audio settings
+    audioButton.setStyle("-fx-text-fill: grey");
+    audioSettings.setVisible(false);
+    audioSettings.setDisable(true);
+  }
+
+  /** This method changes settings to audio settings */
+  @FXML
+  private void changeToAudio() {
+    AudioController.playPencilWrite();
+    // Disabling difficulty settings
+    difficultyButton.setStyle("-fx-text-fill: grey");
+    difficultySettings.setVisible(false);
+    difficultySettings.setDisable(true);
+
+    // Enabling audio settings
+    audioButton.setStyle("-fx-text-fill: black");
+    audioSettings.setVisible(true);
+    audioSettings.setDisable(false);
+
+    settingType = !settingType;
+  }
+
+  /** This method changes the music volume. */
+  @FXML
+  public void onChangeMusicVolume() {
+    AudioController.setMusicVolumeScale(musicSlider.getValue() / 100.0);
+  }
+
+  /** This method changes the sfx volume. */
+  @FXML
+  public void onChangeSfxVolume() {
+    AudioController.setSfxVolumeScale(sfxSlider.getValue() / 100.0);
   }
 
   /**

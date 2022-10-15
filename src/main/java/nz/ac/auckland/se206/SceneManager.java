@@ -11,7 +11,7 @@ public class SceneManager {
     GAME_MENU,
     STATISTICS,
     MODE_SELECT,
-    DIFFICULTY_SETTINGS,
+    SETTINGS,
     GAME
   }
 

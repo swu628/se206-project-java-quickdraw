@@ -59,14 +59,14 @@ public class GameMenuController {
    * @param e the action event that triggered this method
    */
   @FXML
-  private void onShowDifficultySettings(ActionEvent e) {
+  private void onShowSettings(ActionEvent e) {
     AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
-    App.getDifficultySettingsController().setUpScene(App.getCurrentUser());
+    App.getSettingsController().setUpScene(App.getCurrentUser());
 
-    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.DIFFICULTY_SETTINGS));
+    currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.SETTINGS));
   }
 
   /**

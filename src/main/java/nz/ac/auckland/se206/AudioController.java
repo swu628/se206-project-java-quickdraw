@@ -6,7 +6,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class AudioController {
-  private static MediaPlayer mediaPlayer;
+  private static MediaPlayer buttonClickMediaPlayer;
+  private static MediaPlayer pencilWriteMediaPlayer;
+  private static MediaPlayer backgroundMusicMediaPlayer;
+  private static double musicVolumeScale = 1;
+  private static double sfxVolumeScale = 1;
   private static Media buttonClickSound =
       new Media(
           Objects.requireNonNull(
@@ -30,10 +34,10 @@ public class AudioController {
     Thread buttonClickThread =
         new Thread(
             () -> {
-              mediaPlayer = new MediaPlayer(buttonClickSound);
+              pencilWriteMediaPlayer = new MediaPlayer(buttonClickSound);
               // Plays the button click sound
-              mediaPlayer.setVolume(2);
-              mediaPlayer.play();
+              pencilWriteMediaPlayer.setVolume(2 * sfxVolumeScale);
+              pencilWriteMediaPlayer.play();
             });
 
     buttonClickThread.start();
@@ -43,10 +47,10 @@ public class AudioController {
     Thread pencilWriteThread =
         new Thread(
             () -> {
-              mediaPlayer = new MediaPlayer(pencilWriteSound);
+              buttonClickMediaPlayer = new MediaPlayer(pencilWriteSound);
               // Plays the button click sound
-              mediaPlayer.setVolume(0.6);
-              mediaPlayer.play();
+              buttonClickMediaPlayer.setVolume(0.6 * sfxVolumeScale);
+              buttonClickMediaPlayer.play();
             });
 
     pencilWriteThread.start();
@@ -56,13 +60,55 @@ public class AudioController {
     Thread backgroundMusicThread =
         new Thread(
             () -> {
-              mediaPlayer = new MediaPlayer(backgroundMusic);
+              backgroundMusicMediaPlayer = new MediaPlayer(backgroundMusic);
               // Keeps the song looping
-              mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
-              mediaPlayer.setVolume(0.3);
-              mediaPlayer.play();
+              backgroundMusicMediaPlayer.setOnEndOfMedia(
+                  () -> {
+                    backgroundMusicMediaPlayer.stop();
+                    backgroundMusicMediaPlayer.seek(Duration.ZERO);
+                    backgroundMusicMediaPlayer.play();
+                  });
+              backgroundMusicMediaPlayer.setVolume(0.3 * musicVolumeScale);
+              backgroundMusicMediaPlayer.play();
             });
 
     backgroundMusicThread.start();
+  }
+
+  /**
+   * This method returns the music volume scale.
+   *
+   * @return music volume scale
+   */
+  public static double getMusicVolumeScale() {
+    return musicVolumeScale;
+  }
+
+  /**
+   * This method sets the music volume scale.
+   *
+   * @param musicVolumeScale music volume scale
+   */
+  public static void setMusicVolumeScale(double musicVolumeScale) {
+    AudioController.musicVolumeScale = musicVolumeScale;
+    backgroundMusicMediaPlayer.setVolume(0.3 * musicVolumeScale);
+  }
+
+  /**
+   * This method returns the sfx volume scale.
+   *
+   * @return sfx volume scale
+   */
+  public static double getSfxVolumeScale() {
+    return sfxVolumeScale;
+  }
+
+  /**
+   * This method sets the sfx volume scale.
+   *
+   * @param sfxVolumeScale sfx volume scale
+   */
+  public static void setSfxVolumeScale(double sfxVolumeScale) {
+    AudioController.sfxVolumeScale = sfxVolumeScale;
   }
 }

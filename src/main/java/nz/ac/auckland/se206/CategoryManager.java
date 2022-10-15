@@ -87,7 +87,7 @@ public class CategoryManager {
    *
    * @param diff the word difficiulty
    */
-  public static void setWord(DifficultySettingsController.WordsDifficulty diff) {
+  public static void setWord(SettingsController.WordsDifficulty diff) {
     Difficulty[] difficulties = diff.getDifficulties();
 
     word = getRandomWord(difficulties[rand.nextInt(difficulties.length)]);

@@ -45,7 +45,7 @@ Text {
     -fx-font-size: 40px;
 }
 
-.preGameBody .difficultySettings {
+.preGameBody .settings {
     -fx-font-size: 30px;
 }
 
@@ -134,39 +134,60 @@ Text {
     -fx-background-color: transparent;
 }
 
-.difficultySettings .infoPane {
+.settings .infoPane {
     -fx-border-color: rgb(198, 198, 198);
     -fx-background-color: rgb(243, 243, 243);
     -fx-border-width: 1;
 }
 
-.difficultySettings .infoPane TextArea {
+.settings .infoPane TextArea {
     -fx-font-size: 24px;
 }
 
-.difficultySettings TextArea {
+.settings TextArea {
     -fx-font-family: "Indie Flower";
     -fx-font-size: 25px;
     -fx-background-color: transparent;
 }
 
-.difficultySettings TextArea .text {
+.settings TextArea .text {
     -fx-line-spacing: 0.05em;
 }
 
-.difficultySettings TextArea .scroll-pane {
+.settings TextArea .scroll-pane {
     -fx-background-color: transparent;
     -fx-vbar-policy: never;
     -fx-hbar-policy: never;
 }
 
-.difficultySettings TextArea .scroll-pane .viewport {
+.settings TextArea .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
 
 
-.difficultySettings TextArea .scroll-pane .content {
+.settings TextArea .scroll-pane .content {
     -fx-background-color: transparent;
+}
+
+.settings Slider .track {
+    -fx-background-radius: 0;
+    -fx-pref-height: 8px;
+    -fx-border-color: rgb(198, 198, 198);
+    -fx-background-color: rgb(243, 243, 243);
+    -fx-effect: null;
+}
+
+.settings Slider .thumb {
+    -fx-pref-height: 20px;
+    -fx-pref-width: 10px;
+    -fx-background-radius: 0;
+    -fx-border-color: rgb(198, 198, 198);
+    -fx-background-color: rgb(243, 243, 243);
+    -fx-effect: null;
+}
+
+.settingsType Button:hover {
+    -fx-text-fill: black;
 }
 
 Button {
@@ -200,7 +221,7 @@ Checkbox:hover {
 
 CheckBox .box {
     -fx-background-color: rgb(243, 243, 243);
-    -fx-border-color: rgb(198, 198, 198);;
+    -fx-border-color: rgb(198, 198, 198);
     -fx-padding: 1px;
 }
 

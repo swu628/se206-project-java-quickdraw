@@ -20,7 +20,7 @@ public class App extends Application {
   private static MainMenuController mainMenuController;
   private static GameMenuController gameMenuController;
   private static StatisticsController statisticsController;
-  private static DifficultySettingsController difficultySettingsController;
+  private static SettingsController settingsController;
   private static GameController gameController;
   private static ModeSelectController modeSelectController;
 
@@ -50,8 +50,8 @@ public class App extends Application {
       case "statistics":
         statisticsController = loader.getController();
         break;
-      case "difficultySettings":
-        difficultySettingsController = loader.getController();
+      case "settings":
+        settingsController = loader.getController();
         break;
       case "game":
         gameController = loader.getController();
@@ -80,8 +80,8 @@ public class App extends Application {
     return statisticsController;
   }
 
-  public static DifficultySettingsController getDifficultySettingsController() {
-    return difficultySettingsController;
+  public static SettingsController getSettingsController() {
+    return settingsController;
   }
 
   public static GameController getGameController() {
@@ -143,7 +143,7 @@ public class App extends Application {
     SceneManager.addUi(SceneManager.AppScene.REGISTER, loadFxml("register"));
     SceneManager.addUi(SceneManager.AppScene.GAME_MENU, loadFxml("gameMenu"));
     SceneManager.addUi(SceneManager.AppScene.STATISTICS, loadFxml("statistics"));
-    SceneManager.addUi(SceneManager.AppScene.DIFFICULTY_SETTINGS, loadFxml("difficultySettings"));
+    SceneManager.addUi(SceneManager.AppScene.SETTINGS, loadFxml("settings"));
     SceneManager.addUi(SceneManager.AppScene.GAME, loadFxml("game"));
     SceneManager.addUi(SceneManager.AppScene.MODE_SELECT, loadFxml("modeSelect"));
 
