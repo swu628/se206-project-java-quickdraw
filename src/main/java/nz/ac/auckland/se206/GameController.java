@@ -143,6 +143,7 @@ public class GameController {
           entryIndex++;
           definitionIndex = 0;
         } else {
+          // We have run out of definitions
           Platform.runLater(
               () -> {
                 nextDefButton.setText("No more definitions");
@@ -361,15 +362,18 @@ public class GameController {
    * @return either true or false based on the mode chosen
    */
   private boolean getStatement() {
-    boolean statement = false;
+    boolean statement;
 
+    // Checking if we should continue to predict
     if (btnClicked.equals("Zen mode")) {
+      // In zen mode, stop if exit is pressed
       if (!isExitBtnClicked) {
         statement = true;
       } else {
         statement = false;
       }
     } else {
+      // In normal mode, stop if time left is < 0 or game is won
       if (timeLeft >= 0 && !gameWon) {
         statement = true;
       } else {
@@ -421,7 +425,7 @@ public class GameController {
                   FutureTask<BufferedImage> snapshotTask =
                       new FutureTask<BufferedImage>((Callable) () -> getCurrentSnapshot());
                   Platform.runLater(snapshotTask);
-                  java.util.List<Classifications.Classification> predictions =
+                  List<Classifications.Classification> predictions =
                       model.getPredictions(snapshotTask.get(), 50);
                   // Creates a string which lists the top 10 DL predictions and updates the
                   // predictionList string
@@ -626,10 +630,12 @@ public class GameController {
         new Task<>() {
           @Override
           protected Object call() throws Exception {
+            // Getting definition of word
             String definition = getDefinition(currentWord);
 
             AudioController.playPencilWrite();
 
+            // Sets the labels to the word's definitions
             Platform.runLater(
                 () -> {
                   wordText = definition;
@@ -641,6 +647,7 @@ public class GameController {
           }
         };
 
+    // This is set once we run out of definitions
     getDefTask.setOnSucceeded(
         (e) -> {
           if (!nextDefButton.getText().equals("No more definitions")) {
@@ -736,13 +743,14 @@ public class GameController {
   /**
    * This method will open a new window that displays the current word's definition
    *
-   * @throws IOException
+   * @throws IOException if definition fxml doesn't exist
    */
   @FXML
   private void onGetDefWindow() throws IOException {
     // Creates a new window containing the word definition
     getDefWindowButton.setDisable(true);
 
+    // Setting scene to hold definition
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/definition.fxml"));
     Parent parent = loader.load();
     DefinitionController definitionController = loader.getController();
@@ -755,8 +763,10 @@ public class GameController {
     stage.setResizable(false);
     stage.setScene(scene);
     AudioController.playButtonClick();
+    // Popping up window with definition
     stage.show();
 
+    // Enabling get definition button on window close
     stage.setOnCloseRequest(
         new EventHandler<WindowEvent>() {
           public void handle(WindowEvent we) {
@@ -803,9 +813,11 @@ public class GameController {
    */
   @FXML
   private void onGameMenu(ActionEvent e) {
+    // Plays button click sound
     AudioController.playButtonClick();
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
+    // Sets the scene to game menu
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
 
     if (button.getText().equals("Exit")) {

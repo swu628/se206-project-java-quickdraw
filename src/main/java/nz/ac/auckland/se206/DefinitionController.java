@@ -20,7 +20,7 @@ public class DefinitionController {
   /**
    * This method updates the scene by displaying the current definition of the current word
    *
-   * @param definitionText
+   * @param definitionText the definition of the word
    */
   public void updateScene(String definitionText) {
     definitionTextLabel.setText(definitionText);
