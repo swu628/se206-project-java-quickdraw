@@ -28,7 +28,7 @@ Text {
 }
 
 .preGameBody {
-    -fx-background-image: url("../images/background-five.png");
+    -fx-background-image: url("../images/background-nonHidden.png");
     -fx-background-size: 100% 100%;
 }
 
@@ -38,7 +38,7 @@ Text {
 
 .preGameBody #category {
     -fx-font-size: 35px;
-    -fx-line-spacing: -0.1em;
+    -fx-line-spacing: -0.09em;
 }
 
 .preGameBody #prompt {
@@ -79,13 +79,17 @@ Text {
     -fx-background-color: transparent;
 }
 
-
 .gameBody TextArea .scroll-pane .content {
     -fx-background-color: transparent;
 }
 
+#colour-picker {
+    -fx-background-color: transparent;
+    -fx-color-label-visible: false;
+}
+
 .postGameBody {
-    -fx-background-image: url("../images/background-one.png");
+    -fx-background-image: url("../images/background-main.png");
     -fx-background-size: 100% 100%;
 }
 
@@ -190,27 +194,37 @@ CheckBox {
     -fx-font-size: 45px;
 }
 
+Checkbox:hover {
+    -fx-cursor: hand;
+}
+
+CheckBox .box {
+    -fx-background-color: rgb(243, 243, 243);
+    -fx-border-color: rgb(198, 198, 198);;
+    -fx-padding: 1px;
+}
+
 CheckBox .box .mark {
     -fx-padding: 10px;
 }
 
-.backgroundOne {
-    -fx-background-image: url("../images/background-one.png");
+.backgroundMain {
+    -fx-background-image: url("../images/background-main.png");
     -fx-background-size: 100% 100%;
 }
 
-.backgroundTwo {
-    -fx-background-image: url("../images/background-two.png");
+.backgroundBlank {
+    -fx-background-image: url("../images/background-blank.png");
     -fx-background-size: 100% 100%;
 }
 
-.backgroundThree {
-    -fx-background-image: url("../images/background-three.png");
+.backgroundDifficulty {
+    -fx-background-image: url("../images/background-difficulty.png");
     -fx-background-size: 100% 100%;
 }
 
-.backgroundFour {
-    -fx-background-image: url("../images/background-four.png");
+.backgroundStatistics {
+    -fx-background-image: url("../images/background-stats.png");
     -fx-background-size: 100% 100%;
 }
 

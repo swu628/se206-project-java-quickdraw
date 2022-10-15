@@ -25,7 +25,7 @@ public class GameMenuController {
 
   /** This method updates the scene to the user's username */
   public void updateScene() {
-    welcomeText.setText("Welcome " + App.getCurrentUser().getName());
+    welcomeText.setText("Welcome " + App.getCurrentUser().getName() + "!");
   }
 
   /**
