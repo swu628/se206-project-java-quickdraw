@@ -76,7 +76,7 @@ public class MainMenuController {
       // Sets default user as first profile in folder
       username.setText(userList.get(currentUser).getName());
       username.setStyle("-fx-fill: black");
-      userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getColour());
+      userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getProfileColour());
       enableSignIn();
     } else {
       // No users found, so disables ability to sign in
@@ -136,7 +136,7 @@ public class MainMenuController {
     // Changes current user to previous user in list
     currentUser -= 1;
     username.setText(userList.get(currentUser).getName());
-    userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getColour());
+    userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getProfileColour());
     enableUserSelectRight();
 
     if (currentUser == 0) {
@@ -154,7 +154,7 @@ public class MainMenuController {
     // Changes current user to next user in list
     currentUser += 1;
     username.setText(userList.get(currentUser).getName());
-    userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getColour());
+    userIcon.setStyle("-fx-fill: " + userList.get(currentUser).getProfileColour());
     enableUserSelectLeft();
 
     if (currentUser == userList.size() - 1) {
@@ -162,6 +162,12 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * This method signs in the user and changes the scene to the game menu.
+   *
+   * @param e the action event that triggered this method
+   * @throws IOException if the user profile doesn't exist
+   */
   @FXML
   private void onSignIn(ActionEvent e) throws IOException {
     App.setCurrentUser(userList.get(currentUser));
@@ -174,6 +180,11 @@ public class MainMenuController {
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME_MENU));
   }
 
+  /**
+   * This method sets the scene to the register.
+   *
+   * @param e The action even that triggered this method
+   */
   @FXML
   private void onCreateAccount(ActionEvent e) {
     // Resets the scene and replaces root scene with register scene
