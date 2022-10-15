@@ -45,7 +45,7 @@ public class AudioController {
             () -> {
               mediaPlayer = new MediaPlayer(pencilWriteSound);
               // Plays the button click sound
-              mediaPlayer.setVolume(0.7);
+              mediaPlayer.setVolume(0.6);
               mediaPlayer.play();
             });
 
