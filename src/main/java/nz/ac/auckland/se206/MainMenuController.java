@@ -30,11 +30,19 @@ public class MainMenuController {
   private List<User> userList;
   private int currentUser;
 
+  /**
+   * This method is called upon first load of the fxml. It sets the font to the custom IndieFlower
+   * font.
+   */
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
     setUpUsers();
   }
 
+  /**
+   * This method loads all the users in the user profiles folder and displays it in the main menu
+   * scene.
+   */
   public void setUpUsers() {
     File folder = new File("src/main/resources/UserProfiles");
     String[] userFileNames = folder.list();
@@ -82,36 +90,47 @@ public class MainMenuController {
     }
   }
 
+  /** This method enables the signin button */
   private void enableSignIn() {
     signInButton.setDisable(false);
     signInButton.setVisible(true);
   }
 
+  /** This method disables the signin button */
   private void disableSignIn() {
     signInButton.setDisable(true);
     signInButton.setVisible(false);
   }
 
+  /** This method enables the previous user button */
   private void enableUserSelectLeft() {
     profileSelectLeft.setDisable(false);
     profileSelectLeft.setVisible(true);
   }
 
+  /** This method disables the previous user button */
   private void disableUserSelectLeft() {
     profileSelectLeft.setDisable(true);
     profileSelectLeft.setVisible(false);
   }
 
+  /** This method enables the next user button */
   private void enableUserSelectRight() {
     profileSelectRight.setDisable(false);
     profileSelectRight.setVisible(true);
   }
 
+  /** This method disables the next user button */
   private void disableUserSelectRight() {
     profileSelectRight.setDisable(true);
     profileSelectRight.setVisible(false);
   }
 
+  /**
+   * This method changes the selected user to the previous user in the user array.
+   *
+   * @param e the mouse even that triggered this method
+   */
   @FXML
   private void onToPreviousUser(MouseEvent e) {
     // Changes current user to previous user in list
@@ -125,6 +144,11 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * This method changes the selected user to the next user in the user array.
+   *
+   * @param e the mouse even that triggered this method
+   */
   @FXML
   private void onToNextUser(MouseEvent e) {
     // Changes current user to next user in list
@@ -159,6 +183,7 @@ public class MainMenuController {
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.REGISTER));
   }
 
+  /** This method quits the game */
   @FXML
   private void onQuitGame() {
     Platform.exit();

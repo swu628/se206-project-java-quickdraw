@@ -42,6 +42,13 @@ public class CategoryManager {
     return hard;
   }
 
+  /**
+   * This method gets a random word that the player hasn't played yet from the specified difficulty.
+   * If the player has played all words, it will just get any random word in that difficulty.
+   *
+   * @param diff the word difficiulty
+   * @return the random word
+   */
   public static String getRandomWord(Difficulty diff) {
 
     User user = App.getCurrentUser();
@@ -75,12 +82,22 @@ public class CategoryManager {
     return words.get(rand.nextInt(words.size()));
   }
 
+  /**
+   * This method sets the word to a random word of a specificed difficulty
+   *
+   * @param diff the word difficiulty
+   */
   public static void setWord(DifficultySettingsController.WordsDifficulty diff) {
     Difficulty[] difficulties = diff.getDifficulties();
 
     word = getRandomWord(difficulties[rand.nextInt(difficulties.length)]);
   }
 
+  /**
+   * This method returns the current word
+   *
+   * @return the word
+   */
   public static String getWord() {
     return word;
   }

@@ -6,7 +6,7 @@ import nz.ac.auckland.se206.CategoryManager;
 import nz.ac.auckland.se206.DifficultySettingsController;
 
 public class User {
-  private final int[] COLOUR;
+  private final int[] userProfileColour;
   private String username;
   private int gamesWon;
   private int gamesLost;
@@ -41,7 +41,7 @@ public class User {
     fastestWon = -1;
     Random rand = new Random(System.currentTimeMillis());
     // Sets a random colour to be used for user icon
-    COLOUR = new int[] {rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)};
+    userProfileColour = new int[] {rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)};
 
     // Sets the default difficulties
     accuracyDifficulty = DifficultySettingsController.AccuracyDifficulty.EASY;
@@ -138,11 +138,11 @@ public class User {
     // Returns the string "rgb(r,g,b)"
     StringBuilder sb = new StringBuilder();
     sb.append("rgb(")
-        .append(COLOUR[0])
+        .append(userProfileColour[0])
         .append(",")
-        .append(COLOUR[1])
+        .append(userProfileColour[1])
         .append(",")
-        .append(COLOUR[2])
+        .append(userProfileColour[2])
         .append(")");
     return sb.toString();
   }
