@@ -276,18 +276,6 @@ public class GameController {
 
       getPredictTask(maxGuessNum, minConfidence, currentUser);
 
-      // Save the word to history
-      // Updates the user's history of words encountered
-      ArrayList<String> wordsHistory = currentUser.getWordsHistory();
-      wordsHistory.add(CategoryManager.getWord());
-      currentUser.setWordsHistory(wordsHistory);
-      // Create json file named as the username
-      FileWriter fileWriter =
-          new FileWriter("src/main/resources/UserProfiles/" + currentUser.getName() + ".json");
-      // Write user details into the file
-      Gson gson = new Gson();
-      gson.toJson(currentUser, fileWriter);
-      fileWriter.close();
     } else {
       timerLabel.setVisible(true);
       exitButton.setVisible(false);
