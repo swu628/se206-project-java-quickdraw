@@ -211,7 +211,7 @@ public class GameController {
     wordLabel.setText(wordText);
     predDirectionLabel.setText("");
 
-    // Set pen colour to read
+    // Set pen colour to black
     if (colourPicker.isVisible()) {
       colourPicker.setValue(Color.BLACK);
     }
@@ -258,6 +258,9 @@ public class GameController {
       isExitBtnClicked = false;
       colour = Color.BLACK;
 
+      // Get the total number of zen mode played
+      currentUser.setNumberOfZenPlayed();
+        
       getPredictTask(maxGuessNum, minConfidence, currentUser);
 
       // Save the word to history
@@ -524,19 +527,28 @@ public class GameController {
             // If game won, checks if it is a new fastest won and updates if true
             if (gameWon) {
               user.setGamesWon(user.getGamesWon() + 1);
+              ArrayList<String> wonOrLostHistory = user.getWonOrLostHistory();
+              wonOrLostHistory.add("won");
+              user.setWonOrLostHistory(wonOrLostHistory);
               if (user.getFastestWon() > timeTaken || user.getFastestWon() == -1) {
                 user.setFastestWon(timeTaken);
               }
             } else {
               user.setGamesLost(user.getGamesLost() + 1);
+              ArrayList<String> wonOrLostHistory = user.getWonOrLostHistory();
+              wonOrLostHistory.add("lost");
+              user.setWonOrLostHistory(wonOrLostHistory);
             }
 
             // Updates the user's history of words encountered
             ArrayList<String> wordsHistory = user.getWordsHistory();
-
             wordsHistory.add(CategoryManager.getWord());
-
             user.setWordsHistory(wordsHistory);
+
+            // Updates the user's history of time taken
+            ArrayList<Integer> timeTakenHistory = user.getTimeTakenHistory();
+            timeTakenHistory.add(timeTaken);
+            user.setTimeTakenHistory(timeTakenHistory);
 
             // Create json file named as the username
             FileWriter fileWriter =
