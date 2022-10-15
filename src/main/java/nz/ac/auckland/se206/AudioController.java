@@ -30,6 +30,7 @@ public class AudioController {
           Objects.requireNonNull(AudioController.class.getResource("/sounds/write_pencil.mp3"))
               .toExternalForm());
 
+  /** This method will play the button click sound */
   public static void playButtonClick() {
     Thread buttonClickThread =
         new Thread(
@@ -43,6 +44,7 @@ public class AudioController {
     buttonClickThread.start();
   }
 
+  /** This method will play the pencil writing sound */
   public static void playPencilWrite() {
     Thread pencilWriteThread =
         new Thread(
@@ -56,6 +58,7 @@ public class AudioController {
     pencilWriteThread.start();
   }
 
+  /** This method will play the background music sound */
   public static void playBackgroundMusic() {
     Thread backgroundMusicThread =
         new Thread(
@@ -68,6 +71,7 @@ public class AudioController {
                     backgroundMusicMediaPlayer.seek(Duration.ZERO);
                     backgroundMusicMediaPlayer.play();
                   });
+              // Plays the background music
               backgroundMusicMediaPlayer.setVolume(0.3 * musicVolumeScale);
               backgroundMusicMediaPlayer.play();
             });

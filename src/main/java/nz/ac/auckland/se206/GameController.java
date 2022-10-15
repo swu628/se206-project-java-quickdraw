@@ -597,6 +597,7 @@ public class GameController {
       // Moving game outcome label up to accomodate for hidden word label
       postGameOutcomeLabel.setLayoutY(107);
     }
+    // Setting game outcome text
     postGameHiddenWordLabel.setText(hiddenText);
     if (gameWon) {
       postGameOutcomeLabel.setText("You won!");
@@ -747,6 +748,7 @@ public class GameController {
     DefinitionController definitionController = loader.getController();
     definitionController.updateScene(wordText);
 
+    // Setting game icons and scene
     Stage stage = new Stage();
     Scene scene = new Scene(parent);
     stage.getIcons().add(new Image("/images/icon.png"));
@@ -778,6 +780,7 @@ public class GameController {
             new FileChooser.ExtensionFilter("PNG Files", "*.png"),
             new FileChooser.ExtensionFilter("JPG Files", "*.jpg"));
     File filePath = fc.showSaveDialog(null);
+    // Saves file if file path exists
     if (filePath != null) {
       File file = new File(filePath.getAbsolutePath());
       String fileName = filePath.getName();

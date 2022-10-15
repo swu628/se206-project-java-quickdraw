@@ -39,6 +39,7 @@ public class GameMenuController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
+    // Changes scene to Mode Select
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MODE_SELECT));
   }
 
@@ -53,6 +54,7 @@ public class GameMenuController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
+    // Sets up the statistics scene
     App.getStatisticsController().updateScene(App.getCurrentUser());
 
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.STATISTICS));
@@ -69,6 +71,7 @@ public class GameMenuController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
+    // Sets up the settings scene
     App.getSettingsController().setUpScene(App.getCurrentUser());
 
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.SETTINGS));
