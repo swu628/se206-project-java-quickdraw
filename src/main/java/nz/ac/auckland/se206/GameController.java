@@ -395,6 +395,7 @@ public class GameController {
 
             // Setting initial conditions for prediction
             TextToSpeech textToSpeech = new TextToSpeech();
+            boolean givenWarning = false;
             String prevTopPred = "";
             String currentTopPred = "";
             int prevPredPos = Integer.MAX_VALUE;
@@ -408,6 +409,10 @@ public class GameController {
               // If 1000 milliseconds has elapsed, it has been 1 second, so the DL model is
               // queried
               if (deltaTime >= 1000) {
+                if (timeLeft <= 10 && !givenWarning) {
+                  textToSpeech.speak("Less than 10 seconds remaining");
+                  givenWarning = true;
+                }
                 if (doPredict) {
                   // Uses game thread to get current snapshot of canvas
                   // Returns to predictThread to query DL model
