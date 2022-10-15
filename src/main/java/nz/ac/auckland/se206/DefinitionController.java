@@ -2,10 +2,12 @@ package nz.ac.auckland.se206;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 
 public class DefinitionController {
   @FXML private Label definitionTextLabel;
+  @FXML private AnchorPane definitionPane;
 
   /**
    * This method is called upon first load of the fxml. It sets the font to the custom IndieFlower
@@ -22,5 +24,14 @@ public class DefinitionController {
    */
   public void updateScene(String definitionText) {
     definitionTextLabel.setText(definitionText);
+  }
+
+  /**
+   * This method returns the height of the scene
+   *
+   * @return height of the scene
+   */
+  public double getSceneHeight() {
+    return definitionPane.getHeight();
   }
 }

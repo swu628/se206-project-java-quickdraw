@@ -66,11 +66,12 @@ public class GameController {
   @FXML private Label wordLabel;
   @FXML private Button getDefWindowButton;
   @FXML private Label preGameWordLabel;
-  @FXML private Label clickLabel;
+  @FXML private Button startDrawButton;
   @FXML private AnchorPane preGamePane;
   @FXML private Button nextDefButton;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
+  @FXML private Label postGameHiddenWordLabel;
   @FXML private AnchorPane game;
   @FXML private Label timerLabel;
   @FXML private TextArea predictionsList;
@@ -144,7 +145,7 @@ public class GameController {
         } else {
           Platform.runLater(
               () -> {
-                nextDefButton.setText("No more meanings");
+                nextDefButton.setText("No more definitions");
                 nextDefButton.setDisable(true);
               });
         }
@@ -185,7 +186,13 @@ public class GameController {
 
     // Checks if hidden word mode is selected
     if (hiddenWordMode) {
-      clickLabel.setText("Click 'Draw' to begin drawing what you think this is");
+      // Setting pregame background
+      preGamePane.setStyle("-fx-background-image: url('/images/background-hiddenWord.png')");
+      // Setting the pregame word label
+      preGameWordLabel.setLayoutY(178);
+      preGameWordLabel.setStyle("-fx-font-size: 35px");
+      startDrawButton.setLayoutY(615);
+      // Enabling the hidden word buttons
       nextDefButton.setVisible(true);
       wordText = getDefinition(currentWord);
       // Checks if the current word has a definition
@@ -197,15 +204,21 @@ public class GameController {
       wordLabel.setVisible(false);
       getDefWindowButton.setVisible(true);
     } else {
-      clickLabel.setText("Click 'Draw' to begin drawing");
+      // Setting pregame background
+      preGamePane.setStyle("-fx-background-image: url('/images/background-nonHidden.png')");
+      // Setting the pregame word label
+      preGameWordLabel.setLayoutY(71);
+      preGameWordLabel.setStyle("-fx-font-size: 45px");
+      startDrawButton.setLayoutY(395);
+      // disabling the hidden word mode buttons
       nextDefButton.setVisible(false);
+      getDefWindowButton.setVisible(false);
       wordText = "Draw: " + currentWord;
       wordLabel.setVisible(true);
-      getDefWindowButton.setVisible(false);
     }
 
     nextDefButton.setDisable(false);
-    nextDefButton.setText("Next meaning");
+    nextDefButton.setText("Next definition");
     preGameWordLabel.setText(wordText);
 
     wordLabel.setText(wordText);
@@ -260,7 +273,7 @@ public class GameController {
 
       // Get the total number of zen mode played
       currentUser.setNumberOfZenPlayed();
-        
+
       getPredictTask(maxGuessNum, minConfidence, currentUser);
 
       // Save the word to history
@@ -512,6 +525,7 @@ public class GameController {
           protected Void call() throws Exception {
             TextToSpeech tts = new TextToSpeech();
             tts.speak(postGameOutcomeLabel.getText());
+            tts.speak(postGameHiddenWordLabel.getText());
 
             return null;
           }
@@ -568,14 +582,19 @@ public class GameController {
 
     Thread saveThread = new Thread(saveUserDataTask);
 
+    // Setting the post game labels
     String hiddenText = "";
+    postGameOutcomeLabel.setLayoutY(162);
     if (hiddenWordMode) {
-      hiddenText = " The word was: " + currentWord;
+      hiddenText = "The word was: " + currentWord;
+      // Moving game outcome label up to accomodate for hidden word label
+      postGameOutcomeLabel.setLayoutY(107);
     }
+    postGameHiddenWordLabel.setText(hiddenText);
     if (gameWon) {
-      postGameOutcomeLabel.setText("You won!" + hiddenText);
+      postGameOutcomeLabel.setText("You won!");
     } else {
-      postGameOutcomeLabel.setText("You lost!" + hiddenText);
+      postGameOutcomeLabel.setText("You lost!");
     }
 
     ttsThread.start();
@@ -614,7 +633,7 @@ public class GameController {
 
     getDefTask.setOnSucceeded(
         (e) -> {
-          if (!nextDefButton.getText().equals("No more meanings")) {
+          if (!nextDefButton.getText().equals("No more definitions")) {
             nextDefButton.setDisable(false);
           }
         });
@@ -720,11 +739,12 @@ public class GameController {
     definitionController.updateScene(wordText);
 
     Stage stage = new Stage();
-    Scene scene = new Scene(parent, 480, 240);
+    Scene scene = new Scene(parent);
     stage.getIcons().add(new Image("/images/icon.png"));
     stage.setResizable(false);
     stage.setScene(scene);
     stage.show();
+
     stage.setOnCloseRequest(
         new EventHandler<WindowEvent>() {
           public void handle(WindowEvent we) {

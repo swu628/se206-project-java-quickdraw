@@ -11,6 +11,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import nz.ac.auckland.se206.profile.User;
 
 public class StatisticsController {
@@ -42,10 +43,31 @@ public class StatisticsController {
 
   /**
    * This method is called upon first load of the fxml. It sets the font to the custom IndieFlower
-   * font.
+   * font. It also initializes the tooltip setttings.
    */
   public void initialize() {
     Font.loadFont(App.class.getResourceAsStream("/fonts/IndieFlower-Regular.ttf"), 100);
+    // Sets the display message hover to appear after 150ms
+    consecutiveWinsMessage.setShowDelay(Duration.millis(150));
+    // Sets the display message hover to appear after 150ms
+    zenMessage.setShowDelay(Duration.millis(150));
+    // Sets the display message hover to appear after 150ms
+    underTenMessage.setShowDelay(Duration.millis(150));
+    // Sets the display message hover to appear after 150ms
+    underTwentyMessage.setShowDelay(Duration.millis(150));
+    // Sets the display message hover to appear after 150ms
+    underThirtyMessage.setShowDelay(Duration.millis(150));
+
+    // Sets the display message font styles
+    zenMessage.setStyle("-fx-font-size: 16px; -fx-font-family: 'Indie Flower'");
+    // Sets the display message font styles
+    consecutiveWinsMessage.setStyle("-fx-font-size: 16px; -fx-font-family: 'Indie Flower'");
+    // Sets the display message font styles
+    underTenMessage.setStyle("-fx-font-size: 16px; -fx-font-family: 'Indie Flower'");
+    // underTenMessage the display message font styles
+    underTwentyMessage.setStyle("-fx-font-size: 16px; -fx-font-family: 'Indie Flower'");
+    // Sets the display message font styles
+    underThirtyMessage.setStyle("-fx-font-size: 16px; -fx-font-family: 'Indie Flower'");
   }
 
   /**
@@ -207,24 +229,28 @@ public class StatisticsController {
     // Update under 30 seconds badge based on the number of games won
     // Also when hover, display message of the badge
     if (countsUnderThirty < 3) {
+      // Sets disabled under thirty seconds wins badge
       currentUser.setUnderThirtyBadge("/images/under30_opacity80.png");
       underThirtyBadge.setImage(new Image(currentUser.getUnderThirtyBadge()));
       underThirtyMessage.setText(
           "Under 30 seconds badge \nTry to win three rounds in under thirty seconds to earn the bronze badge :)");
       Tooltip.install(underThirtyBadge, underThirtyMessage);
     } else if (countsUnderThirty >= 3 && countsUnderThirty < 10) {
+      // Sets bronze under thirty seconds wins badge
       currentUser.setUnderThirtyBadge("/images/under30_bronze.png");
       underThirtyBadge.setImage(new Image(currentUser.getUnderThirtyBadge()));
       underThirtyMessage.setText(
           "Well done! \nTry to win ten rounds in under thirty seconds to earn the silver badge :)");
       Tooltip.install(underThirtyBadge, underThirtyMessage);
     } else if (countsUnderThirty >= 10 && countsUnderThirty < 50) {
+      // Sets silver under thirty seconds wins badge
       currentUser.setUnderThirtyBadge("/images/under30_silver.png");
       underThirtyBadge.setImage(new Image(currentUser.getUnderThirtyBadge()));
       underThirtyMessage.setText(
           "Good job! \nTry to win fifty rounds in under thirty seconds to earn the gold badge :)");
       Tooltip.install(underThirtyBadge, underThirtyMessage);
     } else {
+      // Sets gold under thirty seconds wins badge
       currentUser.setUnderThirtyBadge("/images/under30_gold.png");
       underThirtyBadge.setImage(new Image(currentUser.getUnderThirtyBadge()));
       underThirtyMessage.setText(
@@ -235,24 +261,28 @@ public class StatisticsController {
     // Update under 20 seconds badge based on the number of games won
     // Also when hover, display message of the badge
     if (countsUnderTwenty < 3) {
+      // Sets disabled under twenty seconds wins badge
       currentUser.setUnderTwentyBadge("/images/under20_opacity80.png");
       underTwentyBadge.setImage(new Image(currentUser.getUnderTwentyBadge()));
       underTwentyMessage.setText(
           "Under 20 seconds badge \nTry to win three rounds in under twenty seconds to earn the bronze badge :)");
       Tooltip.install(underTwentyBadge, underTwentyMessage);
     } else if (countsUnderTwenty >= 3 && countsUnderTwenty < 10) {
+      // Sets bronze under twenty seconds wins badge
       currentUser.setUnderTwentyBadge("/images/under20_bronze.png");
       underTwentyBadge.setImage(new Image(currentUser.getUnderTwentyBadge()));
       underTwentyMessage.setText(
           "Well done! \nTry to win ten rounds in under twenty seconds to earn the silver badge :)");
       Tooltip.install(underTwentyBadge, underTwentyMessage);
     } else if (countsUnderTwenty >= 10 && countsUnderTwenty < 50) {
+      // Sets silver under twenty seconds wins badge
       currentUser.setUnderTwentyBadge("/images/under20_silver.png");
       underTwentyBadge.setImage(new Image(currentUser.getUnderTwentyBadge()));
       underTwentyMessage.setText(
           "Good job! \nTry to win fifty rounds in under twenty seconds to earn the gold badge :)");
       Tooltip.install(underTwentyBadge, underTwentyMessage);
     } else {
+      // Sets gold under twenty seconds wins badge
       currentUser.setUnderTwentyBadge("/images/under20_gold.png");
       underTwentyBadge.setImage(new Image(currentUser.getUnderTwentyBadge()));
       underTwentyMessage.setText(
@@ -263,24 +293,28 @@ public class StatisticsController {
     // Update under 10 seconds badge based on the number of games won
     // Also when hover, display message of the badge
     if (countsUnderTen < 3) {
+      // Sets disabled under ten seconds wins badge
       currentUser.setUnderTenBadge("/images/under10_opacity80.png");
       underTenBadge.setImage(new Image(currentUser.getUnderTenBadge()));
       underTenMessage.setText(
           "Under 10 seconds badge \nTry to win three rounds in under ten seconds to earn the bronze badge :)");
       Tooltip.install(underTenBadge, underTenMessage);
-    } else if (countsUnderTen >= 3 && countsUnderTen < 10) {
+    } else if (countsUnderTen < 10) {
+      // Sets bronze under ten seconds wins badge
       currentUser.setUnderTenBadge("/images/under10_bronze.png");
       underTenBadge.setImage(new Image(currentUser.getUnderTenBadge()));
       underTenMessage.setText(
           "Well done! \nTry to win ten rounds in under ten seconds to earn the silver badge :)");
       Tooltip.install(underTenBadge, underTenMessage);
-    } else if (countsUnderTen >= 10 && countsUnderTen < 50) {
+    } else if (countsUnderTen < 50) {
+      // Sets silver under ten seconds wins badge
       currentUser.setUnderTenBadge("/images/under10_silver.png");
       underTenBadge.setImage(new Image(currentUser.getUnderTenBadge()));
       underTenMessage.setText(
           "Good job! \nTry to win fifty rounds in under ten seconds to earn the gold badge :)");
       Tooltip.install(underTenBadge, underTenMessage);
     } else {
+      // Sets gold under ten seconds wins badge
       currentUser.setUnderTenBadge("/images/under10_gold.png");
       underTenBadge.setImage(new Image(currentUser.getUnderTenBadge()));
       underTenMessage.setText(
@@ -291,22 +325,26 @@ public class StatisticsController {
     // Update zen mode badge based on the number of games played
     // Also when hover, display message of the badge
     if (currentUser.getNumberOfZenPlayed() < 3) {
+      // Sets bronze disabled mode badge
       currentUser.setZenBadge("/images/zen_opacity80.png");
       zenBadge.setImage(new Image(currentUser.getZenBadge()));
       zenMessage.setText("Zen mode badge \nPlay three rounds of zen mode to earn this badge :)");
       Tooltip.install(zenBadge, zenMessage);
     } else if (currentUser.getNumberOfZenPlayed() >= 3 && currentUser.getNumberOfZenPlayed() < 10) {
+      // Sets bronze zen mode badge
       currentUser.setZenBadge("/images/zen_bronze.png");
       zenBadge.setImage(new Image(currentUser.getZenBadge()));
       zenMessage.setText("Good job! \nPlay ten rounds of zen mode to earn this badge :)");
       Tooltip.install(zenBadge, zenMessage);
     } else if (currentUser.getNumberOfZenPlayed() >= 10
         && currentUser.getNumberOfZenPlayed() < 50) {
+      // Sets silver zen mode badge
       currentUser.setZenBadge("/images/zen_silver.png");
       zenBadge.setImage(new Image(currentUser.getZenBadge()));
       zenMessage.setText("Good job! \nPlay fifty rounds of zen mode to earn this badge :)");
       Tooltip.install(zenBadge, zenMessage);
     } else {
+      // Sets gold zen mode badge
       currentUser.setZenBadge("/images/zen_gold.png");
       zenBadge.setImage(new Image(currentUser.getZenBadge()));
       zenMessage.setText("Good job! \nYou have earned all the badges for zen mode :)");
@@ -331,13 +369,13 @@ public class StatisticsController {
       consecutiveWinsMessage.setText(
           "Consecutive wins badge \nTry to win three rounds consecutively to earn the bronze badge :)");
       Tooltip.install(consecutiveWinsBadge, consecutiveWinsMessage);
-    } else if (numberOfConsecutiveWins >= 3 && numberOfConsecutiveWins < 10) {
+    } else if (numberOfConsecutiveWins < 10) {
       currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_bronze.png");
       consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
       consecutiveWinsMessage.setText(
           "Good job! \nTry to win ten rounds consecutively to earn the silver badge :)");
       Tooltip.install(consecutiveWinsBadge, consecutiveWinsMessage);
-    } else if (numberOfConsecutiveWins >= 10 && numberOfConsecutiveWins < 50) {
+    } else if (numberOfConsecutiveWins < 50) {
       currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_silver.png");
       consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
       consecutiveWinsMessage.setText(
