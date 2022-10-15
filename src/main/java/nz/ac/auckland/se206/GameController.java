@@ -773,17 +773,14 @@ public class GameController {
     // Opens a new file explorer window for user to save the image at their chosen
     // location. Will only save if the extension is a .jpg or .png
     FileChooser fc = new FileChooser();
-    fc.getExtensionFilters()
-        .addAll(
-            new FileChooser.ExtensionFilter("PNG Files", "*.png"),
-            new FileChooser.ExtensionFilter("JPG Files", "*.jpg"));
+    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"));
     File filePath = fc.showSaveDialog(null);
     if (filePath != null) {
       File file = new File(filePath.getAbsolutePath());
       String fileName = filePath.getName();
       String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-      if (fileExtension.equals("jpg") || fileExtension.equals("png")) {
-        ImageIO.write(getCurrentSnapshot(), fileExtension, file);
+      if (fileExtension.equals("png")) {
+        ImageIO.write(getCurrentSnapshotColour(), fileExtension, file);
       }
     }
   }
@@ -870,5 +867,17 @@ public class GameController {
     graphics.dispose();
 
     return imageBinary;
+  }
+
+  /**
+   * Get the current snapshot of the canvas.
+   *
+   * @return The BufferedImage corresponding to the current canvas content.
+   */
+  private BufferedImage getCurrentSnapshotColour() {
+    final Image snapshot = canvas.snapshot(null, null);
+    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+
+    return image;
   }
 }
