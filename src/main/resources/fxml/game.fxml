@@ -171,8 +171,7 @@
                 </Button>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="postGame" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody"
-                    visible="false">
+        <AnchorPane fx:id="postGame" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody">
             <children>
                 <Label fx:id="postGameOutcomeLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="107.0"
                        prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Game Outcome" textAlignment="CENTER"
@@ -207,9 +206,9 @@
                         <Font size="16.0"/>
                     </font>
                 </Button>
-                <Label fx:id="postGameHiddenWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="162.0"
-                       prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Hidden Word" textAlignment="CENTER"
-                       wrapText="true">
+                <Label fx:id="postGameHiddenWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="180.0"
+                       prefHeight="23.0" prefWidth="960.0" styleClass="subHeading" text="Hidden Word"
+                       textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font size="25.0"/>
                     </font>
