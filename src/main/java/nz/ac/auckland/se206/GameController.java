@@ -70,6 +70,8 @@ public class GameController {
   @FXML private AnchorPane preGamePane;
   @FXML private Button nextDefButton;
   @FXML private Button prevDefButton;
+  @FXML private Button hintButton;
+  @FXML private Label hintLabel;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
   @FXML private Label postGameHiddenWordLabel;
@@ -102,6 +104,7 @@ public class GameController {
   private String wordText;
   private int entryIndex;
   private int definitionIndex;
+  private int hintIndex;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -234,6 +237,8 @@ public class GameController {
 
     entryIndex = 0;
     definitionIndex = 0;
+    hintIndex = 1;
+    hintButton.setVisible(false);
 
     // Checks if hidden word mode is selected
     if (hiddenWordMode) {
@@ -247,6 +252,10 @@ public class GameController {
       nextDefButton.setVisible(true);
       prevDefButton.setDisable(true);
       prevDefButton.setVisible(true);
+      hintLabel.setText("");
+      hintButton.setText("Get hint");
+      hintButton.setVisible(true);
+      hintButton.setDisable(false);
       wordText = getDefinition(currentWord, true, true);
       // Checks if the current word has a definition
       while (wordText.equals("Word not found")) {
@@ -288,7 +297,6 @@ public class GameController {
     Button button = (Button) ModeSelectController.getActionEvent().getSource();
     btnClicked = button.getText();
     if (btnClicked.equals("Zen mode")) {
-      System.out.println("zenmode");
       timeDifficultyLabel.setVisible(false);
     } else {
       timeDifficultyLabel.setVisible(true);
@@ -730,6 +738,28 @@ public class GameController {
 
     Thread getDefThread = new Thread(getDefTask);
     getDefThread.start();
+  }
+
+  /**
+   * This method gets a hint by showing the next letter of the word currently displayed as the hint
+   */
+  @FXML
+  private void onGetHint() {
+    // Checks if the current character of the word is a space
+    if (currentWord.charAt(hintIndex - 1) == ' ') {
+      hintIndex++;
+    }
+    String hintText = currentWord.substring(0, hintIndex++);
+    // Checks if the whole word is shown
+
+    if (hintIndex <= currentWord.length()) {
+      hintLabel.setText("The word starts with: " + hintText);
+      hintButton.setText("Get another hint");
+    } else {
+      hintLabel.setText("The word is: " + hintText);
+      hintButton.setDisable(true);
+      hintButton.setText("No more hints");
+    }
   }
 
   /** This method is called when the "Clear" button is pressed. */
