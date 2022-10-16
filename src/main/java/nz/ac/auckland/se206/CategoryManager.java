@@ -47,6 +47,7 @@ public class CategoryManager {
    * If the player has played all words, it will just get any random word in that difficulty.
    *
    * @param diff the word difficiulty
+   * @param useUserWordHistory include words from user's words history
    * @return the random word
    */
   private static String getRandomWord(Difficulty diff, boolean useUserWordHistory) {

@@ -148,7 +148,6 @@ public class SettingsController {
   @FXML private Button wordsHelp;
   @FXML private Button timeHelp;
   @FXML private Button confidenceHelp;
-  @FXML private TextArea settingDescription;
   @FXML private AnchorPane accuracyDescriptionPane;
   @FXML private AnchorPane wordDescriptionPane;
   @FXML private AnchorPane timeDescriptionPane;
@@ -164,7 +163,6 @@ public class SettingsController {
   @FXML private Button audioButton;
   @FXML private AnchorPane audioSettings;
   @FXML private AnchorPane difficultySettings;
-  private boolean settingType;
 
   /**
    * This method is called upon first load of the fxml. It sets the font to the custom IndieFlower
@@ -178,8 +176,6 @@ public class SettingsController {
     wordsDifficultyList = new ArrayList<>(Arrays.asList(WordsDifficulty.values()));
     timeDifficultyList = new ArrayList<>(Arrays.asList(TimeDifficulty.values()));
     confidenceDifficultyList = new ArrayList<>(Arrays.asList(ConfidenceDifficulty.values()));
-    // Setting the setting type to difficulty (false difficulty, true audio)
-    settingType = false;
 
     // Enabling difficulty settings
     difficultyButton.setStyle("-fx-text-fill: black");
@@ -220,8 +216,6 @@ public class SettingsController {
     audioButton.setStyle("-fx-text-fill: black");
     audioSettings.setVisible(true);
     audioSettings.setDisable(false);
-
-    settingType = !settingType;
   }
 
   /** This method changes the music volume. */

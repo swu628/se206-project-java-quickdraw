@@ -128,6 +128,7 @@ public class GameController {
    *
    * @param word that is being searched in the dictionary
    * @param direction false for previous, true for next
+   * @param firstDefinition if this time getting the definition
    * @return string with the definition of the word
    */
   private String getDefinition(String word, boolean direction, boolean firstDefinition) {
