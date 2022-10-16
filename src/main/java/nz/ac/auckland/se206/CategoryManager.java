@@ -49,7 +49,7 @@ public class CategoryManager {
    * @param diff the word difficiulty
    * @return the random word
    */
-  public static String getRandomWord(Difficulty diff) {
+  private static String getRandomWord(Difficulty diff, boolean useUserWordHistory) {
 
     User user = App.getCurrentUser();
 
@@ -57,19 +57,19 @@ public class CategoryManager {
     // categories classified as the desired difficulty has been returned.
     switch (diff) {
       case EASY:
-        if (user.getNotPlayedEasyWords().isEmpty()) {
+        if (user.getNotPlayedEasyWords().isEmpty() || useUserWordHistory) {
           return getRandomWord(easy);
         } else {
           return getRandomWord(user.getNotPlayedEasyWords());
         }
       case MEDIUM:
-        if (user.getNotPlayedMediumWords().isEmpty()) {
+        if (user.getNotPlayedMediumWords().isEmpty() || useUserWordHistory) {
           return getRandomWord(medium);
         } else {
           return getRandomWord(user.getNotPlayedMediumWords());
         }
       case HARD:
-        if (user.getNotPlayedHardWords().isEmpty()) {
+        if (user.getNotPlayedHardWords().isEmpty() || useUserWordHistory) {
           return getRandomWord(hard);
         } else {
           return getRandomWord(user.getNotPlayedHardWords());
@@ -78,7 +78,7 @@ public class CategoryManager {
     return null;
   }
 
-  public static String getRandomWord(ArrayList<String> words) {
+  private static String getRandomWord(ArrayList<String> words) {
     return words.get(rand.nextInt(words.size()));
   }
 
@@ -86,11 +86,12 @@ public class CategoryManager {
    * This method sets the word to a random word of a specificed difficulty
    *
    * @param diff the word difficiulty
+   * @param useUserWordHistory include words from user's words history
    */
-  public static void setWord(SettingsController.WordsDifficulty diff) {
+  public static void setWord(SettingsController.WordsDifficulty diff, boolean useUserWordHistory) {
     Difficulty[] difficulties = diff.getDifficulties();
 
-    word = getRandomWord(difficulties[rand.nextInt(difficulties.length)]);
+    word = getRandomWord(difficulties[rand.nextInt(difficulties.length)], useUserWordHistory);
   }
 
   /**
