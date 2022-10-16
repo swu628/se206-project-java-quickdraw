@@ -97,6 +97,7 @@ public class GameController {
   private boolean isExitBtnClicked;
   private String btnClicked;
   private boolean hiddenWordMode;
+  private boolean zenMode;
   private String currentWord;
   private int entryIndex;
   private int definitionIndex;
@@ -233,7 +234,10 @@ public class GameController {
     // Set visibility of time label
     Button button = (Button) ModeSelectController.getActionEvent().getSource();
     btnClicked = button.getText();
+    zenMode = false;
     if (btnClicked.equals("Zen mode")) {
+      zenMode = true;
+      System.out.println("zenmode");
       timeDifficultyLabel.setVisible(false);
     } else {
       timeDifficultyLabel.setVisible(true);
@@ -274,23 +278,10 @@ public class GameController {
       isExitBtnClicked = false;
       colour = Color.BLACK;
 
-      // Get the total number of zen mode played
+      // Increment the total number of zen mode played
       currentUser.setNumberOfZenPlayed();
 
       getPredictTask(maxGuessNum, minConfidence, currentUser);
-
-      // Save the word to history
-      // Updates the user's history of words encountered
-      ArrayList<String> wordsHistory = currentUser.getWordsHistory();
-      wordsHistory.add(CategoryManager.getWord());
-      currentUser.setWordsHistory(wordsHistory);
-      // Create json file named as the username
-      FileWriter fileWriter =
-          new FileWriter("src/main/resources/UserProfiles/" + currentUser.getName() + ".json");
-      // Write user details into the file
-      Gson gson = new Gson();
-      gson.toJson(currentUser, fileWriter);
-      fileWriter.close();
     } else {
       timerLabel.setVisible(true);
       exitButton.setVisible(false);
@@ -610,7 +601,10 @@ public class GameController {
     }
 
     ttsThread.start();
-    saveThread.start();
+
+    if (!hiddenWordMode) {
+      saveThread.start();
+    }
 
     // Sets the postGame pane to visible so save, play again and quit utilities are
     // available to the player
