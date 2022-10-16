@@ -44,6 +44,9 @@ public class RegisterController {
     } else if (newUsernameField.getText().isEmpty()) {
       sceneReset();
       text.setText("Username cannot be empty");
+    } else if (newUsernameField.getText().length() > 10) {
+      sceneReset();
+      text.setText("Username is too long");
     } else {
       // Creates a folder to store users if needed
       final File Users = new File("src/main/resources/UserProfiles");
@@ -71,6 +74,7 @@ public class RegisterController {
         signUpButton.setDisable(true);
         text.setStyle("-fx-fill: green;");
         text.setText("Account Created");
+        AudioController.playPencilWrite();
       }
     }
   }
