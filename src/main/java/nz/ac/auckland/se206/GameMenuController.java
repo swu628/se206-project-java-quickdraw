@@ -39,6 +39,9 @@ public class GameMenuController {
     Button button = (Button) e.getSource();
     Scene currentScene = button.getScene();
 
+    // Sets up the mode select scene
+    App.getModeSelectController().setupScene();
+
     // Changes scene to Mode Select
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.MODE_SELECT));
   }

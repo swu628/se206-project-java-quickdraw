@@ -83,10 +83,6 @@ public class GameController {
   @FXML private Button saveButton;
   @FXML private ColorPicker colourPicker;
   @FXML private Label predDirectionLabel;
-  @FXML private Label accuracyDifficultyLabel;
-  @FXML private Label wordDifficultyLabel;
-  @FXML private Label confidenceDifficultyLabel;
-  @FXML private Label timeDifficultyLabel;
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
@@ -225,13 +221,6 @@ public class GameController {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     User currentUser = App.getCurrentUser();
 
-    // Displays the difficulty for the next game
-    accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
-    timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
-    confidenceDifficultyLabel.setText(
-        "Confidence: " + currentUser.getConfidenceDifficulty().toString());
-    wordDifficultyLabel.setText("Word: " + currentUser.getWordsDifficulty().toString());
-
     // Chooses a random category for next game
     CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
     currentWord = CategoryManager.getWord();
@@ -248,7 +237,7 @@ public class GameController {
       // Setting pregame background
       preGamePane.setStyle("-fx-background-image: url('/images/background-hiddenWord.png')");
       // Setting the pregame word label
-      preGameWordLabel.setLayoutY(158);
+      preGameWordLabel.setLayoutY(178);
       preGameWordLabel.setStyle("-fx-font-size: 35px");
       startDrawButton.setLayoutY(615);
       // Enabling the hidden word buttons
@@ -273,7 +262,7 @@ public class GameController {
       // Setting pregame background
       preGamePane.setStyle("-fx-background-image: url('/images/background-nonHidden.png')");
       // Setting the pregame word label
-      preGameWordLabel.setLayoutY(97);
+      preGameWordLabel.setLayoutY(71);
       preGameWordLabel.setStyle("-fx-font-size: 45px");
       startDrawButton.setLayoutY(395);
       // disabling the hidden word mode buttons
@@ -300,11 +289,6 @@ public class GameController {
     // Set visibility of time label
     Button button = (Button) ModeSelectController.getActionEvent().getSource();
     btnClicked = button.getText();
-    if (btnClicked.equals("Zen mode")) {
-      timeDifficultyLabel.setVisible(false);
-    } else {
-      timeDifficultyLabel.setVisible(true);
-    }
 
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
@@ -339,7 +323,6 @@ public class GameController {
       exitButton.setVisible(true);
       saveButton.setVisible(true);
       colourPicker.setVisible(true);
-      timeDifficultyLabel.setVisible(false);
       isExitBtnClicked = false;
       colour = Color.BLACK;
 
@@ -352,7 +335,6 @@ public class GameController {
       exitButton.setVisible(false);
       saveButton.setVisible(false);
       colourPicker.setVisible(false);
-      timeDifficultyLabel.setVisible(true);
       colour = Color.BLACK;
 
       getTimerTask();
@@ -759,6 +741,7 @@ public class GameController {
     }
     String hintText = currentWord.substring(0, hintIndex++);
 
+    AudioController.playPencilWrite();
     // Checks if the whole word is shown
     if (hintIndex <= currentWord.length()) {
       hintLabel.setText("The word starts with:");
