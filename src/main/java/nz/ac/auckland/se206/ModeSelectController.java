@@ -52,23 +52,33 @@ public class ModeSelectController {
     normalModeMessage.setStyle("-fx-font-size: 16px; -fx-font-family: 'Indie Flower'");
     // Sets the display message font styles
     hiddenModeMessage.setStyle("-fx-font-size: 16px; -fx-font-family: 'Indie Flower'");
+
+    StringBuilder sb = new StringBuilder();
     // Sets the text for zen mode
-    zenModeMessage.setText(
-        "The same as normal game mode, but there is no time limit and user can use different colours."
-            + System.lineSeparator()
-            + "Zen mode games are not tracked.");
+    sb.append("The same as normal mode,")
+        .append(System.lineSeparator())
+        .append("but there is no time limit.")
+        .append(System.lineSeparator())
+        .append("You can draw with different colours.")
+        .append(System.lineSeparator())
+        .append("Zen mode games are not tracked.");
+    zenModeMessage.setText(sb.toString());
     // Sets the text for normal mode
-    normalModeMessage.setText(
-        "Draw the given word within the time limit to win."
-            + System.lineSeparator()
-            + "Games are tracked in user's statistics.");
+    sb.setLength(0);
+    sb.append("Draw the given word within the time limit to win.")
+        .append(System.lineSeparator())
+        .append("Games are tracked in account statistics.");
+    normalModeMessage.setText(sb.toString());
     // Sets the text for hidden mode
-    hiddenModeMessage.setText(
-        "Additional option for normal and zen mode."
-            + System.lineSeparator()
-            + "Instead of giving words, the word definition is given to the user."
-            + System.lineSeparator()
-            + "Hidden mode games are not tracked");
+    sb.setLength(0);
+    sb.append("Additional option for normal and zen mode.")
+        .append(System.lineSeparator())
+        .append("You are given the definition of a word,")
+        .append(System.lineSeparator())
+        .append("and must draw what you think the word is.")
+        .append(System.lineSeparator())
+        .append("Hidden mode games are not tracked.");
+    hiddenModeMessage.setText(sb.toString());
 
     // Adding tooltip to respective buttons/checkbox
     Tooltip.install(zenModeButton, zenModeMessage);
