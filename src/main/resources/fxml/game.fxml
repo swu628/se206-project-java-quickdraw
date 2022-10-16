@@ -126,7 +126,8 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
-            <Label fx:id="hintLabel" alignment="BOTTOM_CENTER" layoutY="505.0" prefWidth="960.0" textAlignment="CENTER" />
+            <Label fx:id="hintLabel" alignment="BOTTOM_CENTER" layoutY="70.0" prefWidth="960.0" textAlignment="CENTER" />
+            <Label fx:id="hintStringLabel" alignment="BOTTOM_CENTER" layoutY="125.0" prefWidth="960.0" textAlignment="CENTER" />
             <Button fx:id="hintButton" alignment="BOTTOM_CENTER" layoutY="560.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onGetHint" pickOnBounds="false" prefHeight="80.0" prefWidth="960.0" text="Get Hint" textAlignment="CENTER" />
                 <Button fx:id="startDrawButton" alignment="BOTTOM_CENTER" layoutY="615.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStartDrawing" pickOnBounds="false" prefHeight="80.0" prefWidth="960.0" text="Click here to begin drawing" textAlignment="CENTER" />
                 <Button fx:id="nextDefButton" layoutX="902.0" layoutY="346.0" mnemonicParsing="false" onAction="#onNextDef" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0" styleClass="profileSelectButton">
