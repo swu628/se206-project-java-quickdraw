@@ -66,7 +66,7 @@
                         <Button fx:id="exitButton" layoutX="803.0" layoutY="99.0" mnemonicParsing="false"
                                 onAction="#onGameMenu" text="Exit" visible="false"/>
                         <Button fx:id="saveButton" layoutX="687.0" layoutY="99.0" mnemonicParsing="false"
-                                onAction="#onSaveDrawing" text="Save" visible="false"/>
+                                onAction="#onSaveDrawingColour" text="Save" visible="false"/>
                     </children>
                 </AnchorPane>
                 <AnchorPane layoutX="480.0" layoutY="177.0" prefHeight="517.0" prefWidth="433.0">
