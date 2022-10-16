@@ -95,14 +95,13 @@ public class GameController {
   private double currentX;
   private double currentY;
   private Color colour;
-  private boolean isExitBtnClicked;
   private String btnClicked;
   private boolean hiddenWordMode;
-  private boolean zenMode;
+  private boolean isExitBtnClicked;
   private String currentWord;
+  private String wordText;
   private int entryIndex;
   private int definitionIndex;
-  private String wordText;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -288,9 +287,7 @@ public class GameController {
     // Set visibility of time label
     Button button = (Button) ModeSelectController.getActionEvent().getSource();
     btnClicked = button.getText();
-    zenMode = false;
     if (btnClicked.equals("Zen mode")) {
-      zenMode = true;
       System.out.println("zenmode");
       timeDifficultyLabel.setVisible(false);
     } else {
@@ -324,6 +321,7 @@ public class GameController {
     AudioController.playButtonClick();
     displayGame();
 
+    // Checks if zen mode is selected
     if (btnClicked.equals("Zen mode")) {
       timerLabel.setVisible(false);
       exitButton.setVisible(true);
