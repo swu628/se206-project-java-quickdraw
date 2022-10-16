@@ -16,7 +16,8 @@ public class DictionarySearch {
   private static final String API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
 
   /**
-   * This method uses a dictionary API to search and store information on a given word
+   * This method uses a dictionary API to search and store information on a given word Code adapted
+   * from softeng206 concurrency code lab
    *
    * @param word is the word being searched using the dictionary API
    * @return WordInfo is the information of the word storing word entries

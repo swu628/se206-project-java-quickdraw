@@ -70,6 +70,9 @@ public class GameController {
   @FXML private AnchorPane preGamePane;
   @FXML private Button nextDefButton;
   @FXML private Button prevDefButton;
+  @FXML private Button hintButton;
+  @FXML private Label hintLabel;
+  @FXML private Label hintStringLabel;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
   @FXML private Label postGameHiddenWordLabel;
@@ -95,13 +98,14 @@ public class GameController {
   private double currentX;
   private double currentY;
   private Color colour;
-  private boolean isExitBtnClicked;
   private String btnClicked;
   private boolean hiddenWordMode;
+  private boolean isExitBtnClicked;
   private String currentWord;
+  private String wordText;
   private int entryIndex;
   private int definitionIndex;
-  private String wordText;
+  private int hintIndex;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -234,19 +238,28 @@ public class GameController {
 
     entryIndex = 0;
     definitionIndex = 0;
+    hintIndex = 1;
+    hintButton.setVisible(false);
+    hintLabel.setVisible(false);
+    hintStringLabel.setVisible(false);
 
     // Checks if hidden word mode is selected
     if (hiddenWordMode) {
       // Setting pregame background
       preGamePane.setStyle("-fx-background-image: url('/images/background-hiddenWord.png')");
       // Setting the pregame word label
-      preGameWordLabel.setLayoutY(178);
+      preGameWordLabel.setLayoutY(158);
       preGameWordLabel.setStyle("-fx-font-size: 35px");
       startDrawButton.setLayoutY(615);
       // Enabling the hidden word buttons
       nextDefButton.setVisible(true);
       prevDefButton.setDisable(true);
       prevDefButton.setVisible(true);
+      hintLabel.setText("");
+      hintStringLabel.setText("");
+      hintButton.setText("Get hint");
+      hintButton.setVisible(true);
+      hintButton.setDisable(false);
       wordText = getDefinition(currentWord, true, true);
       // Checks if the current word has a definition
       while (wordText.equals("Word not found")) {
@@ -260,7 +273,7 @@ public class GameController {
       // Setting pregame background
       preGamePane.setStyle("-fx-background-image: url('/images/background-nonHidden.png')");
       // Setting the pregame word label
-      preGameWordLabel.setLayoutY(71);
+      preGameWordLabel.setLayoutY(97);
       preGameWordLabel.setStyle("-fx-font-size: 45px");
       startDrawButton.setLayoutY(395);
       // disabling the hidden word mode buttons
@@ -320,6 +333,7 @@ public class GameController {
     AudioController.playButtonClick();
     displayGame();
 
+    // Checks if zen mode is selected
     if (btnClicked.equals("Zen mode")) {
       timerLabel.setVisible(false);
       exitButton.setVisible(true);
@@ -329,11 +343,10 @@ public class GameController {
       isExitBtnClicked = false;
       colour = Color.BLACK;
 
-      // Get the total number of zen mode played
+      // Increment the total number of zen mode played
       currentUser.setNumberOfZenPlayed();
 
       getPredictTask(maxGuessNum, minConfidence, currentUser);
-
     } else {
       timerLabel.setVisible(true);
       exitButton.setVisible(false);
@@ -653,7 +666,10 @@ public class GameController {
     }
 
     ttsThread.start();
-    saveThread.start();
+
+    if (!hiddenWordMode) {
+      saveThread.start();
+    }
 
     // Sets the postGame pane to visible so save, play again and quit utilities are
     // available to the player
@@ -726,6 +742,34 @@ public class GameController {
 
     Thread getDefThread = new Thread(getDefTask);
     getDefThread.start();
+  }
+
+  /**
+   * This method gets a hint by showing the next letter of the word currently displayed as the hint
+   */
+  @FXML
+  private void onGetHint() {
+    // Makes labels visible
+    hintLabel.setVisible(true);
+    hintStringLabel.setVisible(true);
+
+    // Checks if the current character of the word is a space
+    if (currentWord.charAt(hintIndex - 1) == ' ') {
+      hintIndex++;
+    }
+    String hintText = currentWord.substring(0, hintIndex++);
+
+    // Checks if the whole word is shown
+    if (hintIndex <= currentWord.length()) {
+      hintLabel.setText("The word starts with:");
+      hintStringLabel.setText(hintText);
+      hintButton.setText("Get another hint");
+    } else {
+      hintLabel.setText("The word is:");
+      hintStringLabel.setText(hintText);
+      hintButton.setDisable(true);
+      hintButton.setText("No more hints");
+    }
   }
 
   /** This method is called when the "Clear" button is pressed. */
