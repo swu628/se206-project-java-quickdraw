@@ -135,7 +135,6 @@ public class GameController {
       // Searches definitions for the given word in a dictionary
       WordInfo wordResult = DictionarySearch.searchWordInfo(word);
       List<WordEntry> entries = wordResult.getWordEntries();
-      String textString;
 
       if (direction && !firstDefinition) {
         // Gets index position of next definition of the given word
@@ -191,7 +190,7 @@ public class GameController {
                 prevDefButton.setDisable(false);
               });
         }
-      } else if (firstDefinition) {
+      } else {
         if (entryIndex == entries.size() - 1
             && definitionIndex == entries.get(entryIndex).getDefinitions().size() - 1) {
           // We have run out of definitions, enable prev def button, disable next def button
@@ -203,9 +202,7 @@ public class GameController {
         }
       }
 
-      textString = entries.get(entryIndex).getDefinitions().get(definitionIndex);
-
-      return textString;
+      return entries.get(entryIndex).getDefinitions().get(definitionIndex);
     } catch (IOException e) {
       e.printStackTrace();
       return "Word not found";
