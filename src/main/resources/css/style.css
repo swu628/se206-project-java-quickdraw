@@ -204,6 +204,10 @@ Button {
     -fx-padding: 0;
 }
 
+TextArea .content {
+    -fx-cursor: DEFAULT;
+}
+
 TextField {
     -fx-font-family: "Indie Flower";
     -fx-font-size: 45px;
