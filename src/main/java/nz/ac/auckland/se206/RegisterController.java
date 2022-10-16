@@ -44,7 +44,7 @@ public class RegisterController {
     } else if (newUsernameField.getText().isEmpty()) {
       sceneReset();
       text.setText("Username cannot be empty");
-    } else if (newUsernameField.getText().length() > 10) {
+    } else if (newUsernameField.getText().length() > 12) {
       sceneReset();
       text.setText("Username is too long");
     } else {
