@@ -61,11 +61,15 @@ public class ModeSelectController {
         .append(System.lineSeparator())
         .append("You can draw with different colours.")
         .append(System.lineSeparator())
+        .append("Already played words can appear.")
+        .append(System.lineSeparator())
         .append("Zen mode games are not tracked.");
     zenModeMessage.setText(sb.toString());
     // Sets the text for normal mode
     sb.setLength(0);
     sb.append("Draw the given word within the time limit to win.")
+        .append(System.lineSeparator())
+        .append("Already played words can not appear.")
         .append(System.lineSeparator())
         .append("Games are tracked in account statistics.");
     normalModeMessage.setText(sb.toString());
@@ -76,6 +80,8 @@ public class ModeSelectController {
         .append("You are given the definition of a word,")
         .append(System.lineSeparator())
         .append("and must draw what you think the word is.")
+        .append(System.lineSeparator())
+        .append("Already played words can appear.")
         .append(System.lineSeparator())
         .append("Hidden mode games are not tracked.");
     hiddenModeMessage.setText(sb.toString());

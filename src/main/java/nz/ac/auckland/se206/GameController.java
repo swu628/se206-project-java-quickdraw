@@ -229,7 +229,12 @@ public class GameController {
     wordDifficultyLabel.setText("Word: " + currentUser.getWordsDifficulty().toString());
 
     // Chooses a random category for next game
-    CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
+    // if hidden word or zen mode, the game can reuse words from words history
+    Button button = (Button) ModeSelectController.getActionEvent().getSource();
+    btnClicked = button.getText();
+    CategoryManager.setWord(
+        App.getCurrentUser().getWordsDifficulty(), hiddenWordMode || btnClicked.equals("Zen mode"));
+
     currentWord = CategoryManager.getWord();
 
     entryIndex = 0;
@@ -250,7 +255,7 @@ public class GameController {
       wordText = getDefinition(currentWord, true, true);
       // Checks if the current word has a definition
       while (wordText.equals("Word not found")) {
-        CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
+        CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty(), true);
         currentWord = CategoryManager.getWord();
         wordText = getDefinition(currentWord, true, true);
       }
@@ -285,7 +290,6 @@ public class GameController {
     }
 
     // Set visibility of time label
-    Button button = (Button) ModeSelectController.getActionEvent().getSource();
     btnClicked = button.getText();
     if (btnClicked.equals("Zen mode")) {
       timeDifficultyLabel.setVisible(false);
