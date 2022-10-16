@@ -34,6 +34,7 @@ Text {
 
 .preGameBody Label {
     -fx-font-family: "Indie Flower";
+    -fx-font-size: 45px;
 }
 
 .preGameBody #category {

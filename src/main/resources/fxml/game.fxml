@@ -12,11 +12,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="720.0" prefWidth="960.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameController">
     <children>
-        <AnchorPane fx:id="game" prefHeight="720.0" prefWidth="960.0" styleClass="backgroundBlank">
+        <AnchorPane fx:id="game" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="backgroundBlank"
+                    visible="false">
             <children>
                 <VBox alignment="CENTER" layoutY="-3.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0"
                       AnchorPane.rightAnchor="0.0">
@@ -120,8 +122,8 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                    minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody" visible="false"
+        <AnchorPane fx:id="preGamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                    minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody"
                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                     AnchorPane.topAnchor="0.0">
             <children>
@@ -161,13 +163,23 @@
                 <Button fx:id="startDrawButton" alignment="BOTTOM_CENTER" layoutY="615.0" minHeight="-Infinity"
                         minWidth="-Infinity" mnemonicParsing="false" onAction="#onStartDrawing" pickOnBounds="false"
                         prefHeight="80.0" prefWidth="960.0" text="Click here to begin drawing"/>
-                <Button fx:id="nextDefButton" alignment="TOP_CENTER" layoutY="565.0" minHeight="-Infinity"
-                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onNextDef" pickOnBounds="false"
-                        prefHeight="64.0" prefWidth="960.0" styleClass="profileSelectButton" text="Next Definition"
-                        textAlignment="CENTER">
-                    <font>
-                        <Font size="24.0"/>
-                    </font>
+                <Button fx:id="nextDefButton" layoutX="902.0" layoutY="346.0" mnemonicParsing="false"
+                        onAction="#onNextDef" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0"
+                        styleClass="profileSelectButton">
+                    <graphic>
+                        <SVGPath
+                                content="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                                scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow"/>
+                    </graphic>
+                </Button>
+                <Button fx:id="prevDefButton" layoutX="53.0" layoutY="346.0" mnemonicParsing="false"
+                        onAction="#onPrevDef" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0"
+                        styleClass="profileSelectButton">
+                    <graphic>
+                        <SVGPath
+                                content="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"
+                                scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow"/>
+                    </graphic>
                 </Button>
             </children>
         </AnchorPane>
