@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
-            prefWidth="960.0" styleClass="backgroundMain" stylesheets="@../css/style.css"
-            xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="nz.ac.auckland.se206.ModeSelectController">
-    <Button alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="235.0" mnemonicParsing="false"
-            onAction="#onPlayZenMode" text="Zen mode" textAlignment="CENTER"/>
-    <Button alignment="CENTER" contentDisplay="CENTER" layoutX="426.0" layoutY="509.0" mnemonicParsing="false"
-            onAction="#onBack" text="Back" textAlignment="CENTER"/>
-    <Button alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" layoutY="290.0" mnemonicParsing="false"
-            onAction="#onPlayNormalMode" text="Normal mode" textAlignment="CENTER"/>
-    <CheckBox fx:id="checkBoxHidWordMode" contentDisplay="CENTER" layoutX="310.0" layoutY="400.0"
-              mnemonicParsing="false" pickOnBounds="false" prefHeight="66.0" prefWidth="328.0" text="Hidden Words"
-              textAlignment="CENTER">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="backgroundMain" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.ModeSelectController">
+    <Button fx:id="zenModeButton" alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="235.0" mnemonicParsing="false" onAction="#onPlayZenMode" text="Zen mode" textAlignment="CENTER" />
+    <Button alignment="CENTER" contentDisplay="CENTER" layoutX="426.0" layoutY="509.0" mnemonicParsing="false" onAction="#onBack" text="Back" textAlignment="CENTER" />
+    <Button fx:id="normalModeButton" alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" layoutY="290.0" mnemonicParsing="false" onAction="#onPlayNormalMode" text="Normal mode" textAlignment="CENTER" />
+    <CheckBox fx:id="checkBoxHidWordMode" contentDisplay="CENTER" layoutX="310.0" layoutY="400.0" mnemonicParsing="false" onMouseClicked="#onPlayWriteSound" pickOnBounds="false" prefHeight="66.0" prefWidth="328.0" text="Hidden Words" textAlignment="CENTER">
         <cursor>
-            <Cursor fx:constant="HAND"/>
+            <Cursor fx:constant="HAND" />
         </cursor>
     </CheckBox>
-    <Label alignment="CENTER" layoutX="204.0" layoutY="107.0" styleClass="title" text="Choose a Game Mode"
-           textAlignment="CENTER">
+    <Label alignment="CENTER" layoutX="204.0" layoutY="107.0" styleClass="title" text="Choose a Game Mode" textAlignment="CENTER">
         <font>
-            <Font size="35.0"/>
+            <Font size="35.0" />
         </font>
     </Label>
 </AnchorPane>
