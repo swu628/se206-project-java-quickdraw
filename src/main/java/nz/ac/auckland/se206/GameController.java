@@ -377,7 +377,7 @@ public class GameController {
               }
             }
 
-            final int timeTaken = 60 - timeLeft;
+            final int timeTaken = App.getCurrentUser().getTimeDifficulty().getMaxTime() - timeLeft;
 
             while (predictThread.isAlive()) {
               // Waiting for predict thread to die before going to post game scene.
