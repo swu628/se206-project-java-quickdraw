@@ -69,6 +69,7 @@ public class GameController {
   @FXML private Button startDrawButton;
   @FXML private AnchorPane preGamePane;
   @FXML private Button nextDefButton;
+  @FXML private Button prevDefButton;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
   @FXML private Label postGameHiddenWordLabel;
@@ -126,31 +127,83 @@ public class GameController {
    * definition to avoid reuse.
    *
    * @param word that is being searched in the dictionary
+   * @param direction false for previous, true for next
    * @return string with the definition of the word
    */
-  private String getDefinition(String word) {
+  private String getDefinition(String word, boolean direction, boolean firstDefinition) {
     try {
       // Searches definitions for the given word in a dictionary
       WordInfo wordResult = DictionarySearch.searchWordInfo(word);
       List<WordEntry> entries = wordResult.getWordEntries();
-      String textString = entries.get(entryIndex).getDefinitions().get(definitionIndex);
+      String textString;
 
-      // Gets index position of next definition of the given word
-      if (entryIndex < entries.size()) {
-        if (definitionIndex + 1 < entries.get(entryIndex).getDefinitions().size()) {
+      if (direction && !firstDefinition) {
+        // Gets index position of next definition of the given word
+        if (definitionIndex < entries.get(entryIndex).getDefinitions().size() - 1) {
+          // Increases definition index as there are more definitions
           definitionIndex++;
-        } else if (entryIndex + 1 < entries.size()) {
+        } else if (entryIndex < entries.size() - 1) {
+          // Increases entry index as entry has run out of definitions
           entryIndex++;
           definitionIndex = 0;
-        } else {
-          // We have run out of definitions
+        }
+
+        if (entryIndex == entries.size() - 1
+            && definitionIndex == entries.get(entryIndex).getDefinitions().size() - 1) {
+          // We have run out of definitions, enable prev def button, disable next def button
           Platform.runLater(
               () -> {
-                nextDefButton.setText("No more definitions");
                 nextDefButton.setDisable(true);
+                prevDefButton.setDisable(false);
+              });
+        } else {
+          // Enable next def button and prev def button
+          Platform.runLater(
+              () -> {
+                nextDefButton.setDisable(false);
+                prevDefButton.setDisable(false);
+              });
+        }
+
+      } else if (!firstDefinition) {
+        // Gets index position of next definition of the given word
+        if (definitionIndex > 0) {
+          // Decreases definition index as there are more definitions
+          definitionIndex--;
+        } else if (entryIndex > 0) {
+          // Decreases entry index as entry has run out of definitions
+          entryIndex--;
+          definitionIndex = entries.get(entryIndex).getDefinitions().size() - 1;
+        }
+
+        if (entryIndex == 0 && definitionIndex == 0) {
+          // We have run out of definitions, disable prev def button, enable next def button
+          Platform.runLater(
+              () -> {
+                nextDefButton.setDisable(false);
+                prevDefButton.setDisable(true);
+              });
+        } else {
+          // Enable next def button and prev def button
+          Platform.runLater(
+              () -> {
+                nextDefButton.setDisable(false);
+                prevDefButton.setDisable(false);
+              });
+        }
+      } else if (firstDefinition) {
+        if (entryIndex == entries.size() - 1
+            && definitionIndex == entries.get(entryIndex).getDefinitions().size() - 1) {
+          // We have run out of definitions, enable prev def button, disable next def button
+          Platform.runLater(
+              () -> {
+                nextDefButton.setDisable(true);
+                prevDefButton.setDisable(true);
               });
         }
       }
+
+      textString = entries.get(entryIndex).getDefinitions().get(definitionIndex);
 
       return textString;
     } catch (IOException e) {
@@ -195,12 +248,14 @@ public class GameController {
       startDrawButton.setLayoutY(615);
       // Enabling the hidden word buttons
       nextDefButton.setVisible(true);
-      wordText = getDefinition(currentWord);
+      prevDefButton.setDisable(true);
+      prevDefButton.setVisible(true);
+      wordText = getDefinition(currentWord, true, true);
       // Checks if the current word has a definition
       while (wordText.equals("Word not found")) {
         CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
         currentWord = CategoryManager.getWord();
-        wordText = getDefinition(currentWord);
+        wordText = getDefinition(currentWord, true, true);
       }
       wordLabel.setVisible(false);
       getDefWindowButton.setVisible(true);
@@ -213,13 +268,15 @@ public class GameController {
       startDrawButton.setLayoutY(395);
       // disabling the hidden word mode buttons
       nextDefButton.setVisible(false);
+      nextDefButton.setDisable(true);
+      prevDefButton.setVisible(false);
+      prevDefButton.setDisable(true);
       getDefWindowButton.setVisible(false);
       wordText = "Draw: " + currentWord;
       wordLabel.setVisible(true);
     }
 
     nextDefButton.setDisable(false);
-    nextDefButton.setText("Next definition");
     preGameWordLabel.setText(wordText);
 
     wordLabel.setText(wordText);
@@ -619,7 +676,7 @@ public class GameController {
           @Override
           protected Object call() throws Exception {
             // Getting definition of word
-            String definition = getDefinition(currentWord);
+            String definition = getDefinition(currentWord, true, false);
 
             AudioController.playPencilWrite();
 
@@ -635,13 +692,39 @@ public class GameController {
           }
         };
 
-    // This is set once we run out of definitions
-    getDefTask.setOnSucceeded(
-        (e) -> {
-          if (!nextDefButton.getText().equals("No more definitions")) {
-            nextDefButton.setDisable(false);
+    Thread getDefThread = new Thread(getDefTask);
+    getDefThread.start();
+  }
+
+  /**
+   * This method is called when the "Previous meaning" button is pressed. Updates to a new
+   * definition for the current word
+   */
+  @FXML
+  private void onPrevDef() {
+    prevDefButton.setDisable(true);
+
+    // Changes the definition of the current word being displayed
+    Task<Object> getDefTask =
+        new Task<>() {
+          @Override
+          protected Object call() throws Exception {
+            // Getting definition of word
+            String definition = getDefinition(currentWord, false, false);
+
+            AudioController.playPencilWrite();
+
+            // Sets the labels to the word's definitions
+            Platform.runLater(
+                () -> {
+                  wordText = definition;
+                  preGameWordLabel.setText(wordText);
+                  wordLabel.setText(wordText);
+                });
+
+            return null;
           }
-        });
+        };
 
     Thread getDefThread = new Thread(getDefTask);
     getDefThread.start();

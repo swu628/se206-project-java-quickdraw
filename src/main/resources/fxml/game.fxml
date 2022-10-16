@@ -1,117 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="720.0" prefWidth="960.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameController">
+
+<AnchorPane prefHeight="720.0" prefWidth="960.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.GameController">
     <children>
-        <AnchorPane fx:id="game" prefHeight="720.0" prefWidth="960.0" styleClass="backgroundBlank">
+        <AnchorPane fx:id="game" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="backgroundBlank" visible="false">
             <children>
-                <VBox alignment="CENTER" layoutY="-3.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0"
-                      AnchorPane.rightAnchor="0.0">
+                <VBox alignment="CENTER" layoutY="-3.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="title"
-                               text="Quick, Draw! SE206 Edition">
+                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="Quick, Draw! SE206 Edition">
                             <font>
-                                <Font size="25.0"/>
+                                <Font size="25.0" />
                             </font>
                         </Label>
                     </children>
                 </VBox>
-                <AnchorPane layoutX="29.0" layoutY="25.0" maxWidth="887.0" prefHeight="674.0" prefWidth="887.0"
-                            styleClass="gameBody">
+                <AnchorPane layoutX="29.0" layoutY="25.0" maxWidth="887.0" prefHeight="674.0" prefWidth="887.0" styleClass="gameBody">
                     <children>
                         <Label layoutX="41.0" layoutY="53.0" styleClass="subHeading" text="Predictions: ">
                             <font>
-                                <Font size="16.0"/>
+                                <Font size="16.0" />
                             </font>
                         </Label>
-                        <Label fx:id="wordLabel" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="54.0"
-                               prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Word"
-                               textAlignment="CENTER">
+                        <Label fx:id="wordLabel" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="54.0" prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Word" textAlignment="CENTER">
                             <font>
-                                <Font size="18.0"/>
+                                <Font size="18.0" />
                             </font>
                         </Label>
-                        <Button fx:id="getDefWindowButton" alignment="CENTER_RIGHT" layoutX="513.0" layoutY="45.0"
-                                mnemonicParsing="false" onAction="#onGetDefWindow" pickOnBounds="false"
-                                prefHeight="66.0" prefWidth="361.0" text="View definition" visible="false"/>
-                        <TextArea fx:id="predictionsList" editable="false" layoutX="26.0" layoutY="112.0"
-                                  prefHeight="566.0" prefWidth="433.0"
-                                  text="Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;The Great Wall of China - 100.00%&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction"/>
-                        <Label fx:id="timerLabel" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="107.0"
-                               prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Time Left:"
-                               textAlignment="CENTER">
+                        <Button fx:id="getDefWindowButton" alignment="CENTER_RIGHT" layoutX="513.0" layoutY="45.0" mnemonicParsing="false" onAction="#onGetDefWindow" pickOnBounds="false" prefHeight="66.0" prefWidth="361.0" text="View definition" visible="false" />
+                        <TextArea fx:id="predictionsList" editable="false" layoutX="26.0" layoutY="112.0" prefHeight="566.0" prefWidth="433.0" text="Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;The Great Wall of China - 100.00%&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction&#10;Prediction" />
+                        <Label fx:id="timerLabel" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="107.0" prefHeight="41.0" prefWidth="373.0" styleClass="subHeading" text="Time Left:" textAlignment="CENTER">
                             <font>
-                                <Font size="16.0"/>
+                                <Font size="16.0" />
                             </font>
                         </Label>
-                        <Label fx:id="predDirectionLabel" layoutX="233.0" layoutY="53.0" styleClass="subHeading"
-                               text="Prediction Direction">
+                        <Label fx:id="predDirectionLabel" layoutX="233.0" layoutY="53.0" styleClass="subHeading" text="Prediction Direction">
                             <font>
-                                <Font size="16.0"/>
+                                <Font size="16.0" />
                             </font>
                         </Label>
-                        <Button fx:id="exitButton" layoutX="803.0" layoutY="99.0" mnemonicParsing="false"
-                                onAction="#onGameMenu" text="Exit" visible="false"/>
-                        <Button fx:id="saveButton" layoutX="687.0" layoutY="99.0" mnemonicParsing="false"
-                                onAction="#onSaveDrawing" text="Save" visible="false"/>
+                        <Button fx:id="exitButton" layoutX="803.0" layoutY="99.0" mnemonicParsing="false" onAction="#onGameMenu" text="Exit" visible="false" />
+                        <Button fx:id="saveButton" layoutX="687.0" layoutY="99.0" mnemonicParsing="false" onAction="#onSaveDrawing" text="Save" visible="false" />
                     </children>
                 </AnchorPane>
                 <AnchorPane layoutX="480.0" layoutY="177.0" prefHeight="517.0" prefWidth="433.0">
                     <children>
-                        <Pane layoutX="-19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                              minWidth="-Infinity" prefHeight="441.0" prefWidth="441.0"
-                              style="-fx-border-color: rgb(198, 198,198); -fx-background-color: rgb(243, 243, 243); -fx-border-width: 1;"
-                              stylesheets="@../css/style.css">
+                        <Pane layoutX="-19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="441.0" style="-fx-border-color: rgb(198, 198,198); -fx-background-color: rgb(243, 243, 243); -fx-border-width: 1;" stylesheets="@../css/style.css">
                             <children>
                                 <Canvas fx:id="canvas" height="439.0" layoutX="1.0" layoutY="1.0" width="439.0">
                                     <cursor>
-                                        <Cursor fx:constant="HAND"/>
+                                        <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Canvas>
                             </children>
                         </Pane>
-                        <HBox alignment="CENTER_RIGHT" layoutX="-80.0" layoutY="442.0" prefHeight="56.0"
-                              prefWidth="501.0" spacing="15.0">
+                        <HBox alignment="CENTER_RIGHT" layoutX="-80.0" layoutY="442.0" prefHeight="56.0" prefWidth="501.0" spacing="15.0">
                             <children>
-                                <ColorPicker id="colour-picker" fx:id="colourPicker" onAction="#onColourPick"
-                                             pickOnBounds="false" prefHeight="30.0" prefWidth="30.0" scaleX="2.0"
-                                             scaleY="2.0" styleClass="button" visible="false">
+                                <ColorPicker id="colour-picker" fx:id="colourPicker" onAction="#onColourPick" pickOnBounds="false" prefHeight="30.0" prefWidth="30.0" scaleX="2.0" scaleY="2.0" styleClass="button" visible="false">
                                     <value>
-                                        <Color/>
+                                        <Color />
                                     </value>
                                     <cursor>
-                                        <Cursor fx:constant="HAND"/>
+                                        <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </ColorPicker>
-                                <ImageView fx:id="toolImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true"
-                                           preserveRatio="true"/>
+                                <ImageView fx:id="toolImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                                 <Button fx:id="penButton" mnemonicParsing="false" onAction="#onSwitchToPen" text="Pen">
                                     <font>
-                                        <Font size="16.0"/>
+                                        <Font size="16.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="eraserButton" mnemonicParsing="false" onAction="#onSwitchToEraser"
-                                        text="Eraser">
+                                <Button fx:id="eraserButton" mnemonicParsing="false" onAction="#onSwitchToEraser" text="Eraser">
                                     <font>
-                                        <Font size="16.0"/>
+                                        <Font size="16.0" />
                                     </font>
                                 </Button>
                                 <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" text="Clear">
                                     <font>
-                                        <Font size="16.0"/>
+                                        <Font size="16.0" />
                                     </font>
                                 </Button>
                             </children>
@@ -120,98 +99,76 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                    minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody" visible="false"
-                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                    AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="preGamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label id="category" fx:id="preGameWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="81.0"
-                       layoutY="178.0" prefHeight="402.0" prefWidth="821.0" text="word" textAlignment="CENTER"
-                       wrapText="true">
+                <Label id="category" fx:id="preGameWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="81.0" layoutY="178.0" prefHeight="402.0" prefWidth="821.0" text="word" textAlignment="CENTER" wrapText="true">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Label>
-                <Label fx:id="accuracyDifficultyLabel" layoutX="78.0" layoutY="85.0" prefHeight="55.0" prefWidth="265.0"
-                       styleClass="settings" text="Accuracy: MEDIUM">
+                <Label fx:id="accuracyDifficultyLabel" layoutX="78.0" layoutY="85.0" prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Accuracy: MEDIUM">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Label>
-                <Label fx:id="wordDifficultyLabel" layoutX="78.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0"
-                       styleClass="settings" text="Words: MEDIUM">
+                <Label fx:id="wordDifficultyLabel" layoutX="78.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Words: MEDIUM">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Label>
-                <Label fx:id="timeDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="140.0"
-                       prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Time: MEDIUM"
-                       textAlignment="RIGHT">
+                <Label fx:id="timeDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Time: MEDIUM" textAlignment="RIGHT">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Label>
-                <Label fx:id="confidenceDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="86.0"
-                       prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Confidence: MASTER"
-                       textAlignment="RIGHT">
+                <Label fx:id="confidenceDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="86.0" prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Confidence: MASTER" textAlignment="RIGHT">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Label>
-                <Button fx:id="startDrawButton" alignment="BOTTOM_CENTER" layoutY="615.0" minHeight="-Infinity"
-                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onStartDrawing" pickOnBounds="false"
-                        prefHeight="80.0" prefWidth="960.0" text="Click here to begin drawing"/>
-                <Button fx:id="nextDefButton" alignment="TOP_CENTER" layoutY="565.0" minHeight="-Infinity"
-                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onNextDef" pickOnBounds="false"
-                        prefHeight="64.0" prefWidth="960.0" styleClass="profileSelectButton" text="Next Definition"
-                        textAlignment="CENTER">
-                    <font>
-                        <Font size="24.0"/>
-                    </font>
-                </Button>
+                <Button fx:id="startDrawButton" alignment="BOTTOM_CENTER" layoutY="615.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStartDrawing" pickOnBounds="false" prefHeight="80.0" prefWidth="960.0" text="Click here to begin drawing" />
+            <Button fx:id="nextDefButton" layoutX="902.0" layoutY="346.0" mnemonicParsing="false" onAction="#onNextDef" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0" styleClass="profileSelectButton">
+               <graphic>
+                  <SVGPath content="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow" />
+               </graphic>
+            </Button>
+            <Button fx:id="prevDefButton" layoutX="53.0" layoutY="346.0" mnemonicParsing="false" onAction="#onPrevDef" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0" styleClass="profileSelectButton">
+               <graphic>
+                  <SVGPath content="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" scaleX="2.5" scaleY="2.5" styleClass="profileSelectArrow" />
+               </graphic>
+            </Button>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="postGame" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody"
-                    visible="false">
+        <AnchorPane fx:id="postGame" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody" visible="false">
             <children>
-                <Label fx:id="postGameOutcomeLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="107.0"
-                       prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Game Outcome" textAlignment="CENTER"
-                       wrapText="true">
+                <Label fx:id="postGameOutcomeLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="107.0" prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Game Outcome" textAlignment="CENTER" wrapText="true">
                     <font>
-                        <Font size="25.0"/>
+                        <Font size="25.0" />
                     </font>
                 </Label>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="290.0" mnemonicParsing="false"
-                        onAction="#onSaveDrawing" pickOnBounds="false" prefWidth="960.0" text="Save drawing"
-                        textAlignment="CENTER">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="290.0" mnemonicParsing="false" onAction="#onSaveDrawing" pickOnBounds="false" prefWidth="960.0" text="Save drawing" textAlignment="CENTER">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="345.0" mnemonicParsing="false"
-                        onAction="#onResetGame" pickOnBounds="false" prefWidth="960.0" text="Play again">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="345.0" mnemonicParsing="false" onAction="#onResetGame" pickOnBounds="false" prefWidth="960.0" text="Play again">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="400.0" mnemonicParsing="false"
-                        onAction="#onGameMenu" pickOnBounds="false" prefWidth="960.0" text="Game Menu">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="400.0" mnemonicParsing="false" onAction="#onGameMenu" pickOnBounds="false" prefWidth="960.0" text="Game Menu">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="454.0" mnemonicParsing="false"
-                        onAction="#onQuitGame" pickOnBounds="false" prefWidth="960.0" text="Quit game"
-                        textAlignment="CENTER">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutY="454.0" mnemonicParsing="false" onAction="#onQuitGame" pickOnBounds="false" prefWidth="960.0" text="Quit game" textAlignment="CENTER">
                     <font>
-                        <Font size="16.0"/>
+                        <Font size="16.0" />
                     </font>
                 </Button>
-                <Label fx:id="postGameHiddenWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="162.0"
-                       prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Hidden Word" textAlignment="CENTER"
-                       wrapText="true">
+                <Label fx:id="postGameHiddenWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="162.0" prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Hidden Word" textAlignment="CENTER" wrapText="true">
                     <font>
-                        <Font size="25.0"/>
+                        <Font size="25.0" />
                     </font>
                 </Label>
             </children>
