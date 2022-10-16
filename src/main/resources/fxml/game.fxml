@@ -101,7 +101,7 @@
         </AnchorPane>
         <AnchorPane fx:id="preGamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label id="category" fx:id="preGameWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="81.0" layoutY="147.0" prefHeight="348.0" prefWidth="821.0" text="word" textAlignment="CENTER" wrapText="true">
+                <Label id="category" fx:id="preGameWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="81.0" layoutY="147.0" prefHeight="414.0" prefWidth="821.0" text="word" textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>

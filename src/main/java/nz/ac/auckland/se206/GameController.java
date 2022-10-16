@@ -248,7 +248,7 @@ public class GameController {
       // Setting pregame background
       preGamePane.setStyle("-fx-background-image: url('/images/background-hiddenWord.png')");
       // Setting the pregame word label
-      preGameWordLabel.setLayoutY(178);
+      preGameWordLabel.setLayoutY(158);
       preGameWordLabel.setStyle("-fx-font-size: 35px");
       startDrawButton.setLayoutY(615);
       // Enabling the hidden word buttons
