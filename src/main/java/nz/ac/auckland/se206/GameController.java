@@ -261,6 +261,7 @@ public class GameController {
     int maxGuessNum = currentUser.getAccuracyDifficulty().getNumGuesses();
     double minConfidence = currentUser.getConfidenceDifficulty().getMinConfidence();
     onSwitchToPen();
+    onClear();
     AudioController.playButtonClick();
     displayGame();
 
@@ -654,7 +655,8 @@ public class GameController {
   /** This method is called when the "Clear" button is pressed. */
   @FXML
   private void onClear() {
-    graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    graphic.setFill(Color.rgb(243, 243, 243));
+    graphic.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     doPredict = false;
   }
 
@@ -764,14 +766,36 @@ public class GameController {
   }
 
   /**
-   * This method will save the user's drawing
+   * This method will save the user's drawing without colour
    *
    * @throws IOException if file path specified doesn't exist
    */
   @FXML
   private void onSaveDrawing() throws IOException {
     // Opens a new file explorer window for user to save the image at their chosen
-    // location. Will only save if the extension is a .jpg or .png
+    // location. Will only save if the extension is a .jpg
+    FileChooser fc = new FileChooser();
+    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"));
+    File filePath = fc.showSaveDialog(null);
+    if (filePath != null) {
+      File file = new File(filePath.getAbsolutePath());
+      String fileName = filePath.getName();
+      String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+      if (fileExtension.equals("png")) {
+        ImageIO.write(getCurrentSnapshot(), fileExtension, file);
+      }
+    }
+  }
+
+  /**
+   * This method will save the user's drawing with colour
+   *
+   * @throws IOException if file path specified doesn't exist
+   */
+  @FXML
+  private void onSaveDrawingColour() throws IOException {
+    // Opens a new file explorer window for user to save the image at their chosen
+    // location. Will only save if the extension is a .jpg
     FileChooser fc = new FileChooser();
     fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"));
     File filePath = fc.showSaveDialog(null);
