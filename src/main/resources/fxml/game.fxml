@@ -99,29 +99,9 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="preGamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label id="category" fx:id="preGameWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="81.0" layoutY="147.0" prefHeight="348.0" prefWidth="821.0" text="word" textAlignment="CENTER" wrapText="true">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Label>
-                <Label fx:id="accuracyDifficultyLabel" layoutX="78.0" layoutY="85.0" prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Accuracy: MEDIUM">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Label>
-                <Label fx:id="wordDifficultyLabel" layoutX="78.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Words: MEDIUM">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Label>
-                <Label fx:id="timeDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Time: MEDIUM" textAlignment="RIGHT">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Label>
-                <Label fx:id="confidenceDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="86.0" prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Confidence: MASTER" textAlignment="RIGHT">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -141,7 +121,7 @@
                 </Button>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="postGame" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody">
+        <AnchorPane fx:id="postGame" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody" visible="false">
             <children>
                 <Label fx:id="postGameOutcomeLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="107.0" prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Game Outcome" textAlignment="CENTER" wrapText="true">
                     <font>

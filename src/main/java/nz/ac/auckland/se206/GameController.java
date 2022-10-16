@@ -82,10 +82,6 @@ public class GameController {
   @FXML private Button saveButton;
   @FXML private ColorPicker colourPicker;
   @FXML private Label predDirectionLabel;
-  @FXML private Label accuracyDifficultyLabel;
-  @FXML private Label wordDifficultyLabel;
-  @FXML private Label confidenceDifficultyLabel;
-  @FXML private Label timeDifficultyLabel;
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
@@ -224,13 +220,6 @@ public class GameController {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     User currentUser = App.getCurrentUser();
 
-    // Displays the difficulty for the next game
-    accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
-    timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
-    confidenceDifficultyLabel.setText(
-        "Confidence: " + currentUser.getConfidenceDifficulty().toString());
-    wordDifficultyLabel.setText("Word: " + currentUser.getWordsDifficulty().toString());
-
     // Chooses a random category for next game
     CategoryManager.setWord(App.getCurrentUser().getWordsDifficulty());
     currentWord = CategoryManager.getWord();
@@ -296,11 +285,6 @@ public class GameController {
     // Set visibility of time label
     Button button = (Button) ModeSelectController.getActionEvent().getSource();
     btnClicked = button.getText();
-    if (btnClicked.equals("Zen mode")) {
-      timeDifficultyLabel.setVisible(false);
-    } else {
-      timeDifficultyLabel.setVisible(true);
-    }
 
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
@@ -335,7 +319,6 @@ public class GameController {
       exitButton.setVisible(true);
       saveButton.setVisible(true);
       colourPicker.setVisible(true);
-      timeDifficultyLabel.setVisible(false);
       isExitBtnClicked = false;
       colour = Color.BLACK;
 
@@ -348,7 +331,6 @@ public class GameController {
       exitButton.setVisible(false);
       saveButton.setVisible(false);
       colourPicker.setVisible(false);
-      timeDifficultyLabel.setVisible(true);
       colour = Color.BLACK;
 
       getTimerTask();

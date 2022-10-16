@@ -5,11 +5,17 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+import nz.ac.auckland.se206.profile.User;
 
 public class ModeSelectController {
 
   @FXML private CheckBox checkBoxHidWordMode;
+  @FXML private Label accuracyDifficultyLabel;
+  @FXML private Label wordDifficultyLabel;
+  @FXML private Label confidenceDifficultyLabel;
+  @FXML private Label timeDifficultyLabel;
   private static ActionEvent event;
 
   /**
@@ -81,5 +87,17 @@ public class ModeSelectController {
 
     // Sets the scene to the game menu
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
+  }
+
+  /** This method sets up the scene with the users specified difficulty settings. */
+  public void setupScene() {
+    User currentUser = App.getCurrentUser();
+
+    // Displays the difficulty for the game
+    accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
+    timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
+    confidenceDifficultyLabel.setText(
+        "Confidence: " + currentUser.getConfidenceDifficulty().toString());
+    wordDifficultyLabel.setText("Word: " + currentUser.getWordsDifficulty().toString());
   }
 }

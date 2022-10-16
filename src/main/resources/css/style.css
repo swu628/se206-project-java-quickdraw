@@ -27,6 +27,16 @@ Text {
     -fx-font-size: 33px;
 }
 
+.modeSelect {
+    -fx-background-image: url("../images/background-modeSelect.png");
+    -fx-background-size: 100% 100%;
+}
+
+.modeSelect .settings {
+    -fx-font-family: "Indie Flower";
+    -fx-font-size: 30px;
+}
+
 .preGameBody {
     -fx-background-image: url("../images/background-nonHidden.png");
     -fx-background-size: 100% 100%;
@@ -44,10 +54,6 @@ Text {
 
 .preGameBody #prompt {
     -fx-font-size: 40px;
-}
-
-.preGameBody .settings {
-    -fx-font-size: 30px;
 }
 
 .gameBody Label {
