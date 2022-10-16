@@ -237,7 +237,7 @@ public class GameController {
       // Setting pregame background
       preGamePane.setStyle("-fx-background-image: url('/images/background-hiddenWord.png')");
       // Setting the pregame word label
-      preGameWordLabel.setLayoutY(158);
+      preGameWordLabel.setLayoutY(178);
       preGameWordLabel.setStyle("-fx-font-size: 35px");
       startDrawButton.setLayoutY(615);
       // Enabling the hidden word buttons
@@ -262,7 +262,7 @@ public class GameController {
       // Setting pregame background
       preGamePane.setStyle("-fx-background-image: url('/images/background-nonHidden.png')");
       // Setting the pregame word label
-      preGameWordLabel.setLayoutY(97);
+      preGameWordLabel.setLayoutY(71);
       preGameWordLabel.setStyle("-fx-font-size: 45px");
       startDrawButton.setLayoutY(395);
       // disabling the hidden word mode buttons
@@ -741,6 +741,7 @@ public class GameController {
     }
     String hintText = currentWord.substring(0, hintIndex++);
 
+    AudioController.playPencilWrite();
     // Checks if the whole word is shown
     if (hintIndex <= currentWord.length()) {
       hintLabel.setText("The word starts with:");

@@ -128,7 +128,7 @@
                     AnchorPane.topAnchor="0.0">
             <children>
                 <Label id="category" fx:id="preGameWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="81.0"
-                       layoutY="147.0" prefHeight="414.0" prefWidth="821.0" text="word" textAlignment="CENTER"
+                       layoutY="178.0" prefHeight="402.0" prefWidth="821.0" text="word" textAlignment="CENTER"
                        wrapText="true">
                     <font>
                         <Font size="16.0"/>
