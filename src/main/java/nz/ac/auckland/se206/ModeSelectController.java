@@ -5,9 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import nz.ac.auckland.se206.profile.User;
 
 public class ModeSelectController {
   private static ActionEvent event;
@@ -22,6 +24,10 @@ public class ModeSelectController {
   }
 
   @FXML private CheckBox checkBoxHidWordMode;
+  @FXML private Label accuracyDifficultyLabel;
+  @FXML private Label wordDifficultyLabel;
+  @FXML private Label confidenceDifficultyLabel;
+  @FXML private Label timeDifficultyLabel;
   @FXML private Button zenModeButton;
   @FXML private Button normalModeButton;
   private Tooltip zenModeMessage;
@@ -144,6 +150,18 @@ public class ModeSelectController {
 
     // Sets the scene to the game menu
     currentScene.setRoot(SceneManager.getUiRoot(SceneManager.AppScene.GAME));
+  }
+
+  /** This method sets up the scene with the users specified difficulty settings. */
+  public void setupScene() {
+    User currentUser = App.getCurrentUser();
+
+    // Displays the difficulty for the game
+    accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
+    timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
+    confidenceDifficultyLabel.setText(
+        "Confidence: " + currentUser.getConfidenceDifficulty().toString());
+    wordDifficultyLabel.setText("Word: " + currentUser.getWordsDifficulty().toString());
   }
 
   /** This method plays the pencil write sound. */

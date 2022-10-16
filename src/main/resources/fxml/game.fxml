@@ -122,7 +122,7 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="preGamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+        <AnchorPane fx:id="preGamePane" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
                     minWidth="-Infinity" prefHeight="720.0" prefWidth="960.0" styleClass="preGameBody"
                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                     AnchorPane.topAnchor="0.0">
@@ -134,35 +134,16 @@
                         <Font size="16.0"/>
                     </font>
                 </Label>
-                <Label fx:id="accuracyDifficultyLabel" layoutX="78.0" layoutY="85.0" prefHeight="55.0" prefWidth="265.0"
-                       styleClass="settings" text="Accuracy: MEDIUM">
-                    <font>
-                        <Font size="16.0"/>
-                    </font>
-                </Label>
-                <Label fx:id="wordDifficultyLabel" layoutX="78.0" layoutY="140.0" prefHeight="55.0" prefWidth="265.0"
-                       styleClass="settings" text="Words: MEDIUM">
-                    <font>
-                        <Font size="16.0"/>
-                    </font>
-                </Label>
-                <Label fx:id="timeDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="140.0"
-                       prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Time: MEDIUM"
-                       textAlignment="RIGHT">
-                    <font>
-                        <Font size="16.0"/>
-                    </font>
-                </Label>
-                <Label fx:id="confidenceDifficultyLabel" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="86.0"
-                       prefHeight="55.0" prefWidth="265.0" styleClass="settings" text="Confidence: MASTER"
-                       textAlignment="RIGHT">
-                    <font>
-                        <Font size="16.0"/>
-                    </font>
-                </Label>
+                <Label fx:id="hintLabel" alignment="BOTTOM_CENTER" layoutY="70.0" prefWidth="960.0"
+                       textAlignment="CENTER"/>
+                <Label fx:id="hintStringLabel" alignment="BOTTOM_CENTER" layoutY="125.0" prefWidth="960.0"
+                       textAlignment="CENTER"/>
+                <Button fx:id="hintButton" alignment="BOTTOM_CENTER" layoutY="560.0" minHeight="-Infinity"
+                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onGetHint" pickOnBounds="false"
+                        prefHeight="80.0" prefWidth="960.0" text="Get Hint" textAlignment="CENTER"/>
                 <Button fx:id="startDrawButton" alignment="BOTTOM_CENTER" layoutY="615.0" minHeight="-Infinity"
                         minWidth="-Infinity" mnemonicParsing="false" onAction="#onStartDrawing" pickOnBounds="false"
-                        prefHeight="80.0" prefWidth="960.0" text="Click here to begin drawing"/>
+                        prefHeight="80.0" prefWidth="960.0" text="Click here to begin drawing" textAlignment="CENTER"/>
                 <Button fx:id="nextDefButton" layoutX="902.0" layoutY="346.0" mnemonicParsing="false"
                         onAction="#onNextDef" pickOnBounds="false" prefHeight="50.0" prefWidth="25.0"
                         styleClass="profileSelectButton">
@@ -183,7 +164,8 @@
                 </Button>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="postGame" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody">
+        <AnchorPane fx:id="postGame" disable="true" prefHeight="720.0" prefWidth="960.0" styleClass="postGameBody"
+                    visible="false">
             <children>
                 <Label fx:id="postGameOutcomeLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="107.0"
                        prefHeight="23.0" prefWidth="960.0" styleClass="title" text="Game Outcome" textAlignment="CENTER"

@@ -70,6 +70,9 @@ public class GameController {
   @FXML private AnchorPane preGamePane;
   @FXML private Button nextDefButton;
   @FXML private Button prevDefButton;
+  @FXML private Button hintButton;
+  @FXML private Label hintLabel;
+  @FXML private Label hintStringLabel;
   @FXML private AnchorPane postGame;
   @FXML private Label postGameOutcomeLabel;
   @FXML private Label postGameHiddenWordLabel;
@@ -80,10 +83,6 @@ public class GameController {
   @FXML private Button saveButton;
   @FXML private ColorPicker colourPicker;
   @FXML private Label predDirectionLabel;
-  @FXML private Label accuracyDifficultyLabel;
-  @FXML private Label wordDifficultyLabel;
-  @FXML private Label confidenceDifficultyLabel;
-  @FXML private Label timeDifficultyLabel;
   private GraphicsContext graphic;
   private DoodlePrediction model;
   private Thread timerThread;
@@ -95,13 +94,14 @@ public class GameController {
   private double currentX;
   private double currentY;
   private Color colour;
-  private boolean isExitBtnClicked;
   private String btnClicked;
   private boolean hiddenWordMode;
+  private boolean isExitBtnClicked;
   private String currentWord;
+  private String wordText;
   private int entryIndex;
   private int definitionIndex;
-  private String wordText;
+  private int hintIndex;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -221,13 +221,6 @@ public class GameController {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     User currentUser = App.getCurrentUser();
 
-    // Displays the difficulty for the next game
-    accuracyDifficultyLabel.setText("Accuracy: " + currentUser.getAccuracyDifficulty().toString());
-    timeDifficultyLabel.setText("Time: " + currentUser.getTimeDifficulty().toString());
-    confidenceDifficultyLabel.setText(
-        "Confidence: " + currentUser.getConfidenceDifficulty().toString());
-    wordDifficultyLabel.setText("Word: " + currentUser.getWordsDifficulty().toString());
-
     // Chooses a random category for next game
     // if hidden word or zen mode, the game can reuse words from words history
     Button button = (Button) ModeSelectController.getActionEvent().getSource();
@@ -239,6 +232,10 @@ public class GameController {
 
     entryIndex = 0;
     definitionIndex = 0;
+    hintIndex = 1;
+    hintButton.setVisible(false);
+    hintLabel.setVisible(false);
+    hintStringLabel.setVisible(false);
 
     // Checks if hidden word mode is selected
     if (hiddenWordMode) {
@@ -252,6 +249,11 @@ public class GameController {
       nextDefButton.setVisible(true);
       prevDefButton.setDisable(true);
       prevDefButton.setVisible(true);
+      hintLabel.setText("");
+      hintStringLabel.setText("");
+      hintButton.setText("Get hint");
+      hintButton.setVisible(true);
+      hintButton.setDisable(false);
       wordText = getDefinition(currentWord, true, true);
       // Checks if the current word has a definition
       while (wordText.equals("Word not found")) {
@@ -291,11 +293,6 @@ public class GameController {
 
     // Set visibility of time label
     btnClicked = button.getText();
-    if (btnClicked.equals("Zen mode")) {
-      timeDifficultyLabel.setVisible(false);
-    } else {
-      timeDifficultyLabel.setVisible(true);
-    }
 
     onSwitchToPen();
     // Shows the preGamePane whilst disabling all the other panes
@@ -324,26 +321,24 @@ public class GameController {
     AudioController.playButtonClick();
     displayGame();
 
+    // Checks if zen mode is selected
     if (btnClicked.equals("Zen mode")) {
       timerLabel.setVisible(false);
       exitButton.setVisible(true);
       saveButton.setVisible(true);
       colourPicker.setVisible(true);
-      timeDifficultyLabel.setVisible(false);
       isExitBtnClicked = false;
       colour = Color.BLACK;
 
-      // Get the total number of zen mode played
+      // Increment the total number of zen mode played
       currentUser.setNumberOfZenPlayed();
 
       getPredictTask(maxGuessNum, minConfidence, currentUser);
-
     } else {
       timerLabel.setVisible(true);
       exitButton.setVisible(false);
       saveButton.setVisible(false);
       colourPicker.setVisible(false);
-      timeDifficultyLabel.setVisible(true);
       colour = Color.BLACK;
 
       getTimerTask();
@@ -657,7 +652,10 @@ public class GameController {
     }
 
     ttsThread.start();
-    saveThread.start();
+
+    if (!hiddenWordMode) {
+      saveThread.start();
+    }
 
     // Sets the postGame pane to visible so save, play again and quit utilities are
     // available to the player
@@ -730,6 +728,35 @@ public class GameController {
 
     Thread getDefThread = new Thread(getDefTask);
     getDefThread.start();
+  }
+
+  /**
+   * This method gets a hint by showing the next letter of the word currently displayed as the hint
+   */
+  @FXML
+  private void onGetHint() {
+    // Makes labels visible
+    hintLabel.setVisible(true);
+    hintStringLabel.setVisible(true);
+
+    // Checks if the current character of the word is a space
+    if (currentWord.charAt(hintIndex - 1) == ' ') {
+      hintIndex++;
+    }
+    String hintText = currentWord.substring(0, hintIndex++);
+
+    AudioController.playPencilWrite();
+    // Checks if the whole word is shown
+    if (hintIndex <= currentWord.length()) {
+      hintLabel.setText("The word starts with:");
+      hintStringLabel.setText(hintText);
+      hintButton.setText("Get another hint");
+    } else {
+      hintLabel.setText("The word is:");
+      hintStringLabel.setText(hintText);
+      hintButton.setDisable(true);
+      hintButton.setText("No more hints");
+    }
   }
 
   /** This method is called when the "Clear" button is pressed. */
