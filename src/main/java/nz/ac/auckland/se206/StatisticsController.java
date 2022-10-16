@@ -373,24 +373,28 @@ public class StatisticsController {
     // Update consecutive wins badge based on the number of games won consecutively
     // Also when hover, display message of the badge
     if (numberOfConsecutiveWins < 3) {
+      // Sets disabled 3 consecutive wins badge
       currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_opacity80.png");
       consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
       consecutiveWinsMessage.setText(
           "Consecutive wins badge \nTry to win three rounds consecutively to earn the bronze badge :)");
       Tooltip.install(consecutiveWinsBadge, consecutiveWinsMessage);
     } else if (numberOfConsecutiveWins < 10) {
+      // Sets bronze badge for 3 consecutive wins
       currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_bronze.png");
       consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
       consecutiveWinsMessage.setText(
           "Good job! \nTry to win ten rounds consecutively to earn the silver badge :)");
       Tooltip.install(consecutiveWinsBadge, consecutiveWinsMessage);
     } else if (numberOfConsecutiveWins < 50) {
+      // Sets silver badge for 10 consecutive wins
       currentUser.setConsecutiveWinsBadge("/images/consecutiveWins_silver.png");
       consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
       consecutiveWinsMessage.setText(
           "Well done! \nTry to win fifty rounds consecutively to earn the gold badge :)");
       Tooltip.install(consecutiveWinsBadge, consecutiveWinsMessage);
     } else {
+      // Sets gold badge for 50 consecutive wins
       currentUser.setConsecutiveWinsBadge("/images/consecutiveWinsgold.png");
       consecutiveWinsBadge.setImage(new Image(currentUser.getConsecutiveWinsBadge()));
       consecutiveWinsMessage.setText(

@@ -5,24 +5,21 @@ import org.json.JSONArray;
 
 public class WordEntry {
 
-  private String partOfSpeech;
   private List<String> definitions;
   private List<JSONArray> synonyms;
   private List<JSONArray> antonyms;
 
-  public WordEntry(
-      String partOfSpeech,
-      List<String> definitions,
-      List<JSONArray> synonyms,
-      List<JSONArray> antonyms) {
-    this.partOfSpeech = partOfSpeech;
+  /**
+   * This constructor stores information on an entry of a word
+   *
+   * @param definitions is the list of definitions
+   * @param synonyms is the list of JSONarrays of synonyms
+   * @param antonyms is the list of JSONarrays of antonyms
+   */
+  public WordEntry(List<String> definitions, List<JSONArray> synonyms, List<JSONArray> antonyms) {
     this.definitions = definitions;
     this.synonyms = synonyms;
     this.antonyms = antonyms;
-  }
-
-  public String getPartOfSpeech() {
-    return partOfSpeech;
   }
 
   public List<String> getDefinitions() {
